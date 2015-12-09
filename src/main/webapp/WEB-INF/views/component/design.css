@@ -1,0 +1,80 @@
+/* CSS Document */
+
+/*1 网页头*/
+.head
+{ 
+	bordercolor="#2285CE";
+	bgcolor="#2285CE";
+}
+      
+/*2 网页脚*/
+.foot
+{
+	bordercolor="#2285CE";
+	bgcolor="#2285CE";
+    font-family: "黑体";
+	font-weight: bold;
+	font-size: 18px;
+	color:#000000;
+}
+
+/*3 时间栏*/
+.time
+{
+    bordercolor="#00B0F0";
+	bgcolor="#00B0F0";
+	font-family: "黑体";
+	font-weight: bold;
+	font-size: 18px;
+	color:#FFFFFF;
+}
+
+/*4 机器分类*/
+.type
+{
+    bordercolor="#FFFFFF";
+	bgcolor="#00B0F0";
+	font-family: "黑体";
+	font-weight: bold;
+	font-size: 18px;
+	color:#FFFFFF;
+}
+
+/*5 内容标题*/
+.title
+{   bordercolor="#2285CE";
+	bgcolor="#2285CE";
+	font-family: "黑体";
+	font-weight: bold;
+	font-size: 18px;
+	color:#000000
+
+}
+
+/*5 内容*/
+.pic
+{  
+   bordercolor="#E1EBF5";
+   bgcolor="#E1EBF5";
+}
+
+/*6 菜单标题栏*/
+.menu
+{ bordercolor="#2285CE";
+	bgcolor="#2285CE";
+	font-family: "黑体";
+	font-weight: bold;
+	font-size: 18px;
+	color:#FFFFFF;
+}
+
+/*7 菜单*/
+.content
+{
+    bordercolor="#E1EBF5";
+	bgcolor="#E1EBF5";
+	font-family: "黑体";
+	font-weight: bold;
+	font-size: 18px;
+	color:#000000
+}

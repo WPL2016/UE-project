@@ -1,0 +1,57 @@
+#customers
+  {
+  font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse:collapse;
+  width:100%;
+  }
+
+#customers td, #customers th 
+  {
+  font-family: "黑体"; 
+  font-size: 18px; 
+  font-weight:bold;
+  border:0px solid #98bf21;
+  padding:3px 7px 2px 7px;
+  }
+
+#customers th 
+  {
+  
+  
+  
+  font-size:1.1em;
+  text-align:center;
+  padding-top:5px;
+  padding-bottom:4px;
+  background-color:#2285CE;
+  color:#ffffff;
+  }
+
+#customers tr.alt td 
+  {
+  font-family: "黑体"; 
+  font-size: 16px; 
+  font-weight:bold;
+  background-color:#E1EBF5;
+  }
+#customers td.value 
+  {
+	 color:#FF6600;
+	 font-family:"黑体";	
+	 font-size:18px;     
+   }
+#customers td.title {
+	font-size: 18px;
+	font-weight: bold;
+	font-family: "黑体";
+	color:#FF6600;
+}   
+#customers td.lightbg {
+	 background-color:#E1EBF5;
+
+	}
+
+
+
+
+   

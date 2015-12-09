@@ -1,0 +1,254 @@
+div.background
+ {
+	background-color:#F8F8F8;
+    widht:100%;
+    height:42px;
+    
+	
+ }
+
+
+
+#fixed_equip
+ {
+	padding:0px;
+	position:relative;
+	top:0;
+	background:#F8F8F8;
+	width:100%;
+	z-index:999;
+	min-width:1366px;
+ }
+/*
+#fixed_menu
+ {
+	padding:0px;
+	position:absolute;
+	top:60px;
+	background:#F8F8F8;
+	width:10%;
+	z-index:999;
+	min-width:170px;
+ }
+*/
+div.equip_container
+  {
+    background-color:#F8F8F8;
+    margin:0 auto;
+    padding:0;
+	display:table;   
+	text-align:center; 
+	
+  }
+div.equip
+  {
+    font-family: "黑体";
+	font-weight: bold;
+	font-size: 18px;
+	color: #FFFFFF;
+	background-color:#00B0F0;
+	height:30px; 
+	margin: 0 auto;
+	float:left;
+	border:1px solid #000;
+	margin-right:-2px;
+	padding-top:10px;
+	padding-left:15px;
+	padding-right:15px;
+  }
+  
+div.blank_bf_menu
+  {
+	width:2.5%;
+	float:left;
+	margin: 0 auto;
+	height:10px;
+	background-color:#F8F8F8;
+  }
+
+div.menu_container
+  {
+    width:10%;
+    background-color:#F8F8F8;
+    min-width:170px;
+    float:left;
+    margin:0 auto;
+    
+  }
+  
+div.time_container
+  {
+    width:100%;
+    height:35px;
+    background-color:#F8F8F8;
+  }  
+div.time
+  {
+   
+    border:1px #98bf21;
+	background-color:#00B0F0;
+	font-family:黑体;
+	font-weight: bold;
+	font-size: 18px;
+	color:#FFFFFF;
+	height:35px;
+    padding-top:20px;
+    text-align:center;
+    margin:0 auto;
+    width:100%;
+    min-width:170px;
+    float:left;
+  }
+
+div.horiz_blank
+  {
+   float:left;	
+   background-color:#F8F8F8;
+   width:100%;
+ 
+  }
+div.blank_btw_time_menu
+  {
+   height:30px;
+   width:100%;
+   background-color:#F8F8F8; 	
+  }
+  
+div.horiz_container{
+   
+   background-color:#F8F8F8;
+   overflow:hidden;
+   width:100%;
+   padding-top:40px;
+   z-index:2;
+}  
+div.menu_head
+  {
+    font-family: "黑体";
+	font-weight: bold;
+	font-size:20px;
+	color: #FFFFFF;
+	height:40px; 
+	border:1px #2285CE; 
+	background-color:#2285CE;
+	padding-left:25px;
+	padding-top:20px;
+  }  
+div.content
+  {
+   float:left;
+   margin:0 auto;    
+   background-color:#F8F8F8;
+   overflow:hidden;
+   
+  }
+div.blank_btw_menu_content
+  {
+   background-color:#F8F8F8;
+   height:100px;
+   width:5%;
+   float:left;
+   margin:0 auto; 
+  
+  
+   
+	
+  }
+  div.blank_btw_body_foot
+  {
+   background-color:#F8F8F8;
+   width:100%;
+   height:100px;
+  }
+
+div.menu
+  {
+  color:#000000; 
+  font-family: "黑体"; 
+  font-weight: bold; 
+  font-size: 20px;
+  padding-left:30px;
+  padding-bottom:5px;
+  padding-top:5px;
+  background-color: #E1EBF5;
+  border: 1 solid #FFFFFF;
+  }
+  
+  div.child_menu
+  {
+  color:#000000; 
+  font-family: "黑体"; 
+  font-weight: bold; 
+  font-size: 20px;
+
+  padding-left:20px;
+  background-color: #E1EBF5;
+  border: 1 solid #FFFFFF;
+  }
+  
+  
+  div.table_head 
+  {
+  font-size:1.1em;
+  text-align:center;
+  padding-top:5px;
+  padding-bottom:4px;
+  background-color:#2285CE;
+  color:#ffffff;
+	
+
+  }
+  
+  div.table_container0
+  {
+   float:left;	
+   margin:0 auto;
+   width:30%;   
+   over-flow:hidden;
+   padding-top:30px;
+   min-width:300px;
+  }
+  
+  div.table_container1
+  {
+   float:left;	
+   margin:0 auto;
+   width:44%;   
+   over-flow:hidden;
+   padding-top:30px;
+   min-width:500px;
+  
+  }
+  
+   div.table_container2
+  {
+   float:left;	
+   margin:0 auto;
+   width:70%;   
+   over-flow:hidden;
+   background-color:#F8F8F8;
+   padding-top:30px;
+   min-width:900px;
+   
+   
+  }
+  
+  div.blank_btw_table
+  {
+  width:5%;
+  height:40px;
+  background-color:#F8F8F8;
+  float:left;
+  padding-top:30px;
+  
+  }
+  
+  a {
+  padding-left:20px;
+  text-decoration:none;
+  color:#000000; 
+  }
+body{
+  min-width:1366px;	
+}
+ 

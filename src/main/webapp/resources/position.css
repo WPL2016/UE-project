@@ -1,0 +1,143 @@
+#position
+  {
+  font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+  border-collapse:collapse;
+  }
+
+#position td.heli1  
+  {
+  vertical-align:top;
+  border:0px;
+  background-color:#F8F8F8;
+  width:170px;
+  height:40px;
+  
+  }
+#position td.heli2  
+  {
+  vertical-align:top;
+  border:0px;
+  background-color:#F8F8F8;
+  height:40px;
+  
+  }
+#position td.col 
+  {
+  vertical-align:top;
+  border:0px;
+  background-color:#F8F8F8;
+  width:100px;
+  
+  }
+
+#position td.table
+{
+background-color:#F8F8F8;	
+vertical-align:top;
+
+}
+#position td.time
+{
+  vertical-align:center;
+  text-align:center; 
+  border:0px;
+  background-color:#E1EBF5;
+  width:170px;
+  height:40px;
+}
+
+#position td.equip
+{
+  vertical-align:top;
+  text-align:center; 
+  border:0px;
+  background-color:#F8F8F8;
+  width:170px;
+  height:50px;
+}
+
+#position div.time
+{
+	border:1px #98bf21;
+	background-color:#00B0F0;
+	font-family: "黑体";
+	font-weight: bold;
+	font-size: 18px;
+	color:#FFFFFF;
+	height:40px;
+    padding-top:20px;
+    margin:0 auto;
+   
+}
+#position div.total{
+	margin:0 auto;
+	display:table;
+	text-align:center; 
+
+}
+
+
+#position div.equip{
+    font-family: "黑体";
+	font-weight: bold;
+	font-size: 18px;
+	color: #FFFFFF;
+	background-color:#00B0F0;
+	height:30px; 
+	margin:0 auto;
+	float:left;
+	border:1px solid #000;
+	margin-right:-2px;
+	padding-top:10px;
+	padding-left:10px;
+	padding-right:10px;
+}
+#position div.menu{
+    font-family: "黑体";
+	font-weight: bold;
+	font-size:20px;
+	color: #FFFFFF;
+	height:40px; 
+	border:1px #2285CE; 
+	background-color:#2285CE;
+	padding-left:25px;
+	padding-top:20px;
+}
+#position div.charts{
+height:100%; 
+width:600px;
+float:left;	
+}
+#position div.blank{
+	width:40px;
+	height:300px;
+	float:left;	
+    background-color:#F8F8F8;
+}#position div.top{
+    font-family: "黑体";
+	font-weight: bold;
+	font-size:1.1em;
+	color: #FFFFFF;
+	height:40px; 
+	border:1px #2285CE; 
+	background-color:#2285CE;
+    text-align:center; 
+	padding-top:20px;
+	width:96%;
+}
+#position div.top1{
+	font-family: "黑体";
+	font-weight: bold;
+	font-size:1.1em;
+	color: #FFFFFF;
+	height:40px; 
+	border:1px #2285CE; 
+	background-color:#2285CE;
+    text-align:center; 
+	padding-top:20px;
+	
+}
+
+
+
+   

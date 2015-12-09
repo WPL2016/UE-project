@@ -1,0 +1,133 @@
+html,body{width:100%;height:100%;overflow:hidden;white-space:nowrap;}
+html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,p,blockquote,th,td{margin:0;padding:0;}
+*{font-family:Verdana, Geneva, sans-serif;font-size:12px;}
+.table {
+  width: 100%;
+}
+
+.tableColumn {
+  overflow: hidden;
+  background: transparent url(tb-bg.gif) repeat-x;
+}
+.tableColumn table {
+  width:100%;
+}
+.tableContent table {
+  width:100%;
+}
+
+.tableColumn table tr td {
+  overflow: hidden;
+  text-align: center;
+  font-weight: bold;
+  border-left: solid 1px #EEEEEE;
+  border-right: solid 1px #D0D0D0;
+  line-height: 26px;
+  white-space:nowrap;
+}
+
+.tableColumn .sortable {
+  cursor: pointer;
+}
+
+.tableColumn .sortable div {
+  position: absolute;
+  width: 7px;
+  height: 9px;
+  z-index: 1;
+}
+
+.tableColumn table tr td input {
+  width: 13px;
+  height: 13px;
+}
+
+.tableContent {
+  overflow: auto;
+  overflow-x: hidden;
+  background-color: #FFFFFF;
+}
+
+.tableContent table {
+  /*table-layout: fixed;*/
+}
+
+.tableContent table tr.row {}
+.tableContent table tr.high td {
+  background-color: #EFF4FA;
+}
+
+.tableContent table tr.group {
+  background-color: #F5F5F5;
+  font-weight: bold;
+  color: #3764B0;
+}
+
+.tableContent table tr.group td {
+  border-bottom: solid 2px #99BBE8;
+  border-left:none;
+  border-right:none;
+}
+
+.tableContent table tr.group td input {
+  vertical-align: text-bottom;
+  *vertical-align: middle;
+}
+
+.tableContent table tr td {
+  border-bottom: solid 1px #EAEAEA;
+  border-left: solid 1px #FFFFFF;
+  border-right: solid 1px #FFFFFF;
+  line-height: 22px;
+  height: 22px;
+  white-space:nowrap;
+  overflow: hidden;
+}
+
+.tableContent table tr td span {
+  display: block;
+  margin-left: 5px;
+  margin-right: 5px;
+  white-space:nowrap;
+  overflow: hidden;
+}
+
+.tableContent table tr td.box {
+  text-align: center;
+  background: transparent url(checkbox-row-bg.gif) repeat-y 0px 0;
+  border-left: solid 1px #F9F9F9 !important;
+}
+
+.tableContent table tr td.box input {
+  width: 13px;
+  height: 13px;
+}
+
+.tableContent table tr td.box .more-operate {
+  cursor: pointer;
+}
+
+.tableContent table tr td.num {
+  background-color: #BED1ED;
+  border-left: solid 1px #BED1ED !important;
+  border-right: solid 1px #D0D0D0 !important;
+  text-align: center;
+}
+
+.tableContent .selected td {
+  border-bottom: dotted 1px #A3BAE9;
+  border-left: solid 1px #E7EDF8;
+  border-right: solid 1px #E7EDF8;
+  background-color: #B7C9E9 !important;
+}
+
+.tableContent .selected td.num {
+  background-color: #447DCB !important;
+  border-left: solid 1px #85AADD;
+  font-weight: bold;
+  color: #FFFFFF;
+}
+.tableContent table tr td.cantDelete {
+  background: transparent url(checkbox-red-row-bg.gif) repeat-y 0 0;
+  border-left: solid 1px #FF9999 !important;
+}
