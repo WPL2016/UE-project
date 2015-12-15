@@ -269,7 +269,10 @@ $(function () {
     <script src="resources/echarts/build/dist/echarts.js"></script>
     
     <script type="text/javascript">
-        // 路径配置
+        
+    
+    
+    // 路径配置
         require.config({
             paths: {
                 echarts: 'resources/echarts/build/dist'
@@ -335,32 +338,34 @@ $(function () {
                         }
                     ],
                     series : [
-                        {
-                            "name":"第一周",
-                            "type":"bar",
-                            "data":[95, 20, 40, 10, 10, 20]
-                        },
-                        {
-                            "name":"第二周",
-                            "type":"bar",
-                            "data":[56, 76, 34, 65, 76, 75]
-                        },
-                        {
-                            "name":"第三周",
-                            "type":"bar",
-                            "data":[24, 78, 90, 89, 76,78]
-                        },
-                        {
-                            "name":"第四周",
-                            "type":"bar",
-                            "data":[67, 98, 87, 32, 12, 43]
-                        }
                         
-                    ]
+                       // {
+                       //     "name":"第一周",
+                       //     "type":"bar",
+                       //     "data":[95, 20, 40, 10, 10, 20]
+                       // },
+                       // {
+                       //     "name":"第二周",
+                       //     "type":"bar",
+                       //     "data":[56, 76, 34, 65, 76, 75]
+                       // },
+                       // {
+                       //     "name":"第三周",
+                       //     "type":"bar",
+                       //     "data":[24, 78, 90, 89, 76,78]
+                       // },
+                       // {
+                       //   "name":"第四周",
+                       //     "type":"bar",
+                       //    "data":[67, 98, 87, 32, 12, 43]
+                       // }
+                        
+                       ]
                 };
-        
-                // 为echarts对象加载数据 
-                myChart.setOption(option); 
+             
+              
+         
+               
             }
             
             function drawPie(ec) {
@@ -412,8 +417,7 @@ $(function () {
 
             }
                
-           
-       
+      
        
         
         

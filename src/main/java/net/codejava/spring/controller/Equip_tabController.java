@@ -5,66 +5,64 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import net.codejava.spring.dao.daointerface.ContactDAO;
 import net.codejava.spring.dao.daointerface.Equip_tabDAO;
 import net.codejava.spring.model.Equip_tab;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
-
-/**
- * This controller routes accesses to the application to the appropriate
- * hanlder methods. 
-
- *
- */
-@Controller
+@Controller 
 public class Equip_tabController {
-
 	@Autowired
 	private Equip_tabDAO equip_tabDAO;
+	@Autowired
+	private ContactDAO contactDAO;
 	
-	@RequestMapping(value="/equip_tab")
-	public ModelAndView listEquip_tab(ModelAndView model) throws IOException{
-		List<Equip_tab> listEquip_tab = equip_tabDAO.list();
-		model.addObject("listEquip_tab", listEquip_tab);
+	@RequestMapping(value="/toequip_tab")
+	public ModelAndView toequiptab(){
+		ModelAndView model=new ModelAndView();
 		model.setViewName("equip_tab");
-		
+		int recordnum=contactDAO.countRecord();
+		model.addObject("recordnum",recordnum+"");
 		return model;
 	}
 	
-	@RequestMapping(value = "equip_tab/newEquip_tab", method = RequestMethod.GET)
-	public ModelAndView newEquip_tab(ModelAndView model) {
-		Equip_tab newEquip_tab = new Equip_tab();
-		model.addObject("equip_tab", newEquip_tab);
-		model.setViewName("Equip_tabForm");
-		return model;
+	@RequestMapping(value="/showequip_tab")  	
+	public @ResponseBody List<Equip_tab> allContact() throws IOException{
+		List<Equip_tab> allEquip_tab = equip_tabDAO.list();		
+		return allEquip_tab;
 	}
 	
-	@RequestMapping(value = "equip_tab/saveEquip_tab", method = RequestMethod.POST)
-	public ModelAndView saveContact(@ModelAttribute Equip_tab equip_tab) {
-		equip_tabDAO.saveOrUpdate(equip_tab);
-		return new ModelAndView("redirect:/equip_tab");
-	}
+	@RequestMapping(value="/editequip_tab")  	
+	public @ResponseBody String editJqGrid(HttpServletRequest request) {
+		Equip_tab equip_tab=new Equip_tab();
+		String oper=request.getParameter("oper");
+		String equip_num=request.getParameter("equip_num");
 	
-	@RequestMapping(value = "equip_tab/deleteEquip_tab", method = RequestMethod.GET)
-	public ModelAndView deleteEquip_tab(HttpServletRequest request) {
-		String equip_num = request.getParameter("equip_num");
-		equip_tabDAO.delete(equip_num);
-		return new ModelAndView("redirect:/equip_tab");
-	}
-	
-	@RequestMapping(value = "equip_tab/editEquip_tab", method = RequestMethod.GET)
-	public ModelAndView editEquip_tab(HttpServletRequest request) {
-		String equip_num = request.getParameter("equip_num");
 		System.out.println(equip_num);
-		Equip_tab equip_tab = equip_tabDAO.get(equip_num);
-		ModelAndView model = new ModelAndView("Equip_tabForm");
-		model.addObject("equip_tab", equip_tab);
 		
-		return model;
+		equip_tab.setEquip_num(request.getParameter("equip_num"));
+		equip_tab.setEquip_name(request.getParameter("equip_name"));
+		equip_tab.setEquip_sup(request.getParameter("equip_sup"));
+		equip_tab.setEquip_recorder_num(request.getParameter("equip_recorder_num"));
+		equip_tab.setEqu_equip_num(request.getParameter("equ_equip_num"));
+	    //System.out.println("½øÈë0");
+		if(oper != null && oper.equals("edit")){
+		equip_tabDAO.saveOrUpdate(equip_tab);   
+		}
+		else if(oper != null && oper.equals("add")){
+			equip_tabDAO.saveOrUpdate(equip_tab);
+		}
+		else if(oper != null && oper.equals("del")){
+			 equip_tabDAO.delete(equip_num);	
+		}
+	
+		return "done";
 	}
+	
+	
 }

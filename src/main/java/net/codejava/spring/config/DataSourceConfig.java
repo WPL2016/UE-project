@@ -46,9 +46,11 @@ public class DataSourceConfig {
 	public DataSource getDataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-		dataSource.setUrl("jdbc:sqlserver://192.168.21.117:1433;databaseName=UEequipmanageDB");
+		//dataSource.setUrl("jdbc:sqlserver://192.168.21.117:1433;databaseName=UEequipmanageDB");
+		//dataSource.setUrl("jdbc:sqlserver://localhost:1433;databaseName=xukai");
+	      dataSource.setUrl("jdbc:sqlserver://localhost:1433;databaseName=UEequipmanageDB");
 		dataSource.setUsername("sa");
-		dataSource.setPassword("123");
+		dataSource.setPassword("88862187");
 		
 		return dataSource;
 	}

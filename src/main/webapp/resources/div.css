@@ -166,8 +166,8 @@ div.menu
   color:#000000; 
   font-family: "ºÚÌå"; 
   font-weight: bold; 
-  font-size: 20px;
-  padding-left:30px;
+  font-size: 18px;
+  padding-left:10px;
   padding-bottom:5px;
   padding-top:5px;
   background-color: #E1EBF5;
@@ -179,9 +179,9 @@ div.menu
   color:#000000; 
   font-family: "ºÚÌå"; 
   font-weight: bold; 
-  font-size: 20px;
+  font-size: 18px;
 
-  padding-left:20px;
+  padding-left:10px;
   background-color: #E1EBF5;
   border: 1 solid #FFFFFF;
   }
