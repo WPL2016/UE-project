@@ -397,7 +397,7 @@ setInterval(autoAjax,3000);
             ],
             DrawCharts
             );
-            function DrawCharts(ec) {
+            function DrawCharts(ec) {	
             drawBar(ec);
             drawPie(ec);
              }
@@ -405,6 +405,18 @@ setInterval(autoAjax,3000);
             function drawBar(ec) {
                 // 基于准备好的dom，初始化echarts图表
                 var myChart = ec.init(document.getElementById('linechart')); 
+                var value=[];
+                var label=[];
+                alert(""+value[0]);
+             
+              
+                
+                //value[0]=1;
+                //value[1]=45;
+                //value[2]=66;
+                //value[3]=99;
+                //value[4]=32;
+                //value[5]=90;
                 
                 var option = {                		                  		
                 title : {
@@ -418,7 +430,7 @@ setInterval(autoAjax,3000);
                     legend: {
                     	orient : 'vertical',
                         x : 'left',
-                        data:['第一周','第二周','第三周','第四周']
+                        data:[],
                     },
                     toolbox: {
                         show : true,
@@ -434,7 +446,7 @@ setInterval(autoAjax,3000);
                     xAxis : [
                         {
                             type : 'category',
-                            data : ["星期一","星期二","星期三","星期四","星期五","星期六"]
+                            data : [],
                         }
                     ],
                     yAxis : [
@@ -442,39 +454,52 @@ setInterval(autoAjax,3000);
                             type : 'value'
                         }
                     ],
-                    series : [
-                        {
-                            "name":"第一周",
-                            "type":"bar",
-                            "data":[95, 20, 40, 10, 10, 20]
-                        },
-                        {
-                            "name":"第二周",
-                            "type":"bar",
-                            "data":[56, 76, 34, 65, 76, 75]
-                        },
-                        {
-                            "name":"第三周",
-                            "type":"bar",
-                            "data":[24, 78, 90, 89, 76,78]
-                        },
-                        {
-                            "name":"第四周",
-                            "type":"bar",
-                            "data":[67, 98, 87, 32, 12, 43]
-                        }
-                        
-                    ]
+                    //要显示几个系列酒填几个大括号，不然不会显示多出的系列
+                    series : [{},{}]
                 };
-        
+             
+                  
+                //myChart.setOption(option); 
                 // 为echarts对象加载数据 
-                myChart.setOption(option); 
+                //  alert("00"+value[0]);
+                   $.ajax({  
+    	       data:"name="+$("#name").val(),  
+    	       //用GET方法当请求参数不变时会因部分浏览器缓存而无法更新
+    	       type:"POST", 
+    	       async : false,
+    	       dataType: "json",  
+    	       url:"echartlinedata",  
+    	       error:function(data){  
+    	            //alert("出错了！！:"+data[0].name);  
+    	        },  
+    	        success:function(data){     	          
+    	           
+    	          
+    	        	  
+    	        	   option.legend.data = data.legend;  
+    	        	   option.xAxis[0].data = data.category;  
+    	        	   $.each(data.series,function(idx,obj){
+    	        	   alert(idx);
+    	        	   option.series[idx].data = data.series[idx].data; 
+    	        	   option.series[idx].name = data.series[idx].name; 
+    	        	   option.series[idx].type = data.series[idx].type; 
+    	        	
+    	        	   })
+    	          
+    	          
+    	        }
+          }) 
+               // alert("11"+value[0]);
+               // option.series[0]['data']=value;
+               // option.series[0]['name']="第一周";
+               // option.series[0]['type']="bar";
+                 myChart.setOption(option); 
             }
             
             function drawPie(ec) {
                 // 基于准备好的dom，初始化echarts图表
-            	  myChart = ec.init(document.getElementById('piechart')); 
-            	  
+            	  myChart = ec.init(document.getElementById('piechart'));            	
+            	 
             	  var option = {
             	      title : {
             	        text: 'FPY不合格原因统计',
@@ -488,7 +513,7 @@ setInterval(autoAjax,3000);
             	      legend: {
             	        orient : 'vertical',
             	        x : 'left',
-            	        data:['工人操作失误','机器故障','原材料不合格','运输损坏']
+            	        data:[],
             	      },
             	      toolbox: {
             	        show : true,
@@ -503,25 +528,53 @@ setInterval(autoAjax,3000);
             	      series : [
             	        {
             	          name:'饼图实例',
-            	          type:'pie',
+            	          //type:'pie',
             	          radius : '55%',
             	          center: ['50%', '60%'],
-            	          data:[
-            	                {value:100, name:'工人操作失误'},
-            	                {value:200, name:'机器故障'},
-            	                {value:300, name:'原材料不合格'},
-            	                {value:400, name:'运输损坏'}]
+            	          data:[]
             	        }
             	      ]
             	    };
-            	  
+            	  //myChart.setOption(option);
+                  $.ajax({  
+           	       data:"name="+$("#name").val(),  
+           	       //用GET方法当请求参数不变时会因部分浏览器缓存而无法更新
+           	       type:"POST", 
+           	       async : false,
+           	       dataType: "json",  
+           	       url:"echartpiedata",  
+           	       error:function(data){  
+           	            //alert("出错了！！:"+data[0].name);  
+           	        },  
+           	        success:function(data){     	          
+           	            var label=[];
+               	        var value=[];
+               	        var values=[];
+           	             alert(option.series[0].data);
+           	        	  alert(data);
+           	        	 //  option.legend.data = data.legend;  
+                            	        
+                   	 label=data.series[0].label;
+                   	 value=data.series[0].data;
+                   	 $.each(label,function(idx,obj){
+                   	values[idx]={'name':label[idx],'value':value[idx]}; 
+                   	 })
+                	
+                	 alert(values);	                   
+           	        	
+                   	 	
+                   	 option.legend.data = data.legend;	
+           	         option.series[0].data = values;
+           	      option.series[0].type = data.series[0].type;
+                    alert(option.series[0].data); 
+           	        }
+                 }) 
             	  // 为echarts对象加载数据 
-            	  myChart.setOption(option); 
+            	 myChart.setOption(option); 
 
             }
                
-           
-       
+    
        
         
         

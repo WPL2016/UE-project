@@ -87,8 +87,7 @@ $(function () {
         		        datatype : "json",
         		        colNames : [  'rowid','Date', 'Client', 'Amount', 'Tax', 'Notes' ],
         		        colModel : [ 
-        		                    //name是后台的名称，与返回的数据对应，index是前台的名称，与前端的操作对应，两者可以不同
-        		                    //index必须有一个值为id的列，那样在delete时只会传递选中的行的id列的值，所以一般选主键的index为id
+        		                
         		                    
         		                 
         		                     {name : 'id',index : 'id',width : 90,sortable : true,editable: false},       	                  

@@ -61,7 +61,8 @@ $(function () {
              <div>
                   <table id="jqGrid"></table>
                   <div id="jqGridPager"></div>
-                 
+                  <button id="deldata">批量修改（如审核等）</button>
+                  <button id="deldata1">批量修改1（如审核等）</button>
             </div>
        </div>
     </div>
@@ -85,7 +86,7 @@ $(function () {
         		        colNames : [  '设备编号', '辅助设备', '辅助设备编号', '设备记录编号', '设备名称' ],
         		        colModel : [ 
         		                     
-        		                     {name : 'equip_num',index :'equip_num',width : 90,sortable :true,editable : true,key:true},
+        		                     {name : 'equip_num',index :'equip_num',width : 90,sortable :true,editable :true,key:true},
         		                     {name : 'equ_equip_num',index : 'equ_equip_num',width : 80,align : "right",sortable : true,editable : true}, 
         		                     {name : 'equip_sup',index : 'equip_sup',width : 90,sortable : true,editable : true},        		                 
         		                     {name : 'equip_recorder_num',index : 'equip_recorder_num',width : 80,align : "right",sortable : true,editable : true},        		  
@@ -102,13 +103,15 @@ $(function () {
         		        loadError: function(xhr,status,error){  
         		        	 alert(status + " loading data of " + $(this).attr("id") + " : " + error );    },  
 
-        		        caption:"原材料使用状况", height : 80,align : "center",
-        		        id:'equip_num',
+        		        caption:"原材料使用状况", //height : 80,align : "center",
+        		       
+        		        prmNames: { id: "equip_num" },
         		        rowNum : 20,
         		        height:300,
         		        rowList : [ 20, 40, 60 ],
         		        pager : '#jqGridPager',
-        		        sortname : 'name',
+        		        multiselect:true,
+        		        sortname :'name',
         		        viewrecords : true,
         		        sortorder : "desc",
         		        autowidth:true,
@@ -140,7 +143,17 @@ $(function () {
         	                    	if(result=="Not Found") message="无法找到资源，请联系系统管理员！";
         	                    	else if(result=="Forbidden") message="您没有权限执行此操作，请联系上级或申请相应权限！";
         	                        alert(message);
-        	                    }
+        	                    },
+        	                //执行完毕进行提示和更新数据  
+        	                afterComplete:function(xhr){      
+        	                	         //提示操作结果
+        	                	                  
+        	                             alert("操作成功！");
+        	                             //更新表格数据，因为之前设置了loadonce，所以datatype自动转换成了local，所以一般的reload都无效，
+        	                             //必须先改回原先的数据数据类型
+        	                             $("#jqGrid").setGridParam({datatype:'json', page:1}).trigger('reloadGrid');
+
+        	                              },
         	                },
         	                // options for the Add Dialog
         	                {
@@ -171,17 +184,30 @@ $(function () {
         	                },
         	                // options for the Delete Dailog
         	                {
-        	                    errorTextFormat: function (data) {
+       
+        	                	
+        	                	errorTextFormat: function (data) {
         	                    	var message="服务器异常，请稍后尝试！";
         	                    	var result=data.statusText;
         	                    	if(result=="Not Found") message="无法找到资源，请联系系统管理员！";
         	                    	else if(result=="Forbidden") message="您没有权限执行此操作，请联系上级或申请相应权限！";
         	                        alert(message);
-        	                    }
+        	                    },
+        	                //执行完毕进行提示和更新数据  
+        	                afterComplete:function(xhr){      
+        	                	         //提示操作结果
+        	                	                  
+        	                             alert("操作成功！");
+        	                             //更新表格数据，因为之前设置了loadonce，所以datatype自动转换成了local，所以一般的reload都无效，
+        	                             //必须先改回原先的数据数据类型
+        	                             $("#jqGrid").setGridParam({datatype:'json', page:1}).trigger('reloadGrid');
+
+        	                              },
         	                },
         	                // options for the Search Dailog
         	                {
         	                	multipleSearch:true,
+        	                	multipleGroup:true,
         	                	recreateForm: true,
         	                	closeAfterSearch: true,       	            
         	                	errorTextFormat: function (data) {
@@ -189,9 +215,101 @@ $(function () {
         	                    }
         	                 }
         	                );
-        		   
+        		 
+        		   //批量修改
+        		   $("#deldata").click(function() {
+        			   //alert("Please Select Row to delete!1")
+        			   var gr = $("#jqGrid").jqGrid('getGridParam', 'selarrrow');
+        			   
+        			    if ((gr != null)&&(gr !="")){
+        			    
+        			   // alert("Please Select Row to delete!2"+gr)
+        			  
+        			    //自定义ajax访问实现批量操作
+        	            $.ajax({  
+	                             data:{"equip_num":""+gr,"column_value":99,"oper":"batch_edit","column_name":"equip_sup"},  
+	                             //用GET方法当请求参数不变时会因部分浏览器缓存而无法更新
+	                             type:"POST",  
+	                             dataType:'json',  
+	                             url:"editequip_tab",  
+	                             error:function(data){  
+	                             //alert("出错了！！:"+data[0].name);  
+	                                                 },  
+	                             success:function(data){  
+	                            	
+	                            	 // alert("成功！！:"+data[0].name);
+	                             }
+	                                                   
+	                             })   
+        			    //var selected=gr.split(',');
+        			    	//   $.each(selected,function(i,n){
+      						//	 if(selected[i]!="")  $("#jqGrid").jqGrid('delGridRow',n,{}); 
+      					//$.each(gr,function(key,val){
+      					//    $("#jqGrid").jqGrid('setRowData',gr[0],{equip_sup:"79800"}).trigger('reloadGrid');   
+      					//    $("#jqGrid").jqGrid('saveRow', gr[0], {equip_sup:"79800"} );  
+      					//	 $("#jqGrid").jqGrid('saveRow', gr[0],{equip_sup:"79800"});
+        		           
+        			    //	            })
+        			       alert("操作成功！"); 
+        			      $("#jqGrid").setGridParam({datatype:'json', page:1}).trigger('reloadGrid');
+        			    	            }
+        			
+        			    	
+        			    else {alert("请选择要删除的行")}
+        			    
+        			    
+        			   
+        			  });
+        		 
+        		   //批量修改
+        		   $("#deldata1").click(function() {
+        			   //alert("Please Select Row to delete!1")
+        			   var gr = $("#jqGrid").jqGrid('getGridParam', 'selarrrow');
+        			   
+        			    if ((gr != null)&&(gr !="")){
+        			    	
+        			   // alert("Please Select Row to delete!2"+gr)
+        			  
+        			    //自定义ajax访问实现批量操作
+        	            $.ajax({  
+	                             data:{"equip_num":""+gr,"column_value":1,"oper":"batch_edit","column_name":"equip_sup"},  
+	                             //用GET方法当请求参数不变时会因部分浏览器缓存而无法更新
+	                             type:"POST",  
+	                             dataType:'json',  
+	                             url:"editequip_tab",  
+	                             error:function(data){  
+	                             //alert("出错了！！:"+data[0].name);  
+	                                                 },  
+	                             success:function(data){  
+	                            	 
+	                            
+	                            	 //alert("成功！！:"+data[0].name);
+	                            	
+	                             }
+	                                                   
+	                             })   
+        			    //var selected=gr.split(',');
+        			    	//   $.each(selected,function(i,n){
+      						//	 if(selected[i]!="")  $("#jqGrid").jqGrid('delGridRow',n,{}); 
+      					//$.each(gr,function(key,val){
+      					//    $("#jqGrid").jqGrid('setRowData',gr[0],{equip_sup:"79800"}).trigger('reloadGrid');   
+      					//    $("#jqGrid").jqGrid('saveRow', gr[0], {equip_sup:"79800"} );  
+      					//	 $("#jqGrid").jqGrid('saveRow', gr[0],{equip_sup:"79800"});
+        		           
+        			    //	            })
+        			      alert("操作成功！"); 
+        			      $("#jqGrid").setGridParam({datatype:'json', page:1}).trigger('reloadGrid');
+        			 
+        			    	            }
+        			    else {alert("请选择要编辑的行")}
+        			   
+        			    
+        			   
+        			    
+        			  });
         		 
         		          		          		 
+        			    	
         		}
         		
         		

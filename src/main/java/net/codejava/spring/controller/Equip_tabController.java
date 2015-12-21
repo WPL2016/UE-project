@@ -42,14 +42,22 @@ public class Equip_tabController {
 		Equip_tab equip_tab=new Equip_tab();
 		String oper=request.getParameter("oper");
 		String equip_num=request.getParameter("equip_num");
-	
-		System.out.println(equip_num);
+		
+		
 		
 		equip_tab.setEquip_num(request.getParameter("equip_num"));
 		equip_tab.setEquip_name(request.getParameter("equip_name"));
 		equip_tab.setEquip_sup(request.getParameter("equip_sup"));
-		equip_tab.setEquip_recorder_num(request.getParameter("equip_recorder_num"));
+		equip_tab.setEquip_recorder_num(request.getUserPrincipal().getName());
 		equip_tab.setEqu_equip_num(request.getParameter("equ_equip_num"));
+		
+		System.out.println("oper:"+oper);
+		System.out.println("equip_num:"+equip_num);
+		System.out.println("equip_name:"+request.getParameter("equip_name"));
+		System.out.println("equip_sup:"+request.getParameter("equip_sup"));
+		System.out.println("equ_equip_num:"+request.getParameter("equ_equip_num"));
+		
+		 
 	    //System.out.println("½øÈë0");
 		if(oper != null && oper.equals("edit")){
 		equip_tabDAO.saveOrUpdate(equip_tab);   
@@ -58,9 +66,24 @@ public class Equip_tabController {
 			equip_tabDAO.saveOrUpdate(equip_tab);
 		}
 		else if(oper != null && oper.equals("del")){
-			 equip_tabDAO.delete(equip_num);	
+			String[] ids=equip_num.split(",");
+			for(int i=0;i<ids.length;i++)
+			      equip_tabDAO.delete(ids[i]);	
 		}
-	
+		else if(oper != null && oper.equals("batch_edit")){
+			String[] ids=equip_num.split(",");
+			String column_name=request.getParameter("column_name");
+			System.out.println("column_name:"+column_name);
+			String column_value=request.getParameter("column_value");
+			System.out.println("column_value:"+column_value);
+			for(int i=0;i<ids.length;i++)
+				  {equip_tab.setEquip_num(ids[i]);
+			      System.out.println("update:"+ids[i]);
+			  
+			      System.out.println("update:"+equip_tab.getEquip_num());
+			      equip_tabDAO.updateSingleColumn(equip_tab,column_name,column_value);	
+				  }
+		     }
 		return "done";
 	}
 	
