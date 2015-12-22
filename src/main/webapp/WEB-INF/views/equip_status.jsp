@@ -407,17 +407,7 @@ setInterval(autoAjax,3000);
                 var myChart = ec.init(document.getElementById('linechart')); 
                 var value=[];
                 var label=[];
-                alert(""+value[0]);
-             
-              
-                
-                //value[0]=1;
-                //value[1]=45;
-                //value[2]=66;
-                //value[3]=99;
-                //value[4]=32;
-                //value[5]=90;
-                
+               //设置图的选项
                 var option = {                		                  		
                 title : {
                   	        text: '上月FPY统计值(%)',
@@ -427,11 +417,13 @@ setInterval(autoAjax,3000);
                     tooltip: {
                         show: true
                     },
+                    //数据注释（对应数据分组的小按钮）
                     legend: {
                     	orient : 'vertical',
                         x : 'left',
                         data:[],
                     },
+                    //图标右上方的工具箱设置
                     toolbox: {
                         show : true,
                         feature : {
@@ -443,28 +435,29 @@ setInterval(autoAjax,3000);
                         }
                     },
                     calculable:true,
+                    //x轴
                     xAxis : [
                         {
                             type : 'category',
                             data : [],
                         }
                     ],
+                    //y轴
                     yAxis : [
                         {
                             type : 'value'
                         }
                     ],
-                    //要显示几个系列酒填几个大括号，不然不会显示多出的系列
+                    //数据系列，要显示几个系列酒填几个大括号，不然不会显示多出的系列
                     series : [{},{}]
                 };
              
                   
-                //myChart.setOption(option); 
-                // 为echarts对象加载数据 
-                //  alert("00"+value[0]);
-                   $.ajax({  
-    	       data:"name="+$("#name").val(),  
-    	       //用GET方法当请求参数不变时会因部分浏览器缓存而无法更新
+               
+                //通过ajax从后台获取图表所需数据               
+               $.ajax({  
+    	       //data:"name="+$("#name").val(),  
+    	       //用GET方法当请求参数不变时会因部分浏览器缓存而无法更新，所以有POST
     	       type:"POST", 
     	       async : false,
     	       dataType: "json",  
@@ -473,13 +466,10 @@ setInterval(autoAjax,3000);
     	            //alert("出错了！！:"+data[0].name);  
     	        },  
     	        success:function(data){     	          
-    	           
-    	          
-    	        	  
     	        	   option.legend.data = data.legend;  
     	        	   option.xAxis[0].data = data.category;  
     	        	   $.each(data.series,function(idx,obj){
-    	        	   alert(idx);
+    	        	   //赋值操作
     	        	   option.series[idx].data = data.series[idx].data; 
     	        	   option.series[idx].name = data.series[idx].name; 
     	        	   option.series[idx].type = data.series[idx].type; 
@@ -489,10 +479,7 @@ setInterval(autoAjax,3000);
     	          
     	        }
           }) 
-               // alert("11"+value[0]);
-               // option.series[0]['data']=value;
-               // option.series[0]['name']="第一周";
-               // option.series[0]['type']="bar";
+               //加载选项
                  myChart.setOption(option); 
             }
             
@@ -550,8 +537,8 @@ setInterval(autoAjax,3000);
            	            var label=[];
                	        var value=[];
                	        var values=[];
-           	             alert(option.series[0].data);
-           	        	  alert(data);
+           	            
+           	        	  
            	        	 //  option.legend.data = data.legend;  
                             	        
                    	 label=data.series[0].label;
@@ -560,13 +547,13 @@ setInterval(autoAjax,3000);
                    	values[idx]={'name':label[idx],'value':value[idx]}; 
                    	 })
                 	
-                	 alert(values);	                   
+                	               
            	        	
                    	 	
                    	 option.legend.data = data.legend;	
            	         option.series[0].data = values;
-           	      option.series[0].type = data.series[0].type;
-                    alert(option.series[0].data); 
+           	         option.series[0].type = data.series[0].type;
+                   
            	        }
                  }) 
             	  // 为echarts对象加载数据 
