@@ -4,13 +4,13 @@ import java.util.List;
 
 //Echarts的series类 
 public class Series {
-
+        //序列的名称
 	    private String name;  
-	     
+	    //序列的类型 
 	    private String type;  
-	      
+	    //序列的值  
 	    private List<Integer> data;//这里要用int 不能用String 不然前台显示不正常（特别是在做数学运算的时候）  
-	    
+	    //序列数据分组的标签，只用于饼图
 	    private List<String> label; 
 	   
 	    public Series(){}

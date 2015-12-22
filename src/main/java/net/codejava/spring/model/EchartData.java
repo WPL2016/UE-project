@@ -7,7 +7,7 @@ public class EchartData {
 
 	    private List<String> legend = new ArrayList<String>();//数据分组  
 	    private List<String> category = new ArrayList<String>();//横坐标  
-	    private List<Series> series = new ArrayList<Series>();//纵坐标  
+	    private List<Series> series = new ArrayList<Series>();//纵坐标 ，具体定义见Series.java 
 	       
 	    public EchartData(){}  
 	    public EchartData(List<String> legendList, List<String> categoryList, List<Series> seriesList) {  
