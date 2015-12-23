@@ -56,10 +56,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                                .antMatchers("*.js").permitAll()
                                //重复的规则取或，ADMIN和USER都可以请求“/toadmin”
 			                   .antMatchers("/toadmin").hasRole("ADMIN")
-			                   .antMatchers("/toadmin").hasRole("USER")
+			                   //.antMatchers("/toadmin").hasRole("USER")
 			                   //冲突的规则上面的先起作用，比如editjqgrid的请求都符合如下两个拦截规则，但是两个规则有冲突，因此位于上面的规则起效，ADMIN可以访问而USER不能，
 			                   //如果换下顺序则只能由USER来访问
-			                   .antMatchers("/editjqgrid").hasRole("ADMIN")
+			                   .antMatchers("/editequip_tab").hasRole("ADMIN")
 			                   .antMatchers("/**").hasRole("USER")			                  		
 				               .anyRequest().authenticated()
 				.and()				

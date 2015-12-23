@@ -82,14 +82,14 @@ $(function () {
         		      {
         		        url : "showequip_tab",
         		        datatype : "json",
-        		        colNames : [  '设备编号', '辅助设备', '辅助设备编号', '设备记录编号', '设备名称' ],
+        		        colNames : [  '设备编号', '设备名称','设备供应商', '设备记录人编号', '辅助设备编号' ],
         		        colModel : [ 
         		                     
-        		                     {name : 'equip_num',index :'equip_num',width : 90,sortable :true,editable : true,key:true},
-        		                     {name : 'equ_equip_num',index : 'equ_equip_num',width : 80,align : "right",sortable : true,editable : true}, 
-        		                     {name : 'equip_sup',index : 'equip_sup',width : 90,sortable : true,editable : true},        		                 
-        		                     {name : 'equip_recorder_num',index : 'equip_recorder_num',width : 80,align : "right",sortable : true,editable : true},        		  
-        		                     {name : 'equip_name',index : 'equip_name',width : 150,sortable : true,editable : true}, 
+        		                     {name : 'equip_num',index :'equip_num',width : 90,align : "center",sortable :true,editable : true,key:true},
+        		                     {name : 'equip_name',index : 'equip_name',width : 150,align : "center",sortable : true,editable : true}, 
+        		                     {name : 'equip_sup',index : 'equip_sup',width : 90,align : "center",sortable : true,editable : true},        		                 
+        		                     {name : 'equip_recorder_num',index : 'equip_recorder_num',width : 80,align : "center",sortable : true,editable : false},        		  
+        		                     {name : 'equ_equip_num',index : 'equ_equip_num',width : 80,align : "center",sortable : true,editable : true}, 
         		                     
         		                   ],
         		                   
@@ -102,8 +102,8 @@ $(function () {
         		        loadError: function(xhr,status,error){  
         		        	 alert(status + " loading data of " + $(this).attr("id") + " : " + error );    },  
 
-        		        caption:"原材料使用状况", height : 80,align : "center",
-        		        id:'equip_num',
+        		        caption:"", height : 80,align : "center",
+        		        prmNames: { id: "equip_num" },
         		        rowNum : 20,
         		        height:300,
         		        rowList : [ 20, 40, 60 ],
@@ -140,7 +140,18 @@ $(function () {
         	                    	if(result=="Not Found") message="无法找到资源，请联系系统管理员！";
         	                    	else if(result=="Forbidden") message="您没有权限执行此操作，请联系上级或申请相应权限！";
         	                        alert(message);
-        	                    }
+        	                    },
+        	                
+        	                afterComplete:function(xhr){      
+	                	         //提示操作结果
+	                	                  
+	                             alert("操作成功！");
+	                             //更新表格数据，因为之前设置了loadonce，所以datatype自动转换成了local，所以一般的reload都无效，
+	                             //必须先改回原先的数据数据类型
+	                             $("#jqGrid").setGridParam({datatype:'json', page:1}).trigger('reloadGrid');
+
+	                         },
+	                         
         	                },
         	                // options for the Add Dialog
         	                {
@@ -177,7 +188,18 @@ $(function () {
         	                    	if(result=="Not Found") message="无法找到资源，请联系系统管理员！";
         	                    	else if(result=="Forbidden") message="您没有权限执行此操作，请联系上级或申请相应权限！";
         	                        alert(message);
-        	                    }
+        	                    },
+        	               
+        	                afterComplete:function(xhr){      
+	                	         //提示操作结果
+	                	                  
+	                             alert("操作成功！");
+	                             //更新表格数据，因为之前设置了loadonce，所以datatype自动转换成了local，所以一般的reload都无效，
+	                             //必须先改回原先的数据数据类型
+	                             $("#jqGrid").setGridParam({datatype:'json', page:1}).trigger('reloadGrid');
+
+	                              },
+
         	                },
         	                // options for the Search Dailog
         	                {
