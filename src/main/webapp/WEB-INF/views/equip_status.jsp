@@ -33,56 +33,191 @@ $(function () {
 	});	
    });
    
-$(document).ready(autoAjax);
+$(document).ready(operStateAjax);
+$(document).ready(operStateTimeAjax);
+$(document).ready(dynamStateAjax);
+$(document).ready(preSetStateAjax);
+setInterval(operStateAjax,13000);
+setInterval(operStateTimeAjax,13000);
+setInterval(dynamStateAjax,13000);
+setInterval(preSetStateAjax,13000);
 
-setInterval(autoAjax,3000);
 
- function autoAjax(){
-	   $.ajax({  
-	       data:"name="+$("#name").val(),  
+ function operStateAjax(){
+	  $.ajax({  
+     	 data:"name="+$("#name").val(),  
 	       //用GET方法当请求参数不变时会因部分浏览器缓存而无法更新
 	       type:"POST",  
-	       dataType: 'json',  
-	        url:"autoajax",  
+	       dataType:'json',  
+	        url:"showequip_oper_stat_tab", 
+	        async:true,
+	        error:function(data){  
+	            //alert("出错了！！:"+data[0].name);  
+	        },  
+	        success:function(data){  
+	        	//alert("这是提示！！:"+data[0].name);  
+	        	var records=0;
+	        	var alertreason;
+	        	var alerttime;
+	        	var a =document.createElement('link');
+                a.type='text/css';
+                a.rel='stylesheet';
+           
+                document.head.appendChild(a);
+	           var htmlstr="<table id='customers'><tr><td class='title' colspan='4'>压铸机运行状态</td></tr><tr>"+
+	           "<td>当前状态</td><td colspan='3' class='value'>"+data[0].stat_name+"</td></tr><tr>"+
+	           "</tr><tr><td>最新状态转变点</td></tr><tr>"
+	           $.each(data,function(idx,obj){
+	        	   
+	        	   if(obj.stat_reason==null) {
+	        		 htmlstr=htmlstr+"<td>"+obj.stat_name+"</td><td class='value'>"+obj.stat_time+"</td>";
+	        		 records++;
+	        		 if ((records%2==0)&&(obj.stat_num!=null))  htmlstr=htmlstr+"</tr><tr>";}
+	        	 else {alertreason=obj.stat_reason;
+	        	       alerttime=obj.stat_time;
+	        	      }
+	        	  
+	    
+	           })
+	          // var htmlstr="</table>"
+	          // htmlstr=htmlstr+data.msg;
+	         
+	          if(records%2!=0){ htmlstr=htmlstr+"<td>报警时刻</td><td class='value'>"+alerttime+"</td></tr>";}
+	          else {htmlstr=htmlstr+"</tr><tr><td>报警时刻</td><td class='value'>"+alerttime+"</td></tr>";} 
+	          htmlstr=htmlstr+"<tr><td>报警原因</td><td colspan='4' class='reason'>"+alertreason+"</td></tr></table>";
+	           $("#cloneTr0").html(htmlstr);
+	                        
+	                               
+	    }  
+     })
+ }
+ 
+ function operStateTimeAjax(){
+	  $.ajax({  
+    	 //data:"name="+$("#name").val(),  
+	       //用GET方法当请求参数不变时会因部分浏览器缓存而无法更新
+	       type:"POST",  
+	       dataType:'json',  
+	        url:"todayequip_oper_stat_tab", 
+	        async:true,
 	        error:function(data){  
 	            alert("出错了！！:"+data[0].name);  
 	        },  
 	        success:function(data){  
-	          // var string[] htmlstr[9];
-	           var htmlstr0=data[0].name;
-	           //+"</td><td></td><td>"+data[0].address+"</td><td>"+obj.telephone+"</td><td>"
+	        	//alert("这是提示！！:"+data.totalalerttime);  
 	        	
-	           var htmlstr1=data[0].email;
-	           var htmlstr2=data[0].telephone;
-	           var htmlstr3=data[0].address;
-	           var htmlstr4=data[0].address;
-	           var htmlstr5=data[0].address;
-	           var htmlstr6=data[0].name;
-	           var htmlstr7=data[0].email;
-	           var htmlstr8=data[0].reason;
-	           var htmlstr9="";
-	           if(data[0].id%2==0){
-	           htmlstr9=htmlstr9+"<table><tr align='center'><td bgcolor='red' width='40px' height='20px'></td></tr></table>";
-	                              }
-	            else{
-	            htmlstr9=htmlstr9+"<table><tr align='center'><td bgcolor='green' width='40px' height='20px'></td></tr></table>";
-	            }
+	        	
+	           var a =document.createElement('link');
+               a.type='text/css';
+               a.rel='stylesheet';
+          
+               document.head.appendChild(a);
+	           var htmlstr="";
+	           htmlstr=htmlstr+"<table id='customers'>"+
+	           "<tr><td>今日累计停机时间</td><td class='value'>"+data.totalstoptime+"</td><td>今日累计开机时间</td><td class='value'>"+data.totalstarttime+"</td></tr>"+
+	           "<tr><td>今日累计待机时间</td><td class='value'>"+data.totalwaittime+"</td><td>今日累计报警时间</td><td class='value'>"+data.totalalerttime+"</td></tr>";
+	           htmlstr=htmlstr+"</table>";
+	           $("#cloneTr1").html(htmlstr);
+	                        
+	                               
+	    }  
+    })
+}
+ 
+ 
+ function dynamStateAjax(){
+	  $.ajax({  
+    	 //data:"name="+$("#name").val(),  
+	       //用GET方法当请求参数不变时会因部分浏览器缓存而无法更新
+	       type:"POST",  
+	       dataType:'json',  
+	        url:"showequip_oper_stat_tab", 
+	        async:true,
+	        error:function(data){  
+	            //alert("出错了！！:"+data[0].name);  
+	        },  
+	        success:function(data){  
+	        	//alert("这是提示！！:"+data[0].name);  
+	        	var records=0;
+	        	var alertreason;
+	        	var alerttime;
+	        	var a =document.createElement('link');
+               a.type='text/css';
+               a.rel='stylesheet';
+          
+               document.head.appendChild(a);
+	           var htmlstr="<table id='customers'><tr><td class='title' colspan='4'>压铸机动态参数</td></tr><tr>"
+	           $.each(data,function(idx,obj){
+	        	   
+	        	   if(obj.stat_reason==null) {
+	        		 htmlstr=htmlstr+"<td>"+obj.stat_name+"</td><td class='value'>"+obj.stat_time+"</td>";
+	        		 records++;
+	        		 if ((records%2==0)&&(obj.stat_num!=null))  htmlstr=htmlstr+"</tr><tr>";}
+	        	 else {alertreason=obj.stat_reason;
+	        	       alerttime=obj.stat_time;
+	        	      }
+	        	  
+	    
+	           })
 	          // var htmlstr="</table>"
 	          // htmlstr=htmlstr+data.msg;
-	           //htmlstr=htmlstr+"</table>";
-	           $("#cloneTr0").html(htmlstr0);
-	           $("#cloneTr1").html(htmlstr1);
-	           $("#cloneTr2").html(htmlstr2);
-	           $("#cloneTr3").html(htmlstr3);
-	           $("#cloneTr4").html(htmlstr4);
-	           $("#cloneTr5").html(htmlstr5);	        
-	           $("#cloneTr6").html(htmlstr6);
-	           $("#cloneTr7").html(htmlstr7);
-	           $("#cloneTr8").html(htmlstr8);
-	           $("#cloneTr9").html(htmlstr9);      
+	         
+	          if(records%2!=0){ htmlstr=htmlstr+"<td>报警时刻</td><td class='value'>"+alerttime+"</td></tr>";}
+	          else {htmlstr=htmlstr+"</tr><tr><td>报警时刻</td><td class='value'>"+alerttime+"</td></tr>";} 
+	          htmlstr=htmlstr+"<tr><td>报警原因</td><td colspan='4' class='reason'>"+alertreason+"</td></tr></table>";
+	           $("#cloneTr2").html(htmlstr);
+	                        
+	                               
 	    }  
-	        })   
- }
+    })
+}
+ 
+ function preSetStateAjax(){
+	  $.ajax({  
+   	 //data:"name="+$("#name").val(),  
+	       //用GET方法当请求参数不变时会因部分浏览器缓存而无法更新
+	       type:"POST",  
+	       dataType:'json',  
+	        url:"showequip_oper_stat_tab", 
+	        async:true,
+	        error:function(data){  
+	            //alert("出错了！！:"+data[0].name);  
+	        },  
+	        success:function(data){  
+	        	//alert("这是提示！！:"+data[0].name);  
+	        	var records=0;
+	        	var alertreason;
+	        	var alerttime;
+	        	var a =document.createElement('link');
+              a.type='text/css';
+              a.rel='stylesheet';
+         
+              document.head.appendChild(a);
+	           var htmlstr="<table id='customers'><tr><td class='title' colspan='4'>压铸机预设参数</td></tr><tr>"
+	           $.each(data,function(idx,obj){
+	        	   
+	        	   if(obj.stat_reason==null) {
+	        		 htmlstr=htmlstr+"<td>"+obj.stat_name+"</td><td class='value'>"+obj.stat_time+"</td>";
+	        		 records++;
+	        		 if ((records%2==0)&&(obj.stat_num!=null))  htmlstr=htmlstr+"</tr><tr>";}
+	        	 else {alertreason=obj.stat_reason;
+	        	       alerttime=obj.stat_time;
+	        	      }
+	        	  
+	    
+	           })
+	          // var htmlstr="</table>"
+	          // htmlstr=htmlstr+data.msg;
+	         
+	          if(records%2!=0){ htmlstr=htmlstr+"<td>报警时刻</td><td class='value'>"+alerttime+"</td></tr>";}
+	          else {htmlstr=htmlstr+"</tr><tr><td>报警时刻</td><td class='value'>"+alerttime+"</td></tr>";} 
+	          htmlstr=htmlstr+"<tr><td>报警原因</td><td colspan='4' class='reason'>"+alertreason+"</td></tr></table>";
+	           $("#cloneTr3").html(htmlstr);
+	                        
+	                               
+	    }  
+   })
+}
 </script>  
 </head>
 <body>
@@ -104,58 +239,17 @@ setInterval(autoAjax,3000);
         <div class="table_container0">    
          <div class="table_head">压铸机设备状态</div> 
          <table id="customers">         
-          <tr class="alt" ><td colspan=4 class="title">压铸机开机状态</td></tr>
-          <tr class="alt"><td>压铸机开机时刻</td><td id="cloneTr0" class="value" ></td>
-                          <td>压铸机关机时刻</td><td id="cloneTr1" class="value" ></td>
-          </tr>
-          <tr class="alt"><td>压铸机开机时间</td><td id="cloneTr2" class="value"></td>
-                          <td>压铸机机时间</td><td id="cloneTr3" class="value"></td>
-          </tr>
-          <tr class="alt"><td>压铸机停机时间</td><td id="cloneTr4" class="value"></td>
-                          <td>压铸机报警时间</td><td id="cloneTr5" class="value"></td>
-          </tr>
-          <tr class="alt"><td>压铸机报警开始时刻</td><td id="cloneTr6" class="value"></td>
-                          <td>压铸机报警结束时刻</td><td id="cloneTr7" class="value"></td>
-          </tr>
-          <tr class="alt"><td>压铸机报警原因</td><td id="cloneTr8" class="value" colspan=3></td>
-         </tr>
-         <tr>
-                          <td class="lightbg">熔炉报警状态</td>
-                          <td class="lightbg"></td>
-                          <td class="lightbg" align="center"><div id="cloneTr9"></div></td>
-                          <td class="lightbg"></td>
-        </tr>
-       </table>
-       
-      
-        <table id="customers">
-  
-          <tr class="alt" ><td colspan=4 class="title">压铸机开机状态</td></tr>
-          <tr class="alt"><td>压铸机开机时刻</td><td class="value" ></td>
-                          <td>压铸机关机时刻</td><td  class="value" ></td>
-          </tr>
-          <tr class="alt"><td>压铸机开机时间</td><td class="value"></td>
-                          <td>压铸机机时间</td><td  class="value"></td>
-          </tr>
-          <tr class="alt"><td>压铸机停机时间</td><td  class="value"></td>
-                          <td>压铸机报警时间</td><td  class="value"></td>
-          </tr>
-          <tr class="alt"><td>压铸机报警开始时刻</td><td  class="value"></td>
-                          <td>压铸机报警结束时刻</td><td  class="value"></td>
-          </tr>
-          <tr class="alt"><td>压铸机报警开始时刻</td><td  class="value"></td>
-                          <td>压铸机报警结束时刻</td><td  class="value"></td>
-          </tr>
-          <tr class="alt"><td>压铸机报警开始时刻</td><td  class="value"></td>
-                          <td>压铸机报警结束时刻</td><td  class="value"></td>
-          </tr>
-          <tr class="alt"><td>压铸机报警开始时刻</td><td  class="value"></td>
-                          <td>压铸机报警结束时刻</td><td  class="value"></td>
-          </tr>
-          <tr class="alt"><td>压铸机报警开始时刻</td><td  class="value"></td>
-                          <td>压铸机报警结束时刻</td><td  class="value"></td>
-          </tr>
-       </table>
+         <tr><td><div id="cloneTr0"></div></td></tr>
+         </table>
+         <table id="customers">         
+         <tr><td><div id="cloneTr1"></div></td></tr>
+         </table>
+          <table id="customers">         
+         <tr><td><div id="cloneTr2"></div></td></tr>
+         </table>
+     <table id="customers">         
+         <tr><td><div id="cloneTr3"></div></td></tr>
+         </table>
        <%@ include file="./component/1-2 input.jsp"%> 
        </div>
       <div class="blank_btw_table"></div>

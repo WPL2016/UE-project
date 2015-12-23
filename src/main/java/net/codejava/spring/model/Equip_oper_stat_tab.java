@@ -1,19 +1,21 @@
 package net.codejava.spring.model;
 
-import java.text.SimpleDateFormat;
+import java.sql.Timestamp;
+import java.util.Date;
+
 
 public class Equip_oper_stat_tab {
 	private String stat_reason;
 	private String stat_recorder_num;
 	private String stat_name;
-	private SimpleDateFormat stat_time = new SimpleDateFormat("yyyy-M-dd HH:mm:ss");
+	private Date stat_time = new Date();
 	private String stat_num;
 	private String equip_num;
 
 	public Equip_oper_stat_tab() {
 	}
 
-	public Equip_oper_stat_tab(String stat_reason, String stat_recorder_num,String stat_name,SimpleDateFormat stat_time,String stat_num, String equip_num) {
+	public Equip_oper_stat_tab(String stat_reason, String stat_recorder_num,String stat_name,Date stat_time,String stat_num, String equip_num) {
 		this.stat_reason = stat_reason;
 		this.stat_recorder_num = stat_recorder_num;
 		this.stat_name = stat_name;
@@ -47,11 +49,11 @@ public class Equip_oper_stat_tab {
 	}
 	
 
-	public SimpleDateFormat getStat_time() {
+	public Date getStat_time() {
 		return stat_time;
 	}
 
-	public void setStat_time(SimpleDateFormat stat_time) {
+	public void setStat_time(Date stat_time) {
 		this.stat_time = stat_time;
 	}
 	

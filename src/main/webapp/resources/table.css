@@ -12,6 +12,7 @@
   font-weight:bold;
   border:0px solid #98bf21;
   padding:3px 7px 2px 7px;
+  background-color:#E1EBF5;
   }
 
 #customers th 
@@ -50,7 +51,13 @@
 	 background-color:#E1EBF5;
 
 	}
+#customers td.reason {
+	 color:#FF6600;
+	 font-family:"ºÚÌå";	
+	 font-size:18px;  
+	 text-align:left;
 
+	}
 
 
 
