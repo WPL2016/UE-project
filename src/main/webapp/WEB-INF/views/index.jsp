@@ -26,7 +26,7 @@
 <a href="toschedule">生产进度管理</a><br/>
 <a href="toinput2">电能消耗</a><br/>
 <a href="togas">天然气消耗</a><br/>
-<a href="equip_tab">设备</a><br/>
+<a href="toequip_tab">设备表</a><br/>
 <!--  <a href="tohello">3号输入</a><br/>-->
 </body>
 </html>
