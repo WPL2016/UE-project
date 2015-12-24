@@ -19,6 +19,7 @@ import net.codejava.spring.dao.daoimpl.Mater_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.Mou_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.Mou_use_inf_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.Produce_plan_tabDAOImpl;
+import net.codejava.spring.dao.daoimpl.Produce_prog_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.Product_qual_asse_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.Product_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.User_tabDAOImpl;
@@ -35,6 +36,7 @@ import net.codejava.spring.dao.daointerface.Mater_tabDAO;
 import net.codejava.spring.dao.daointerface.Mou_tabDAO;
 import net.codejava.spring.dao.daointerface.Mou_use_inf_tabDAO;
 import net.codejava.spring.dao.daointerface.Produce_plan_tabDAO;
+import net.codejava.spring.dao.daointerface.Produce_prog_tabDAO;
 import net.codejava.spring.dao.daointerface.Product_qual_asse_tabDAO;
 import net.codejava.spring.dao.daointerface.Product_tabDAO;
 import net.codejava.spring.dao.daointerface.User_tabDAO;
@@ -48,7 +50,7 @@ public class DataSourceConfig {
 		dataSource.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 		//dataSource.setUrl("jdbc:sqlserver://192.168.21.117:1433;databaseName=UEequipmanageDB");
 		//dataSource.setUrl("jdbc:sqlserver://localhost:1433;databaseName=xukai");
-	      dataSource.setUrl("jdbc:sqlserver://localhost:1433;databaseName=UEequipmanageDB");
+	    dataSource.setUrl("jdbc:sqlserver://localhost:1433;databaseName=UEequipmanageDB");
 		dataSource.setUsername("sa");
 		dataSource.setPassword("SWJYYSD1");
 		
@@ -117,6 +119,10 @@ public class DataSourceConfig {
 	@Bean
 	public Product_qual_asse_tabDAO getProduct_qual_asse_tabDAO() {
 		return new Product_qual_asse_tabDAOImpl(getDataSource());
+	}
+	@Bean
+	public Produce_prog_tabDAO getProduce_prog_tabDAO() {
+		return new Produce_prog_tabDAOImpl(getDataSource());
 	}
 	
 }

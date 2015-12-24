@@ -102,5 +102,15 @@ public class Equip_tabDAOImpl implements Equip_tabDAO {
 			
 		});
 	}
+	
+	@Override
+	public int updateSingleColumn(Equip_tab equip_tab,String column,String value){
+		   System.out.println("updating...");
+	        String sql = "UPDATE equip_tab SET "+column+" = '"+value+"' WHERE equip_num='"+equip_tab.getEquip_num()+"'";
+	        //int i=jdbcTemplate.update(sql,column,value,equip_tab.getEquip_num());	
+	        int i=jdbcTemplate.update(sql);
+	        System.out.println("updating result:"+i);
+	        return i;
+	}
 
 }

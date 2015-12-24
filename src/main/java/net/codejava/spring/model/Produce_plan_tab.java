@@ -1,18 +1,18 @@
 package net.codejava.spring.model;
 
-import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Produce_plan_tab {
 	private String produce_plan_recorder_num;
 	private String produce_plan_num;
-	private SimpleDateFormat plan_time = new SimpleDateFormat("yyyy-M-dd");
+	private Date plan_time;
 	private int plan_quan;
 	private int plan_work_time;
 	private String equip_product_relat_num;
 	public Produce_plan_tab() {
 	}
 
-	public Produce_plan_tab(String produce_plan_recorder_num, String produce_plan_num, SimpleDateFormat plan_time,int plan_quan,int plan_work_time, String equip_product_relat_num) {
+	public Produce_plan_tab(String produce_plan_recorder_num, String produce_plan_num, Date plan_time,int plan_quan,int plan_work_time, String equip_product_relat_num) {
 		this.produce_plan_recorder_num = produce_plan_recorder_num;
 		this.produce_plan_num = produce_plan_num;
 		this.plan_time = plan_time;	
@@ -38,11 +38,11 @@ public class Produce_plan_tab {
 		this.produce_plan_num = produce_plan_num;
 	}
 
-	public SimpleDateFormat getPlan_time() {
+	public Date getPlan_time() {
 		return plan_time;
 	}
 
-	public void setPlan_time(SimpleDateFormat plan_time) {
+	public void setPlan_time(Date plan_time) {
 		this.plan_time = plan_time;
 	}
 	

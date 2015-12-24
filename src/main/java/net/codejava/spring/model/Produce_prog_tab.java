@@ -1,16 +1,18 @@
 package net.codejava.spring.model;
 
-import java.text.SimpleDateFormat;
+
+import java.sql.Timestamp;
+
 
 public class Produce_prog_tab {
 	private String produce_prog_num;
-	private SimpleDateFormat bat_produce_start_time = new SimpleDateFormat("yyyy-M-dd HH:mm:ss");
+	private Timestamp bat_produce_start_time  ;
 	private String equip_product_relat_num;
 
 	public Produce_prog_tab() {
 	}
 
-	public Produce_prog_tab(String produce_prog_num, SimpleDateFormat bat_produce_start_time,String equip_product_relat_num) {
+	public Produce_prog_tab(String produce_prog_num,Timestamp  bat_produce_start_time,String equip_product_relat_num) {
 		this.produce_prog_num = produce_prog_num;
 		this.bat_produce_start_time= bat_produce_start_time;	
 		this.equip_product_relat_num=equip_product_relat_num;
@@ -24,11 +26,11 @@ public class Produce_prog_tab {
 		this.produce_prog_num = produce_prog_num;
 	}
 
-	public SimpleDateFormat getBat_produce_start_time() {
+	public Timestamp  getBat_produce_start_time() {
 		return bat_produce_start_time;
 	}
 
-	public void setBat_produce_start_time(SimpleDateFormat bat_produce_start_time) {
+	public void setBat_produce_start_time(Timestamp  bat_produce_start_time) {
 		this.bat_produce_start_time = bat_produce_start_time;
 	}
 	
