@@ -31,7 +31,7 @@ public class EquipController {
 	@RequestMapping(value="/toecharts")
 	public ModelAndView echartstest(){
 		ModelAndView model=new ModelAndView();
-		model.setViewName("component/1_head");
+		model.setViewName("maintain");
 		int recordnum=contactDAO.countRecord();
 		model.addObject("recordnum",recordnum+"");
 		return model;

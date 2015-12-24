@@ -1,16 +1,16 @@
 package net.codejava.spring.model;
 
 
-public class UsersRoles {
+public class Users_Roles {
 	private int urid;
 	private String uid;
 	private String rid;
 
 
-	public UsersRoles() {
+	public Users_Roles() {
 	}
 
-	public UsersRoles(String uid, String rid) {
+	public Users_Roles(String uid, String rid) {
 		this.uid = uid;
 		this.rid = rid;
 

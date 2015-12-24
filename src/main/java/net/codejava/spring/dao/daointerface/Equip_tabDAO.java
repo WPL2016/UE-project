@@ -18,4 +18,6 @@ public interface Equip_tabDAO {
 	public Equip_tab get(String equip_num);
 	
 	public List<Equip_tab> list();
+	
+	public int updateSingleColumn(Equip_tab equip_tab,String column,String value);
 }

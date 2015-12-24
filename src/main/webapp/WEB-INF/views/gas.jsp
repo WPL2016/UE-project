@@ -295,22 +295,29 @@ $(function () {
             function drawBar(ec) {
                 // 基于准备好的dom，初始化echarts图表
                 var myChart = ec.init(document.getElementById('linechart')); 
-                
+
+
+
+                var value=[];
+                var label=[];
+               //设置图的选项
+
                 var option = {                		                  		
                 title : {
-                  	        text: '压铸设备能耗统计图',
+                  	        text: '上月FPY统计值(%)',
                   	        subtext: '折线图（Line Chart）',
-                  	        x:'center',
-                  	       
+                  	        x:'center'
                   	      },	
                     tooltip: {
                         show: true
                     },
+                    //数据注释（对应数据分组的小按钮）
                     legend: {
                     	orient : 'vertical',
                         x : 'left',
-                        data:['第一周','第二周','第三周','第四周']
+                        data:[],
                     },
+                    //图标右上方的工具箱设置
                     toolbox: {
                         show : true,
                         feature : {
@@ -322,54 +329,61 @@ $(function () {
                         }
                     },
                     calculable:true,
-                    zIndex:-1,
+                    //x轴
                     xAxis : [
                         {
                             type : 'category',
-                            data : ["星期一","星期二","星期三","星期四","星期五","星期六"]
+                            data : [],
                         }
                     ],
+                    //y轴
                     yAxis : [
                         {
                             type : 'value'
                         }
                     ],
-                    series : [
-                        {
-                            "name":"第一周",
-                            "type":"bar",
-                            "data":[95, 20, 40, 10, 10, 20]
-                        },
-                        {
-                            "name":"第二周",
-                            "type":"bar",
-                            "data":[56, 76, 34, 65, 76, 75]
-                        },
-                        {
-                            "name":"第三周",
-                            "type":"bar",
-                            "data":[24, 78, 90, 89, 76,78]
-                        },
-                        {
-                            "name":"第四周",
-                            "type":"bar",
-                            "data":[67, 98, 87, 32, 12, 43]
-                        }
-                        
-                    ]
-                };
-        
-                // 为echarts对象加载数据 
-                myChart.setOption(option); 
+
+                    //数据系列，要显示几个系列酒填几个大括号，不然不会显示多出的系列
+                    series : [{},{}],}
+                
+               
+                //通过ajax从后台获取图表所需数据               
+               $.ajax({  
+    	       //data:"name="+$("#name").val(),  
+    	       //用GET方法当请求参数不变时会因部分浏览器缓存而无法更新，所以有POST
+    	       type:"POST", 
+    	       async : false,
+    	       dataType: "json",  
+    	       url:"gaslinedata",  
+    	       error:function(data){  
+    	            //alert("出错了！！:"+data[0].name);  
+    	        },  
+    	        success:function(data){     	          
+    	        	   option.legend.data = data.legend;  
+    	        	   option.xAxis[0].data = data.category;  
+    	        	   $.each(data.series,function(idx,obj){
+    	        	   //赋值操作
+    	        	   option.series[idx].data = data.series[idx].data; 
+    	        	   option.series[idx].name = data.series[idx].name; 
+    	        	   option.series[idx].type = data.series[idx].type; 
+    	        	  alert(data.series[idx].data[0]);
+    	        	   })
+    	          
+    	          
+    	        }
+          }) 
+               //加载选项
+                 myChart.setOption(option); 
+
             }
             
             function drawPie(ec) {
                 // 基于准备好的dom，初始化echarts图表
-            	  myChart = ec.init(document.getElementById('piechart')); 
-            	  
+            	  myChart = ec.init(document.getElementById('piechart'));            	
+            	 
             	  var option = {
             	      title : {
-            	        text: '压住设备能耗扇形统计图',
+            	        text: 'FPY不合格原因统计',
             	        subtext: '饼图（Pie Chart）',
             	        x:'center'
             	      },
@@ -380,7 +394,7 @@ $(function () {
             	      legend: {
             	        orient : 'vertical',
             	        x : 'left',
-            	        data:['工人操作失误','机器故障','原材料不合格','运输损坏']
+            	        data:[],
             	      },
             	      toolbox: {
             	        show : true,
@@ -395,23 +409,55 @@ $(function () {
             	      series : [
             	        {
             	          name:'饼图实例',
-            	          type:'pie',
+            	          //type:'pie',
             	          radius : '55%',
             	          center: ['50%', '60%'],
-            	          data:[
-            	                {value:100, name:'工人操作失误'},
-            	                {value:200, name:'机器故障'},
-            	                {value:300, name:'原材料不合格'},
-            	                {value:400, name:'运输损坏'}]
+            	          data:[]
             	        }
             	      ]
             	    };
+
             	  
+
+            	  //myChart.setOption(option);
+                  $.ajax({  
+           	       data:"name="+$("#name").val(),  
+           	       //用GET方法当请求参数不变时会因部分浏览器缓存而无法更新
+           	       type:"POST", 
+           	       async : false,
+           	       dataType: "json",  
+           	       url:"gaspiedata",  
+           	       error:function(data){  
+           	            alert("出错了！！:"+data[0].name);  
+           	        },  
+           	        success:function(data){     	          
+           	            var label=[];
+               	        var value=[];
+               	        var values=[];
+           	             alert(option.series[0].data);
+           	        	  alert(data);
+           	        	 //  option.legend.data = data.legend;  
+                            	        
+                   	 label=data.series[0].label;
+                   	 value=data.series[0].data;
+                   	 $.each(label,function(idx,obj){
+                   	values[idx]={'name':label[idx],'value':value[idx]}; 
+                   	 })
+                	
+                	 alert(values);	                   
+           	        	
+                   	 	
+                   	 option.legend.data = data.legend;	
+           	         option.series[0].data = values;
+           	      option.series[0].type = data.series[0].type;
+                    alert(option.series[0].data); 
+           	        }
+                 }) 
+
             	  // 为echarts对象加载数据 
-            	  myChart.setOption(option); 
+            	 myChart.setOption(option); 
 
             }
-               
            
        
        

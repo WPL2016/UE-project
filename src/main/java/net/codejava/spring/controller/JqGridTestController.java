@@ -39,6 +39,17 @@ public class JqGridTestController {
 		contact.setName(request.getParameter("name"));
 		contact.setTelephone(request.getParameter("telephone"));
 		contact.setReason(request.getParameter("reason"));
+		
+		System.out.println(contact.getAddress()); 
+		System.out.println(id); 
+		System.out.println(contact.getName()); 
+		System.out.println(contact.getEmail()); 
+		System.out.println(contact.getTelephone()); 
+		System.out.println(contact.getReason()); 
+		
+		
+		
+		
 		 System.out.println("½øÈë0");
 		if(oper != null && oper.equals("edit")){
 		if((id!="")&&(id!=null)){

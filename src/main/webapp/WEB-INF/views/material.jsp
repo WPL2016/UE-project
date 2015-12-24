@@ -37,44 +37,47 @@ $(function () {
 </script>  
 </head>
 <body>
-  
   <!-- 插入头部 -->
+ 
   <%@ include file="./component/1_head.jsp"%> 
   
   <!-- 中间层的总体容器，宽度是100% -->
   <div class="horiz_container">
-       
         <!-- 插入左侧菜单空白 --> 
         <div class="blank_bf_menu"></div>    
-       
         <!-- 插入左侧菜单 --> 
         <div class="menu_container">
         <%@ include file="./component/7_content.jsp"%> 
         </div>
-       
         <!--插入菜单与主体内容之间的空白  -->
         <div class="blank_btw_menu_content"></div>
-       
         <!--内容主体的div,请根据具体内容决定div的样式，table_container0最小，1次之，2最大，也可自行在div.css定义你自己想要的样式，要设置成左浮动以保证div水平排列-->     
-       <div class="table_container2">
-             <div class="table_head">材料使用情况</div>
+        
+        <div class="table_container2">
+             <div class="table_head">默认的搜索和排序（前台），无需任何代码</div>
              <div>
-                  <table id="jqGrid"></table>
-                  <div id="jqGridPager"></div>
-                                  
-                  <table id="jqGrid1"></table>
-                  <div id="jqGridPager1"></div>
-                  
-                  <table id="jqGrid2"></table>
-                  <div id="jqGridPager2"></div>
-            </div>
+                <table id="jqGrid"></table>
+                <div id="jqGridPager"></div>
+             </div>
+              <div class="table_head">自定义的搜索和排序（后台），后台带代码见SearchAndSortController</div>
+                <div>
+                <table id="jqGrid1"></table>
+                <div id="jqGridPager1"></div>
+             </div>
        </div>
-    
+  
+  
+  </div>
+  <!-- 插入底部 -->     
+  <div>
+  <%@ include file="./component/2_foot.jsp"%>
+  </div>  
   <script type="text/javascript"> 
         $(document).ready(function () {
+        	     //前台排序和搜索
         		  pageInit();
+        	     //后台排序和搜索
         		  pageInit1();
-        		  pageInit2();
         		});
         		function pageInit(){
         		  var lastsel;
@@ -84,22 +87,33 @@ $(function () {
         		        datatype : "json",
         		        colNames : [  'rowid','Date', 'Client', 'Amount', 'Tax', 'Notes' ],
         		        colModel : [ 
-        		                    {name : 'id',index : 'id',width : 90,sortable : false,editable : false},
-        		                    {name : 'name',index : 'name',width : 100,sortable : false,editable : true},        		                          		                    
-        		                     {name : 'email',index : 'email',width : 80,align : "right",sortable : false,editable : true}, 
-        		                     {name : 'address',index : 'address',width : 80,align : "right",sortable : false,editable : true},        		  
-        		                     {name : 'reason',index : 'reason',width : 150,sortable : false,editable : true}, 
-        		                     {name : 'telephone',index : 'telephone',width : 90,sortable : false,editable : true}, 
+        		                
+        		                    
+        		                 
+        		                     {name : 'id',index : 'id',width : 90,sortable : true,editable: false},       	                  
+        		                     {name : 'name',index : 'name',width : 100,sortable : true,editable : true, },        		                          		                    
+        		                     {name : 'email',index : 'email',width : 80,align : "right",sortable : true,editable : true}, 
+        		                     {name : 'address',index : 'address',width : 80,align : "right",sortable : true,editable : true},        		  
+        		                     {name : 'reason',index : 'reason',width : 150,sortable : true,editable : true}, 
+        		                     {name : 'telephone',index : 'telephone',width : 90,sortable : true,editable : true}, 
         		                   ],
-        		        caption:"原材料使用状况", height : 80,align : "center",
+        		        //multiselect:true,
+        		 
         		        rowNum : 20,
         		        height:300,
         		        rowList : [ 20, 40, 60 ],
         		        pager : '#jqGridPager',
         		        sortname : 'name',
         		        viewrecords : true,
+        		        //下载数据到本地，可以实现在前端排序、搜索，这种方式好处是这里的排序和搜索都无需后台处理，无需额外代码，而且支持多条件复杂搜索
+        		        //缺点是一次导入所有数据，数据量大时会存在一些问题，此时需要在后台实现搜索，只载入符合条件的数据,此外表格不在自动刷新
+        		        //请根据需要选择养已经完成好的前台查询和排序还是自行实现后台排序和搜索
+        		        loadonce:true,	   
+  
         		        sortorder : "desc",
         		        autowidth:true,
+       		       
+        		        
         		        onSelectRow : function(id) {
         		          if (id && id !== lastsel) {
         		            jQuery('#jqGrid').jqGrid('restoreRow', lastsel);
@@ -113,7 +127,7 @@ $(function () {
         		  
         		   $('#jqGrid').navGrid('#jqGridPager',
         	                // the buttons to appear on the toolbar of the grid
-        	                { edit: true, add: true, del: true, search: false, refresh: false, view: false, position: "left", cloneToTop: false },
+        	                { edit: true, add: true, del: true, search: true, refresh: true, view: false, position: "left", cloneToTop: false },
         	                // options for the Edit Dialog
         	                {
         	                    editCaption: "The Edit Dialog",
@@ -128,21 +142,34 @@ $(function () {
         	                // options for the Add Dialog
         	                {
         	                    closeAfterAdd: true,
-        	                    recreateForm: false,
+        	                    recreateForm: true,
         	                    errorTextFormat: function (data) {
         	                        return 'Error: ' + data.responseText
         	                    }
         	                },
         	                // options for the Delete Dailog
         	                {
-        	                    errorTextFormat: function (data) {
+        	                	recreateForm: true,
+        	                	errorTextFormat: function (data) {
         	                        return 'Error: ' + data.responseText
+        	                    }       	                  
+        	                },
+        	                // options for the Search Dailog
+        	                {
+        	                	multipleSearch:true,
+        	                	recreateForm: true,
+        	                	closeAfterSearch: true,       	            
+        	                	errorTextFormat: function (data) {
+        	                        return '搜索失败，请重新尝试!'+ data.responseText
         	                    }
-        	                });
-        		          		          		 
+        	                 }
+        	               
+        	                );
+        		  
+
+        		  
+        		 
         		}
-        		
-        		
         		function pageInit1(){
           		  var lastsel;
           		  jQuery("#jqGrid1").jqGrid(
@@ -151,22 +178,34 @@ $(function () {
           		        datatype : "json",
           		        colNames : [  'rowid','Date', 'Client', 'Amount', 'Tax', 'Notes' ],
           		        colModel : [ 
-          		                    {name : 'id',index : 'id',width : 90,sortable : false,editable : false},
-          		                    {name : 'name',index : 'name',width : 100,sortable : false,editable : true},        		                          		                    
-          		                     {name : 'email',index : 'email',width : 80,align : "right",sortable : false,editable : true}, 
-          		                     {name : 'address',index : 'address',width : 80,align : "right",sortable : false,editable : true},        		  
-          		                     {name : 'reason',index : 'reason',width : 150,sortable : false,editable : true}, 
-          		                     {name : 'telephone',index : 'telephone',width : 90,sortable : false,editable : true}, 
+          		                    //name是后台的名称，与返回的数据对应，index是前台的名称，与前端的操作对应，两者可以不同
+          		                    //index必须有一个值为id的列，那样在delete时只会传递选中的行的id列的值，所以一般选主键的index为id
+          		                    
+          		                 
+          		                     {name : 'id',index : 'id',width : 90,sortable : true,editable: false},       	                  
+          		                     {name : 'name',index : 'name',width : 100,sortable : true,editable : true, },        		                          		                    
+          		                     {name : 'email',index : 'email',width : 80,align : "right",sortable : true,editable : true}, 
+          		                     {name : 'address',index : 'address',width : 80,align : "right",sortable : true,editable : true},        		  
+          		                     {name : 'reason',index : 'reason',width : 150,sortable : true,editable : true}, 
+          		                     {name : 'telephone',index : 'telephone',width : 90,sortable : true,editable : true}, 
           		                   ],
-          		        caption:"新料使用状况",           
+          		        //multiselect:true,
+          		 
           		        rowNum : 20,
           		        height:300,
           		        rowList : [ 20, 40, 60 ],
           		        pager : '#jqGridPager1',
           		        sortname : 'name',
           		        viewrecords : true,
+          		        //下载数据到本地，可以实现在前端排序、搜索，这种方式好处是这里的排序和搜索都无需后台处理，无需额外代码，而且支持多条件复杂搜索
+          		        //缺点是一次导入所有数据，数据量大时会存在一些问题，此时需要在后台实现搜索，只载入符合条件的数据,此外表格不在自动刷新
+          		        //请根据需要选择养已经完成好的前台查询和排序还是自行实现后台排序和搜索
+          		        //loadonce:false,	   
+    
           		        sortorder : "desc",
           		        autowidth:true,
+         		       
+          		        
           		        onSelectRow : function(id) {
           		          if (id && id !== lastsel) {
           		            jQuery('#jqGrid1').jqGrid('restoreRow', lastsel);
@@ -180,7 +219,7 @@ $(function () {
           		  
           		   $('#jqGrid1').navGrid('#jqGridPager1',
           	                // the buttons to appear on the toolbar of the grid
-          	                { edit: true, add: true, del: true, search: false, refresh: false, view: false, position: "left", cloneToTop: false },
+          	                { edit: true, add: true, del: true, search: true, refresh: true, view: false, position: "left", cloneToTop: false },
           	                // options for the Edit Dialog
           	                {
           	                    editCaption: "The Edit Dialog",
@@ -195,95 +234,37 @@ $(function () {
           	                // options for the Add Dialog
           	                {
           	                    closeAfterAdd: true,
-          	                    recreateForm: false,
+          	                    recreateForm: true,
           	                    errorTextFormat: function (data) {
           	                        return 'Error: ' + data.responseText
           	                    }
           	                },
           	                // options for the Delete Dailog
           	                {
-          	                    errorTextFormat: function (data) {
+          	                	recreateForm: true,
+          	                	errorTextFormat: function (data) {
           	                        return 'Error: ' + data.responseText
+          	                    }       	                  
+          	                },
+          	                // options for the Search Dailog
+          	                {
+          	                	multipleSearch:true,
+          	                	recreateForm: true,
+          	                	closeAfterSearch: true,       	            
+          	                	errorTextFormat: function (data) {
+          	                        return '搜索失败，请重新尝试!'+ data.responseText
           	                    }
-          	                });
-          		          		          		 
-          		}  		
-          		
-          		
-          		function pageInit2(){
-          		  var lastsel;
-          		  jQuery("#jqGrid2").jqGrid(
-          		      {
-          		        url : "showjqgrid",
-          		        datatype : "json",
-          		        colNames : [  'rowid','Date', 'Client', 'Amount', 'Tax', 'Notes' ],
-          		        colModel : [ 
-          		                    {name : 'id',index : 'id',width : 90,sortable : false,editable : false},
-          		                    {name : 'name',index : 'name',width : 100,sortable : false,editable : true},        		                          		                    
-          		                     {name : 'email',index : 'email',width : 80,align : "right",sortable : false,editable : true}, 
-          		                     {name : 'address',index : 'address',width : 80,align : "right",sortable : false,editable : true},        		  
-          		                     {name : 'reason',index : 'reason',width : 150,sortable : false,editable : true}, 
-          		                     {name : 'telephone',index : 'telephone',width : 90,sortable : false,editable : true}, 
-          		                   ],
-          		        caption:"回炉料使用情况", 
-          		        rowNum : 20,
-          		        height:300,
-          		        rowList : [ 20, 40, 60 ],
-          		        pager : '#jqGridPager2',
-          		        sortname : 'name',
-          		        viewrecords : true,
-          		        sortorder : "desc",
-          		        autowidth:true,
-          		        onSelectRow : function(id) {
-          		          if (id && id !== lastsel) {
-          		            jQuery('#jqGrid2').jqGrid('restoreRow', lastsel);
-          		            jQuery('#jqGrid2').jqGrid('editRow', id, true);
-          		            lastsel = id;
-          		          }
-          		        },
-          		        editurl : "editjqgrid",
-          		       
-          		      });
+          	                 }
+          	               
+          	                );
           		  
-          		   $('#jqGrid2').navGrid('#jqGridPager2',
-          	                // the buttons to appear on the toolbar of the grid
-          	                { edit: true, add: true, del: true, search: false, refresh: false, view: false, position: "left", cloneToTop: false },
-          	                // options for the Edit Dialog
-          	                {
-          	                    editCaption: "The Edit Dialog",
-          	                    recreateForm: true,
-          						checkOnUpdate : true,
-          						checkOnSubmit : true,
-          	                    closeAfterEdit: true,
-          	                    errorTextFormat: function (data) {
-          	                        return 'Error: ' + data.responseText
-          	                    }
-          	                },
-          	                // options for the Add Dialog
-          	                {
-          	                    closeAfterAdd: true,
-          	                    recreateForm: false,
-          	                    errorTextFormat: function (data) {
-          	                        return 'Error: ' + data.responseText
-          	                    }
-          	                },
-          	                // options for the Delete Dailog
-          	                {
-          	                    errorTextFormat: function (data) {
-          	                        return 'Error: ' + data.responseText
-          	                    }
-          	                });
-          		          		          		 
-          		}  		
-   </script>
-   
 
-  
-  
-  <!-- 插入底部 -->     
-  <div>
-  <%@ include file="./component/2_foot.jsp"%>
-  </div>  
+          		  
+          		 
+          		}
+        		
+        	
+   </script>
   
 </body>
 </html>

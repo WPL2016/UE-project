@@ -9,6 +9,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import net.codejava.spring.dao.daoimpl.Atype_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.Atype_use_inf_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.ContactDAOImpl;
+import net.codejava.spring.dao.daoimpl.Ener_stat_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.Equip_para_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.Equip_pres_para_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.Equip_product_relat_tabDAOImpl;
@@ -25,6 +26,7 @@ import net.codejava.spring.dao.daoimpl.User_tabDAOImpl;
 import net.codejava.spring.dao.daointerface.Atype_tabDAO;
 import net.codejava.spring.dao.daointerface.Atype_use_inf_tabDAO;
 import net.codejava.spring.dao.daointerface.ContactDAO;
+import net.codejava.spring.dao.daointerface.Ener_stat_tabDAO;
 import net.codejava.spring.dao.daointerface.Equip_para_tabDAO;
 import net.codejava.spring.dao.daointerface.Equip_pres_para_tabDAO;
 import net.codejava.spring.dao.daointerface.Equip_product_relat_tabDAO;
@@ -46,7 +48,9 @@ public class DataSourceConfig {
 	public DataSource getDataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-		dataSource.setUrl("jdbc:sqlserver://192.168.21.117:1433;databaseName=UEequipmanageDB");
+		//dataSource.setUrl("jdbc:sqlserver://192.168.21.117:1433;databaseName=UEequipmanageDB");
+		//dataSource.setUrl("jdbc:sqlserver://localhost:1433;databaseName=xukai");
+	      dataSource.setUrl("jdbc:sqlserver://localhost:1433;databaseName=UEequipmanageDB");
 		dataSource.setUsername("sa");
 		dataSource.setPassword("123");
 		
@@ -115,6 +119,10 @@ public class DataSourceConfig {
 	@Bean
 	public Product_qual_asse_tabDAO getProduct_qual_asse_tabDAO() {
 		return new Product_qual_asse_tabDAOImpl(getDataSource());
+	}
+	@Bean
+	public Ener_stat_tabDAO getEner_stat_tabDAO() {
+		return new Ener_stat_tabDAOImpl(getDataSource());
 	}
 	
 }
