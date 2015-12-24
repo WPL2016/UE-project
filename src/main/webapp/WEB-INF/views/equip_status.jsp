@@ -15,13 +15,24 @@
 <link rel="stylesheet" type="text/css" media="screen" href="resources/jqGrid/themes/cupertino/theme.css" />
 <script src="resources/jqGrid/js/i18n/grid.locale-cn.js" type="text/ecmascript"></script>
 <script src="resources/jqGrid/js/jquery.jqGrid.min.js" type="text/ecmascript"></script>
-<script src="resources/jqGrid/plugins/grid.addons.js" type="text/ecmascript"></script>
+
+<script src="resources/jquery-ui.js"></script>
+<!--重写jqgrid的样式，修改toolbar的高度  -->
+<style>
+.ui-jqgrid .ui-userdata {
+    height: 60px; /* default value in ui.jqgrid.CSS is 21px */
+}
+</style>
+
+
 <!-- 添加csrf标记，防止crsf安全过滤器无法识别ajax访问的crsf_token-->
 <meta http-equiv="Content-Type" content="text/html; charset=utf8">  
 <meta name="_csrf" content="${_csrf.token}"/>
 <!-- default header name is X-CSRF-TOKEN -->
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
 <title>基础模板</title>  
+
+
 
 <script type="text/javascript">  
 <!--ajax访问时发送csrf token，以防止ajax访问被crsf过滤器拦截   -->
@@ -37,15 +48,15 @@ $(document).ready(operStateAjax);
 $(document).ready(operStateTimeAjax);
 $(document).ready(dynamStateAjax);
 $(document).ready(preSetStateAjax);
-setInterval(operStateAjax,13000);
-setInterval(operStateTimeAjax,13000);
-setInterval(dynamStateAjax,13000);
-setInterval(preSetStateAjax,13000);
+setInterval(operStateAjax,1333000);
+setInterval(operStateTimeAjax,1333000);
+setInterval(dynamStateAjax,1333000);
+setInterval(preSetStateAjax,1333000);
 
 
  function operStateAjax(){
 	  $.ajax({  
-     	 data:"name="+$("#name").val(),  
+     	// data:"name="+$("#name").val(),  
 	       //用GET方法当请求参数不变时会因部分浏览器缓存而无法更新
 	       type:"POST",  
 	       dataType:'json',  
@@ -59,6 +70,8 @@ setInterval(preSetStateAjax,13000);
 	        	var records=0;
 	        	var alertreason;
 	        	var alerttime;
+	        	var stopreason;
+	        	var stoptime;
 	        	var a =document.createElement('link');
                 a.type='text/css';
                 a.rel='stylesheet';
@@ -69,21 +82,28 @@ setInterval(preSetStateAjax,13000);
 	           "</tr><tr><td>最新状态转变点</td></tr><tr>"
 	           $.each(data,function(idx,obj){
 	        	   
-	        	   if(obj.stat_reason==null) {
+	        	   if(obj.stat_name=="报警") {
+	        		   //alert("报警了"+obj.stat_name+""+idx+""+obj.stat_time);
+	        		   alertreason=obj.stat_reason;
+        	           alerttime=obj.stat_time;}
+	        	   else{
+	        		  // alert(obj.stat_name+""+idx);
+	        		  //alert(obj.stat_name+""+obj.stat_reason+""+records+""+obj.stat_time+""+data[idx].stat_name);
 	        		 htmlstr=htmlstr+"<td>"+obj.stat_name+"</td><td class='value'>"+obj.stat_time+"</td>";
 	        		 records++;
-	        		 if ((records%2==0)&&(obj.stat_num!=null))  htmlstr=htmlstr+"</tr><tr>";}
-	        	 else {alertreason=obj.stat_reason;
-	        	       alerttime=obj.stat_time;
-	        	      }
+	        		 if(obj.stat_name=="停机") stopreason=obj.stat_reason;
+	        		 if (records%2==0)  htmlstr=htmlstr+"</tr><tr>";}
+	        	 
+	        	    
 	        	  
 	    
 	           })
 	          // var htmlstr="</table>"
 	          // htmlstr=htmlstr+data.msg;
 	         
-	          if(records%2!=0){ htmlstr=htmlstr+"<td>报警时刻</td><td class='value'>"+alerttime+"</td></tr>";}
-	          else {htmlstr=htmlstr+"</tr><tr><td>报警时刻</td><td class='value'>"+alerttime+"</td></tr>";} 
+	          if(records%2!=0){ htmlstr=htmlstr+"<td>报警</td><td class='value'>"+alerttime+"</td></tr>";}
+	          else {htmlstr=htmlstr+"</tr><tr><td>报警</td><td class='value'>"+alerttime+"</td></tr>";} 
+	          htmlstr=htmlstr+"<tr><td>停机原因</td><td colspan='4' class='reason'>"+stopreason+"</td></tr>";
 	          htmlstr=htmlstr+"<tr><td>报警原因</td><td colspan='4' class='reason'>"+alertreason+"</td></tr></table>";
 	           $("#cloneTr0").html(htmlstr);
 	                        
@@ -107,11 +127,11 @@ setInterval(preSetStateAjax,13000);
 	        	//alert("这是提示！！:"+data.totalalerttime);  
 	        	
 	        	
-	           var a =document.createElement('link');
-               a.type='text/css';
-               a.rel='stylesheet';
+	         //  var a =document.createElement('link');
+             //  a.type='text/css';
+             // a.rel='stylesheet';
           
-               document.head.appendChild(a);
+             //  document.head.appendChild(a);
 	           var htmlstr="";
 	           htmlstr=htmlstr+"<table id='customers'>"+
 	           "<tr><td>今日累计停机时间</td><td class='value'>"+data.totalstoptime+"</td><td>今日累计开机时间</td><td class='value'>"+data.totalstarttime+"</td></tr>"+
@@ -131,7 +151,7 @@ setInterval(preSetStateAjax,13000);
 	       //用GET方法当请求参数不变时会因部分浏览器缓存而无法更新
 	       type:"POST",  
 	       dataType:'json',  
-	        url:"showequip_oper_stat_tab", 
+	        url:"showequip_dyn_para_tab", 
 	        async:true,
 	        error:function(data){  
 	            //alert("出错了！！:"+data[0].name);  
@@ -141,30 +161,32 @@ setInterval(preSetStateAjax,13000);
 	        	var records=0;
 	        	var alertreason;
 	        	var alerttime;
-	        	var a =document.createElement('link');
-               a.type='text/css';
-               a.rel='stylesheet';
+	        //	var a =document.createElement('link');
+            //   a.type='text/css';
+             //  a.rel='stylesheet';
           
-               document.head.appendChild(a);
+             //  document.head.appendChild(a);
 	           var htmlstr="<table id='customers'><tr><td class='title' colspan='4'>压铸机动态参数</td></tr><tr>"
-	           $.each(data,function(idx,obj){
-	        	   
-	        	   if(obj.stat_reason==null) {
-	        		 htmlstr=htmlstr+"<td>"+obj.stat_name+"</td><td class='value'>"+obj.stat_time+"</td>";
-	        		 records++;
-	        		 if ((records%2==0)&&(obj.stat_num!=null))  htmlstr=htmlstr+"</tr><tr>";}
-	        	 else {alertreason=obj.stat_reason;
-	        	       alerttime=obj.stat_time;
-	        	      }
-	        	  
-	    
-	           })
+	        	   $.each(data,function(idx,obj){
+		        	   
+		        	  
+		        	   
+		        		  // alert(obj.stat_name+""+idx);
+		        		  //alert(obj.stat_name+""+obj.stat_reason+""+records+""+obj.stat_time+""+data[idx].stat_name);
+		        		 htmlstr=htmlstr+"<td>"+obj.equip_para_tab.para_name+"</td><td class='value'>"+obj.equip_dyn_para_tab.dyn_para_val+"  "+obj.equip_para_tab.para_unit+"</td>";
+		        		 records++;
+		        		
+		        		 if (records%2==0)  htmlstr=htmlstr+"</tr><tr>";
+		        	 
+		        	    
+		        	  
+		    
+		           })
 	          // var htmlstr="</table>"
 	          // htmlstr=htmlstr+data.msg;
 	         
-	          if(records%2!=0){ htmlstr=htmlstr+"<td>报警时刻</td><td class='value'>"+alerttime+"</td></tr>";}
-	          else {htmlstr=htmlstr+"</tr><tr><td>报警时刻</td><td class='value'>"+alerttime+"</td></tr>";} 
-	          htmlstr=htmlstr+"<tr><td>报警原因</td><td colspan='4' class='reason'>"+alertreason+"</td></tr></table>";
+	         
+	          htmlstr=htmlstr+"</tr></table>";
 	           $("#cloneTr2").html(htmlstr);
 	                        
 	                               
@@ -173,45 +195,47 @@ setInterval(preSetStateAjax,13000);
 }
  
  function preSetStateAjax(){
-	  $.ajax({  
-   	 //data:"name="+$("#name").val(),  
+	 $.ajax({  
+    	 //data:"name="+$("#name").val(),  
 	       //用GET方法当请求参数不变时会因部分浏览器缓存而无法更新
 	       type:"POST",  
 	       dataType:'json',  
-	        url:"showequip_oper_stat_tab", 
+	        url:"showequip_pres_para_tab", 
 	        async:true,
 	        error:function(data){  
 	            //alert("出错了！！:"+data[0].name);  
 	        },  
 	        success:function(data){  
 	        	//alert("这是提示！！:"+data[0].name);  
+	        	
 	        	var records=0;
-	        	var alertreason;
-	        	var alerttime;
 	        	var a =document.createElement('link');
-              a.type='text/css';
-              a.rel='stylesheet';
-         
-              document.head.appendChild(a);
-	           var htmlstr="<table id='customers'><tr><td class='title' colspan='4'>压铸机预设参数</td></tr><tr>"
-	           $.each(data,function(idx,obj){
-	        	   
-	        	   if(obj.stat_reason==null) {
-	        		 htmlstr=htmlstr+"<td>"+obj.stat_name+"</td><td class='value'>"+obj.stat_time+"</td>";
-	        		 records++;
-	        		 if ((records%2==0)&&(obj.stat_num!=null))  htmlstr=htmlstr+"</tr><tr>";}
-	        	 else {alertreason=obj.stat_reason;
-	        	       alerttime=obj.stat_time;
-	        	      }
-	        	  
-	    
-	           })
+              // a.type='text/css';
+             //  a.rel='stylesheet';
+          
+              // document.head.appendChild(a);
+	           var htmlstr="<table id='customers'><tr><td class='title' colspan='4'>压铸机动态参数</td></tr><tr>"
+	        	   $.each(data,function(idx,obj){
+		        	   
+	        		   //alert(obj.equip_pres_para_tab.pres_para_val);
+		        	   
+		        		  // alert(obj.stat_name+""+idx);
+		        		  //alert(obj.stat_name+""+obj.stat_reason+""+records+""+obj.stat_time+""+data[idx].stat_name);
+		        		 htmlstr=htmlstr+"<td>"+obj.equip_para_tab.para_name+"</td><td class='value'>"+obj.equip_pres_para_tab.pres_para_val+"  "+obj.equip_para_tab.para_unit+"</td>";
+		        		 records++;
+		        		
+		        		 if (records%2==0)  htmlstr=htmlstr+"</tr><tr>";
+		        	 
+		        	    
+		        	  
+		    
+		           })
 	          // var htmlstr="</table>"
 	          // htmlstr=htmlstr+data.msg;
 	         
-	          if(records%2!=0){ htmlstr=htmlstr+"<td>报警时刻</td><td class='value'>"+alerttime+"</td></tr>";}
-	          else {htmlstr=htmlstr+"</tr><tr><td>报警时刻</td><td class='value'>"+alerttime+"</td></tr>";} 
-	          htmlstr=htmlstr+"<tr><td>报警原因</td><td colspan='4' class='reason'>"+alertreason+"</td></tr></table>";
+	         
+	          htmlstr=htmlstr+"</tr><tr><td class='title' colspan='4'>设备维护保养记录</td></tr></table>";
+	          
 	           $("#cloneTr3").html(htmlstr);
 	                        
 	                               
@@ -250,140 +274,58 @@ setInterval(preSetStateAjax,13000);
      <table id="customers">         
          <tr><td><div id="cloneTr3"></div></td></tr>
          </table>
-       <%@ include file="./component/1-2 input.jsp"%> 
+                  <div>
+                  <table id="jqGrid"></table>
+                  <div id="jqGridPager"></div>
+                  </div>
        </div>
       <div class="blank_btw_table"></div>
      
       <div class="table_container1">
            <div class="table_head">设备OEE分析</div>
+           
            <table width="100%" height="798" border="0" cellpadding="0" cellspacing="0">
+             
                <tr bgcolor="#E1EBF5">
-                   <th height="35" colspan="10" scope="row"><div align="left"><strong><span class="style1"> 设备能耗查询</span></strong></div></th>
-                   <td colspan="2">&nbsp;</td>
-                   <td width="50">&nbsp;</td>
-               </tr>
-               <tr bgcolor="#E1EBF5">
-                  
-                   <th width="87" scope="row"><strong>选择时间段</strong></th>
-                   <th width="92" bgcolor="#FFFFFF" scope="row"><strong>2015-10-10</strong></th>
-                   <th width="27" scope="row"><strong>至</strong></th>
-                   <th width="99" bgcolor="#FFFFFF" scope="row"><strong>2015-12-23</strong></th>
-                   <th width="14" scope="row">&nbsp;</th>
-                   <th width="75" scope="row"><div align="left"><strong>选择设备</strong></div></th>
-                   <th width="113" bgcolor="#FFFFFF" scope="row">
-                      <form action="" method="post" name="form1" class="style2"  >
-                      <div align="center">
-                         <select name="select" style="font-size:20px; width:100px; height:28px;">
-                         </select>
-                      </div>
-                     </form>
-                   </th>
-                   <th width="86" scope="row"><div align="left"><strong>选择产品</strong></div></th>
-                   <th width="113" bgcolor="#FFFFFF" scope="row">
-                      <form action="" method="post" name="form2">
-                          <strong><select name="select2" style="font-size:20px; width:100px; height:28px;"></select></strong>
-                      </form>
-                   </th>
-                   <td width="70"><strong>频率设定</strong></td>
-                   <td width="46">
-                        <form name="form3" method="post" action="">
-                           <select name="select3" style="font-size:20px; width:40px; height:28px;"></select>
-                        </form>
-                   </td>
-                   <td>&nbsp;</td>
-               </tr>
-               <tr bgcolor="#E1EBF5">
-                   <th height="32" scope="row">&nbsp;</th>
-                   <th height="32" colspan="2" scope="row">
-                      <form name="form4" method="post" action="">
-                        <input type="submit" name="Submit" value="查询总能耗值" style="font-size:20px; width:150px; height:30px;">
-                      </form></th>
-                  
-                   <th height="32" colspan="2" scope="row"><div align="left"><span class="style3">总能耗值为</span></div></th>
-                   <th height="32" bgcolor="#FFFFFF" scope="row">&nbsp;</th>
-                   <th height="32" colspan="2" scope="row">
-                      <form name="form5" method="post" action="">
-                         <input type="submit" name="Submit2" value="查询能耗统计表" style="font-size:20px; width:150px; height:30px;">
-                      </form>
-                   </th>
-                   <th height="32" colspan="3" scope="row">
-                      <form name="form6" method="post" action="">
-                         <input type="submit" name="Submit3" value="查询能耗折线图" style="font-size:20px; width:150px; height:30px;">
-                      </form>
-                   </th>
-                   <td>&nbsp;</td>
-               </tr>
-               <tr bgcolor="#E1EBF5">
-                   <th height="18" colspan="10" scope="row">&nbsp;</th>
-                   <td colspan="2">&nbsp;</td>
-                   <td>&nbsp;</td>
-               </tr>
-               <tr bgcolor="#E1EBF5">
-                   <th height="26" colspan="10" scope="row"><span class="style3">压铸能耗设备统计表</span></th>
+                   <th height="26" colspan="10" scope="row"><span class="style3">压铸设备OEE统计表</span></th>
                    <td colspan="2">&nbsp;</td>
                    <td>&nbsp;</td>
                </tr>
                <tr bgcolor="#E1EBF5" align="center"> 
                    <td height="275"  colspan="13" align="center" >
                         <div style="width:80%">
-                            <table id="jqGrid"></table>
-                            <div id="jqGridPager"></div>
+                            <table id="jqGrid1"></table>
+                            <div id="jqGridPager1"></div>
+                            
                         </div>
                     </td>
                    
                </tr>
   <tr bgcolor="#E1EBF5">
-    <th height="25" scope="row">&nbsp;</th>
-    <th height="25" scope="row">&nbsp;</th>
-    <th height="25" scope="row">&nbsp;</th>
-    <th height="25" scope="row">&nbsp;</th>
-    <th height="25" scope="row">&nbsp;</th>
-    <th height="25" scope="row">&nbsp;</th>
-    <th height="25" scope="row">&nbsp;</th>
-    <th height="25" scope="row">&nbsp;</th>
-    <th height="25" colspan="2" scope="row">&lt;&lt;点击查看全部</th>
-    <td colspan="2"><form name="form7" method="post" action="">
-      <input type="submit" name="Submit4" value="导出统计图">
-    </form></td>
-    <td>&nbsp;</td>
+    
   </tr>
-  <tr bgcolor="#E1EBF5">
-    <th height="25" colspan="10" class="style3" scope="row">压铸设备能耗统计图</th>
-    <td colspan="2">&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
+ 
+  
   <tr bgcolor="#E1EBF5">
     <td height="257" colspan="13" align="center">
         <div id="linechart" style="width:80%; height:500px"></div>
         <div id="piechart" style="width:80%; height:500px"></div>
+        
+     
+
+ 
+
+
+        
     </td>
   </tr>
-  <tr bgcolor="#E1EBF5">
-    <th height="32" scope="row">&nbsp;</th>
-    <th height="32" scope="row">&nbsp;</th>
-    <th height="32" scope="row">&nbsp;</th>
-    <th height="32" scope="row">&nbsp;</th>
-    <th height="32" scope="row">&nbsp;</th>
-    <th height="32" scope="row">&nbsp;</th>
-    <th height="32" scope="row">&nbsp;</th>
-    <th height="32" scope="row">&nbsp;</th>
-    <th height="32" colspan="2" scope="row">&lt;&lt;点击查看全部</th>
-    <td colspan="2">
-       <input type="submit" name="Submit42" value="导出统计图">
-    </td>
-    <td>&nbsp;</td>
-  </tr>
-  <tr bgcolor="#E1EBF5">
-    <th height="32" colspan="10" scope="row"><div align="center"></div></th>
-    <td colspan="2">&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
+  
+ 
+  
 </table>                                        
      </div>
         
-       
  
-  
   
   </div>
   <!-- 插入底部 -->     
@@ -391,30 +333,45 @@ setInterval(preSetStateAjax,13000);
   <%@ include file="./component/2_foot.jsp"%>
   </div>  
   
-   <script type="text/javascript"> 
+    <script type="text/javascript"> 
         $(document).ready(function () {
         		  pageInit();
+        		  pageInit1();
+        		  
         		});
         		function pageInit(){
         		  var lastsel;
         		  jQuery("#jqGrid").jqGrid(
         		      {
-        		        url : "autoajax",
+        		        url : "showemaint_reg_tab",
         		        datatype : "json",
-        		        colNames : [ 'Inv No', 'Date', 'Client', 'Amount', 'Tax', 'Notes' ],
+        		        colNames : [  '维修编号', '维修日期', '维修人员', '维修设备', '维修内容' ],
         		        colModel : [ 
-        		                     {name : 'id',index : 'id',width : 55},
-        		                     {name : 'telephone',index : 'invdate',width : 90,sortable : false,editable : true}, 
-        		                     {name : 'name',index : 'name',width : 100,sortable : false,editable : true}, 
-        		                     {name : 'email',index : 'amount',width : 80,align : "right",sortable : false,editable : true}, 
-        		                     {name : 'address',index : 'tax',width : 80,align : "right",sortable : false,editable : true},        		  
-        		                     {name : 'reason',index : 'note',edittype : "select",editoptions : {value : "1:通过;0:待审核;-1:驳回"},width : 150,sortable : false,editable : true} 
+        		                     
+        		                     {name : 'maint_reg_num',index :'maint_reg_num',width:80,sortable :true,editable :false,key:true},
+        		                     {name : 'maint_reg_date',index : 'maint_reg_date',width:100,sortable : true,editable : false,formatter: 'date', formatoptions: { newformat: 'Y/m/d' }, editable: false, searchoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker();}}}, 
+        		                          		                 
+        		                     {name : 'maint_reg_per_num',index : 'maint_reg_per_num',width:80,sortable : true,editable : false},        		  
+        		                     {name : 'maint_reg_obj_num',index : 'maint_reg_obj_num',width:80,sortable : true,editable :false}, 
+        		                     {name : 'maint_reg_cont',index : 'maint_reg_cont',width:320,sortable : true,editable : false}, 
         		                   ],
+        		                   
+        		        //下载数据到本地，可以实现在前端排序、搜索，这种方式好处是这里的排序和搜索都无需后台处理，无需额外代码，而且支持多条件复杂搜索
+        	        	//缺点是一次导入所有数据，数据量大时会存在一些问题，此时需要在后台实现搜索，只载入符合条件的数据,此外表格不自动刷新，需要reload
+        	        	//请根据需要选择养已经完成好的前台查询和排序还是自行实现后台排序和搜索  
+        	        
+        		        loadonce:true,
+        		        //当加载出错时提供错误信息
+        		      
+        		        //caption:"原材料使用状况", //height : 80,align : "center",
+        		       
+        		        prmNames: { id: "maint_reg_num" },
         		        rowNum : 20,
         		        height:300,
         		        rowList : [ 20, 40, 60 ],
         		        pager : '#jqGridPager',
-        		        sortname : 'id',
+        		        //multiselect:true,
+        		        sortname :'name',
         		        viewrecords : true,
         		        sortorder : "desc",
         		        autowidth:true,
@@ -425,45 +382,148 @@ setInterval(preSetStateAjax,13000);
         		            lastsel = id;
         		          }
         		        },
-        		        editurl : "contact/saveContact",
+        		        editurl : "editequip_tab",
         		       
         		      });
         		  
         		   $('#jqGrid').navGrid('#jqGridPager',
-        	                // the buttons to appear on the toolbar of the grid
-        	                { edit: true, add: true, del: true, search: false, refresh: false, view: false, position: "left", cloneToTop: false },
-        	                // options for the Edit Dialog
-        	                {
-        	                    editCaption: "The Edit Dialog",
-        	                    recreateForm: true,
-        						checkOnUpdate : true,
-        						checkOnSubmit : true,
-        	                    closeAfterEdit: true,
-        	                    errorTextFormat: function (data) {
-        	                        return 'Error: ' + data.responseText
-        	                    }
-        	                },
-        	                // options for the Add Dialog
-        	                {
-        	                    closeAfterAdd: true,
-        	                    recreateForm: true,
-        	                    errorTextFormat: function (data) {
-        	                        return 'Error: ' + data.responseText
-        	                    }
-        	                },
-        	                // options for the Delete Dailog
-        	                {
-        	                    errorTextFormat: function (data) {
-        	                        return 'Error: ' + data.responseText
-        	                    }
-        	                });
-        		  
+        				// the buttons to appear on the toolbar of the grid
+         	                { edit: false, add: false, del: false, search: true, refresh: true, view: true, position: "left", cloneToTop: false },
+         	                // options for the Edit Dialog
+         	                {
+         	                },
+         	                // options for the Add Dialog
+         	                {       
+         	                                   	               
+         	                },
+         	                // options for the Delete Dailog
+         	                {
 
+         	                },
+         	                // options for the Search Dailog
+         	                {
+         	                	
+         	                		
+         	                	
+
+         	                	multipleSearch:true,
+         	                	multipleGroup:true,
+         	                	recreateForm: true,
+         	                	closeAfterSearch: true,       	            
+         	                	errorTextFormat: function (data) {
+         	                        return '搜索失败，请重新尝试!'+ data.responseText
+         	                    }
+         	                 }
+        	                );
+        		
+        		 
+
+        		 
         		  
         		 
+        		          		          		 
+        			    	
         		}
+        		
+        		function pageInit1(){
+          		  var lastsel;
+          		  jQuery("#jqGrid1").jqGrid(
+          		      {
+          		        url : "showequip_tab",
+          		        datatype : "json",
+          		        colNames : [  '设备编号', '辅助设备', '辅助设备编号', '设备记录编号', '设备名称' ],
+          		        colModel : [ 
+          		                     
+          		                     {name : 'equip_num',index :'equip_num',width : 90,sortable :true,editable :false,key:true},
+          		                     {name : 'equ_equip_num',index : 'equ_equip_num',width : 80,sortable : true,editable :false}, 
+          		                     {name : 'equip_sup',index : 'equip_sup',width : 90,sortable : true,editable : false},        		                 
+          		                     {name : 'equip_recorder_num',index : 'equip_recorder_num',width : 80,sortable : true,editable : false},        		  
+          		                     {name : 'equip_name',index : 'equip_name',width : 150,sortable : true,editable : false}, 
+          		                     
+          		                   ],
+          		                   
+          		        //下载数据到本地，可以实现在前端排序、搜索，这种方式好处是这里的排序和搜索都无需后台处理，无需额外代码，而且支持多条件复杂搜索
+          	        	//缺点是一次导入所有数据，数据量大时会存在一些问题，此时需要在后台实现搜索，只载入符合条件的数据,此外表格不自动刷新，需要reload
+          	        	//请根据需要选择养已经完成好的前台查询和排序还是自行实现后台排序和搜索  
+          	        
+          		        loadonce:true,
+          		        //当加载出错时提供错误信息
+          		        loadError: function(xhr,status,error){  
+          		        	 alert(status + " loading data of " + $(this).attr("id") + " : " + error );    },  
 
-   </script>  
+          		        //caption:"原材料使用状况", //height : 80,align : "center",
+          		       
+          		        prmNames: { id: "equip_num" },
+          		        rowNum : 20,
+          		        height:300,
+          		        rowList : [ 20, 40, 60 ],
+          		        pager : '#jqGridPager1',
+          		       // multiselect:true,
+          		        sortname :'name',
+          		        viewrecords : true,
+          		        sortorder : "desc",
+          		        autowidth:true,
+          		        toolbar : [ true,"top",1000],
+
+          		        onSelectRow : function(id) {
+          		          if (id && id !== lastsel) {
+          		            jQuery('#jqGrid1').jqGrid('restoreRow', lastsel);
+          		            jQuery('#jqGrid1').jqGrid('editRow', id, true);
+          		            lastsel = id;
+          		          }
+          		        },
+          		        editurl : "editequip_tab",
+          		       
+          		      });
+          		  
+          		   $('#jqGrid1').navGrid('#jqGridPager1',
+          	                // the buttons to appear on the toolbar of the grid
+          	                { edit: false, add: false, del: false, search: true, refresh: true, view: true, position: "left", cloneToTop: false },
+          	                // options for the Edit Dialog
+          	                {
+          	                },
+          	                // options for the Add Dialog
+          	                {       
+          	                                   	               
+          	                },
+          	                // options for the Delete Dailog
+          	                {
+
+          	                },
+          	                // options for the Search Dailog
+          	                {
+          	                	
+          	                		
+
+          	                	multipleSearch:true,
+          	                	multipleGroup:true,
+          	                	recreateForm: true,
+          	                	closeAfterSearch: true,       	            
+          	                	errorTextFormat: function (data) {
+          	                        return '搜索失败，请重新尝试!'+ data.responseText
+          	                    }
+          	                 }
+          	                );
+          		 
+          		   $("#t_jqGrid1")
+         	      .append(
+         	          "<table><tr><td><label>选择设备:</label></td><td><select style='width:140px;height:25px;font-size:-3'>"+
+         	          "<option>五连杆给汤机</option><option>压铸机1号</option></select></td>"+
+         	          "<td><label>选择时间分段:</label></td><td><select style='width:140px;height:25px;font-size-3'>"+
+         	          "<option>按日汇总</option><option>按周汇总</option><option>按月汇总</option><option>按年汇总</option></select></td></tr>"+
+         	          "<tr><td><label>选择起始时间:</label></td><td><input type='text' id='starttime' style='width:140px;height:15px;font-size-3'></input></td><td><label>选择结束时间:</label></td><td><input type='text' id='endtime' style='width:140px;height:15px;font-size-3'></input><td></tr></table>");
+         	  $("#starttime", "#t_jqGrid1").click(  $("#starttime").datepicker({
+         	      showWeek: true,
+         	      firstDay: 1
+         	    }))
+         	      $("#endtime", "#t_jqGrid1").click(  $("#endtime").datepicker({
+         	      showWeek: true,
+         	      firstDay: 1
+         	    }))
+         	   
+          		} 
+        		
+   </script>
   
   
   
@@ -504,8 +564,8 @@ setInterval(preSetStateAjax,13000);
                //设置图的选项
                 var option = {                		                  		
                 title : {
-                  	        text: '上月FPY统计值(%)',
-                  	        subtext: '折线图（Line Chart）',
+                  	        text: 'OEE分析折线图图',
+                  	        //subtext: '折线图（Line Chart）',
                   	        x:'center'
                   	      },	
                     tooltip: {
@@ -583,7 +643,7 @@ setInterval(preSetStateAjax,13000);
             	 
             	  var option = {
             	      title : {
-            	        text: 'FPY不合格原因统计',
+            	        text: 'OEE分析饼图',
             	        subtext: '饼图（Pie Chart）',
             	        x:'center'
             	      },

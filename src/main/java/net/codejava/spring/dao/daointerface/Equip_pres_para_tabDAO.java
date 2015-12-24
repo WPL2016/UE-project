@@ -3,6 +3,7 @@ package net.codejava.spring.dao.daointerface;
 import java.util.List;
 
 import net.codejava.spring.model.Equip_pres_para_tab;
+import net.codejava.spring.model.Equip_pres_record;
 
 
 /**
@@ -19,4 +20,6 @@ public interface Equip_pres_para_tabDAO {
 	public Equip_pres_para_tab get(String para_num);
 	
 	public List<Equip_pres_para_tab> list();
+	
+	public List<Equip_pres_record> getLastPresStat();
 }

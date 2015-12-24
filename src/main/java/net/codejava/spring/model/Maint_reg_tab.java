@@ -1,18 +1,19 @@
 package net.codejava.spring.model;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Maint_reg_tab {
 	private String maint_reg_cont;
 	private String maint_reg_obj_num;
 	private String maint_reg_num;
 	private String maint_reg_per_num;
-	private SimpleDateFormat maint_reg_date = new SimpleDateFormat("yyyy-M-dd");
+	private Date maint_reg_date = new Date();
 	
 	public Maint_reg_tab() {
 	}
 
-	public Maint_reg_tab(String maint_reg_cont, String maint_reg_obj_num, String maint_reg_num,String maint_reg_per_num,SimpleDateFormat maint_reg_date) {
+	public Maint_reg_tab(String maint_reg_cont, String maint_reg_obj_num, String maint_reg_num,String maint_reg_per_num,Date maint_reg_date) {
 		this.maint_reg_cont = maint_reg_cont;
 		this.maint_reg_obj_num = maint_reg_obj_num;	
 		this.maint_reg_num = maint_reg_num;
@@ -52,11 +53,11 @@ public class Maint_reg_tab {
 		this.maint_reg_per_num = maint_reg_per_num;
 	}
 	
-	public SimpleDateFormat getMaint_reg_date(){
+	public Date getMaint_reg_date(){
 		return maint_reg_date;
 	}
 
-	public void setMaint_reg_date(SimpleDateFormat maint_reg_date) {
+	public void setMaint_reg_date(Date maint_reg_date) {
 		this.maint_reg_date = maint_reg_date;
 	}
 }

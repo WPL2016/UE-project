@@ -4,11 +4,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.sql.DataSource;
 import net.codejava.spring.dao.daointerface.Equip_pres_para_tabDAO;
+import net.codejava.spring.model.Equip_dyn_para_tab;
+import net.codejava.spring.model.Equip_dyn_record;
+import net.codejava.spring.model.Equip_para_tab;
 import net.codejava.spring.model.Equip_pres_para_tab;
+import net.codejava.spring.model.Equip_pres_record;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -67,10 +72,8 @@ public class Equip_pres_para_tabDAOImpl implements Equip_pres_para_tabDAO {
 	
 				aEquip_pres_para_tab.setPres_para_val(rs.getFloat("pres_para_val"));
 				
-				Format formatter = new SimpleDateFormat("yyyy-M-dd");
-				String str = formatter.format(rs.getDate("pres_date"));
-				SimpleDateFormat simple= new SimpleDateFormat(str);
-				aEquip_pres_para_tab.setPres_date(simple);
+				Date date = new Date();
+				aEquip_pres_para_tab.setPres_date(date);
 				
 				aEquip_pres_para_tab.setPres_num(rs.getString("pres_num"));
 				aEquip_pres_para_tab.setProduct_num(rs.getString("product_num"));
@@ -97,10 +100,8 @@ public class Equip_pres_para_tabDAOImpl implements Equip_pres_para_tabDAO {
 					
 					aEquip_pres_para_tab.setPres_para_val(rs.getFloat("pres_para_val"));
 					
-					Format formatter = new SimpleDateFormat("yyyy-M-dd");
-					String str = formatter.format(rs.getDate("pres_date"));
-					SimpleDateFormat simple= new SimpleDateFormat(str);
-					aEquip_pres_para_tab.setPres_date(simple);
+					Date date=new Date();
+					aEquip_pres_para_tab.setPres_date(date);
 					
 					aEquip_pres_para_tab.setPres_num(rs.getString("pres_num"));
 					aEquip_pres_para_tab.setProduct_num(rs.getString("product_num"));
@@ -114,5 +115,44 @@ public class Equip_pres_para_tabDAOImpl implements Equip_pres_para_tabDAO {
 			
 		});
 	}
+	@Override
+	public List<Equip_pres_record> getLastPresStat(){
+		String sql = "with lastunique  as (SELECT MAX(pres_date) as pres_date,a.para_num FROM "
+		+ "equip_pres_para_tab as a,equip_para_tab as b WHERE a.para_num=b.para_num group by a.para_num),"
+		+ "total as (Select a.para_num,a.pres_num,a.product_num,a.pres_para_val,a.pres_date,b.down_lim_vall,b.equip_num,b.para_name,"
+		+ "b.para_recorder_num,b.para_unit,b.up_lim_val from equip_pres_para_tab as a,equip_para_tab as b WHERE a.para_num=b.para_num) "
+		+ "SELECT * FROM total,lastunique where total.pres_date=lastunique.pres_date and total.para_num=lastunique.para_num";
+						List<Equip_pres_record> listEquip_pres_record = jdbcTemplate.query(sql, new RowMapper<Equip_pres_record>() {
 
+							@Override
+							public Equip_pres_record mapRow(ResultSet rs, int rowNum) throws SQLException {
+								
+					            Equip_pres_para_tab  equip_pres_para_tab=new Equip_pres_para_tab();
+					            Equip_para_tab equip_para_tab =new Equip_para_tab(); 
+					            
+					            equip_pres_para_tab.setPres_num(rs.getString("pres_num"));
+					            equip_pres_para_tab.setPres_para_val(rs.getFloat("pres_para_val"));
+					            equip_pres_para_tab.setPres_date(rs.getTime("pres_date"));
+					            equip_pres_para_tab.setProduct_num(rs.getString("product_num"));
+					            equip_pres_para_tab.setPara_num(rs.getString("para_num"));
+					            
+					            equip_para_tab.setDown_lim_val(rs.getFloat("down_lim_vall"));
+					            equip_para_tab.setEquip_num(rs.getString("equip_num"));
+					            equip_para_tab.setPara_name(rs.getString("para_name"));
+					            equip_para_tab.setPara_num(rs.getString("para_num"));
+					            equip_para_tab.setPara_recorder_num(rs.getString("para_recorder_num"));
+					            equip_para_tab.setPara_unit(rs.getString("para_unit"));
+					            equip_para_tab.setUp_lim_val(rs.getFloat("up_lim_val"));
+					            Equip_pres_record aEquip_pres_record = new Equip_pres_record(equip_pres_para_tab,equip_para_tab);
+								return aEquip_pres_record;
+							}
+							
+						});
+						
+						return listEquip_pres_record;
+					
+
+	}
+	
+	
 }

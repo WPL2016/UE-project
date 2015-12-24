@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import net.codejava.spring.dao.daointerface.Maint_reg_tabDAO;
+import net.codejava.spring.model.Equip_dyn_record;
 import net.codejava.spring.model.Maint_reg_tab;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -26,6 +28,13 @@ public class Maint_reg_tabController {
 
 	@Autowired
 	private Maint_reg_tabDAO maint_reg_tabDAO;
+	
+	@RequestMapping(value="/showemaint_reg_tab")  	
+	public @ResponseBody List<Maint_reg_tab> allMaint() throws IOException{
+		List<Maint_reg_tab> allMaint = maint_reg_tabDAO.list();		
+		return allMaint;
+	}
+	
 	
 	@RequestMapping(value="/maint_reg_tab")
 	public ModelAndView listMaint_reg_tab(ModelAndView model) throws IOException{

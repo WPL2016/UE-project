@@ -71,10 +71,9 @@ public class Maint_reg_tabDAOImpl implements Maint_reg_tabDAO {
 				aMaint_reg_tab.setMaint_reg_num(rs.getString("maint_reg_num"));
 				aMaint_reg_tab.setMaint_reg_per_num(rs.getString("maint_reg_per_num"));
 				
-				Format formatter = new SimpleDateFormat("yyyy-M-dd");
-				String str = formatter.format(rs.getDate("maint_reg_date"));
-				SimpleDateFormat simple= new SimpleDateFormat(str);
-				aMaint_reg_tab.setMaint_reg_date(simple);
+				
+				
+				aMaint_reg_tab.setMaint_reg_date(rs.getDate("maint_reg_date"));
 				return aMaint_reg_tab;
 			}
 			
@@ -99,10 +98,7 @@ public class Maint_reg_tabDAOImpl implements Maint_reg_tabDAO {
 					aMaint_reg_tab.setMaint_reg_num(rs.getString("maint_reg_num"));
 					aMaint_reg_tab.setMaint_reg_per_num(rs.getString("maint_reg_per_num"));
 					
-					Format formatter = new SimpleDateFormat("yyyy-M-dd");
-					String str = formatter.format(rs.getDate("maint_reg_date"));
-					SimpleDateFormat simple= new SimpleDateFormat(str);
-					aMaint_reg_tab.setMaint_reg_date(simple);
+					aMaint_reg_tab.setMaint_reg_date(rs.getTimestamp("maint_reg_date"));
 					return aMaint_reg_tab;
 				}
 				
