@@ -99,7 +99,16 @@ public class Mater_tabDAOImpl implements Mater_tabDAO {
 				return null;
 			}
 			
-		});
-	}
-
+			});
+		}
+		
+		@Override
+		public int updateSingleColumn(Mater_tab mater_tab,String column,String value){
+			   System.out.println("updating...");
+		        String sql = "UPDATE mater_tab SET "+column+" = '"+value+"' WHERE mater_num='"+mater_tab.getMater_num()+"'";
+		        //int i=jdbcTemplate.update(sql,column,value,mater_tab.getMater_num());	
+		        int i=jdbcTemplate.update(sql);
+		        System.out.println("updating result:"+i);
+		        return i;
+		}
 }

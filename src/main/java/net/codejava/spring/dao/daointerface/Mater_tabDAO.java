@@ -2,6 +2,7 @@ package net.codejava.spring.dao.daointerface;
 
 import java.util.List;
 
+
 import net.codejava.spring.model.Mater_tab;
 
 /**
@@ -18,4 +19,6 @@ public interface Mater_tabDAO {
 	public Mater_tab get(String mater_num);
 	
 	public List<Mater_tab> list();
+	
+	public int updateSingleColumn(Mater_tab mater_tab,String column,String value);
 }

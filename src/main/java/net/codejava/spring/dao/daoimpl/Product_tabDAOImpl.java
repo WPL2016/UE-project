@@ -98,7 +98,17 @@ public class Product_tabDAOImpl implements Product_tabDAO {
 				return null;
 			}
 			
-		});
-	}
+			});
+		}
+		
+		@Override
+		public int updateSingleColumn(Product_tab product_tab,String column,String value){
+			   System.out.println("updating...");
+		        String sql = "UPDATE product_tab SET "+column+" = '"+value+"' WHERE product_num='"+product_tab.getProduct_num()+"'";
+		        //int i=jdbcTemplate.update(sql,column,value,product_tab.getProduct_num());	
+		        int i=jdbcTemplate.update(sql);
+		        System.out.println("updating result:"+i);
+		        return i;
+		}
 
 }
