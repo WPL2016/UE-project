@@ -3,6 +3,7 @@ package net.codejava.spring.controller;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,9 +50,13 @@ public class Produce_plan_tabController {
 		produce_plan_tab.setProduce_plan_recorder_num(request.getUserPrincipal().getName());
 		
 		
+		String date=request.getParameter("plan_time");
+		date="2015-12-18 00:00:00.000";
+		System.out.println(date);
+		Date date1=new Date();
+		date1.parse("2015-12-18 00:00:00.000");
 		
-		SimpleDateFormat simple= new SimpleDateFormat("yyyy-MM-dd ");
-		produce_plan_tab.setPlan_time(simple.parse(request.getParameter("plan_time")));
+		produce_plan_tab.setPlan_time(date1);
 		
 		produce_plan_tab.setPlan_quan(Integer.parseInt(request.getParameter("plan_quan")));		
 		produce_plan_tab.setPlan_work_time(Integer.parseInt(request.getParameter("plan_work_time")));

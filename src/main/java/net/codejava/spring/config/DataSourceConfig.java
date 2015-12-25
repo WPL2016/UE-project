@@ -15,7 +15,9 @@ import net.codejava.spring.dao.daoimpl.Equip_product_relat_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.Equip_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.Maint_plan_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.Maint_reg_tabDAOImpl;
+import net.codejava.spring.dao.daoimpl.Mater_stock_stat_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.Mater_tabDAOImpl;
+import net.codejava.spring.dao.daoimpl.Mater_use_stock_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.Mou_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.Mou_use_inf_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.Produce_plan_tabDAOImpl;
@@ -32,7 +34,9 @@ import net.codejava.spring.dao.daointerface.Equip_product_relat_tabDAO;
 import net.codejava.spring.dao.daointerface.Equip_tabDAO;
 import net.codejava.spring.dao.daointerface.Maint_plan_tabDAO;
 import net.codejava.spring.dao.daointerface.Maint_reg_tabDAO;
+import net.codejava.spring.dao.daointerface.Mater_stock_stat_tabDAO;
 import net.codejava.spring.dao.daointerface.Mater_tabDAO;
+import net.codejava.spring.dao.daointerface.Mater_use_stock_tabDAO;
 import net.codejava.spring.dao.daointerface.Mou_tabDAO;
 import net.codejava.spring.dao.daointerface.Mou_use_inf_tabDAO;
 import net.codejava.spring.dao.daointerface.Produce_plan_tabDAO;
@@ -124,6 +128,12 @@ public class DataSourceConfig {
 	public Produce_prog_tabDAO getProduce_prog_tabDAO() {
 		return new Produce_prog_tabDAOImpl(getDataSource());
 	}
-	
-	
+	@Bean
+	public Mater_use_stock_tabDAO getMater_use_stock_tabDAO() {
+		return new Mater_use_stock_tabDAOImpl(getDataSource());
+	}
+	@Bean
+	public Mater_stock_stat_tabDAO getMater_stock_stat_tabDAO() {
+		return new Mater_stock_stat_tabDAOImpl(getDataSource());
+	}
 }

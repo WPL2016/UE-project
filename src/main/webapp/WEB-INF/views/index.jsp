@@ -29,7 +29,8 @@
 <a href="toequip_tab">设备</a><br/>
 <a href="toproduce_prog_tab">生产状态</a><br/>
 <a href="toauthority">权限管理</a><br/>
-<a href="tomater_tab">物料管理</a><br/>
+<a href="tomater_tab">物料信息</a><br/>
+<a href="tomater_use_stock_tab">原材料状态</a><br/>
 <!--  <a href="tohello">3号输入</a><br/>-->
 </body>
 </html>
