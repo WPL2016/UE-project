@@ -720,8 +720,8 @@ setInterval(preSetStateAjax,1333000);
            	            var label=[];
                	        var value=[];
                	        var values=[];
-           	             alert(option.series[0].data);
-           	        	  alert(data);
+           	        //     alert(option.series[0].data);
+           	        //	  alert(data);
            	        	 //  option.legend.data = data.legend;  
                             	        
                    	 label=data.series[0].label;
@@ -730,13 +730,13 @@ setInterval(preSetStateAjax,1333000);
                    	values[idx]={'name':label[idx],'value':value[idx]}; 
                    	 })
                 	
-                	 alert(values);	                   
+                	// alert(values);	                   
            	        	
                    	 	
                    	 option.legend.data = data.legend;	
            	         option.series[0].data = values;
            	      option.series[0].type = data.series[0].type;
-                    alert(option.series[0].data); 
+                  //  alert(option.series[0].data); 
            	        }
                  }) 
 
