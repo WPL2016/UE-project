@@ -581,9 +581,13 @@ setInterval(preSetStateAjax,1333000);
             function drawBar(ec) {
                 // 基于准备好的dom，初始化echarts图表
                 var myChart = ec.init(document.getElementById('linechart')); 
+
+
+
                 var value=[];
                 var label=[];
                //设置图的选项
+
                 var option = {                		                  		
                 title : {
                   	        text: 'OEE分析折线图图',
@@ -624,11 +628,10 @@ setInterval(preSetStateAjax,1333000);
                             type : 'value'
                         }
                     ],
+
                     //数据系列，要显示几个系列酒填几个大括号，不然不会显示多出的系列
-                    series : [{},{}]
-                };
-             
-                  
+                    series : [{},{}],}
+                
                
                 //通过ajax从后台获取图表所需数据               
                $.ajax({  
@@ -657,6 +660,7 @@ setInterval(preSetStateAjax,1333000);
           }) 
                //加载选项
                  myChart.setOption(option); 
+
             }
             
             function drawPie(ec) {
@@ -698,6 +702,9 @@ setInterval(preSetStateAjax,1333000);
             	        }
             	      ]
             	    };
+
+            	  
+
             	  //myChart.setOption(option);
                   $.ajax({  
            	       data:"name="+$("#name").val(),  
@@ -713,8 +720,8 @@ setInterval(preSetStateAjax,1333000);
            	            var label=[];
                	        var value=[];
                	        var values=[];
-           	            
-           	        	  
+           	             alert(option.series[0].data);
+           	        	  alert(data);
            	        	 //  option.legend.data = data.legend;  
                             	        
                    	 label=data.series[0].label;
@@ -723,15 +730,16 @@ setInterval(preSetStateAjax,1333000);
                    	values[idx]={'name':label[idx],'value':value[idx]}; 
                    	 })
                 	
-                	               
+                	 alert(values);	                   
            	        	
                    	 	
                    	 option.legend.data = data.legend;	
            	         option.series[0].data = values;
-           	         option.series[0].type = data.series[0].type;
-                   
+           	      option.series[0].type = data.series[0].type;
+                    alert(option.series[0].data); 
            	        }
                  }) 
+
             	  // 为echarts对象加载数据 
             	 myChart.setOption(option); 
 

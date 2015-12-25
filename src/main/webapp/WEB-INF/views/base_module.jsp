@@ -3,6 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <script type="text/javascript" src="resources/jquery-2.1.3.js"></script>  
 <script type="text/javascript" src="resources/jquery-2.1.3.min.js"></script>  
 <link rel="stylesheet" type="text/css" href="resources/table.css" />
@@ -45,7 +46,7 @@ $(function () {
         <!--内容主体的div,请根据具体内容决定div的样式，table_container0最小，1次之，2最大，也可自行在div.css定义你自己想要的样式，要设置成左浮动以保证div水平排列-->     
         <div class="table_container2">插入你们自己的代码,在table_container下插入表头table_head和表格，如有多列表格请在container外再加一个其他container（同级），
                                                                                                          表格之间的空白用blank_btw_table样式的div，放在container之间即可
-                                      <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+                                    
         </div>
  
   
@@ -55,6 +56,7 @@ $(function () {
 
   <%@ include file="./component/2_foot.jsp"%>
   </div>  
+  
 </body>
 </html>
 
