@@ -30,15 +30,17 @@ public class Maint_reg_tabController {
 	private Maint_reg_tabDAO maint_reg_tabDAO;
 	
 	@RequestMapping(value="/showemaint_reg_tab")  	
-	public @ResponseBody List<Maint_reg_tab> allMaint() throws IOException{
-		List<Maint_reg_tab> allMaint = maint_reg_tabDAO.list();		
+	public @ResponseBody List<Maint_reg_tab> allMaint(HttpServletRequest request) throws IOException{
+		String equip_num=request.getParameter("equip_num");
+		System.out.println("Œ¨–ﬁ…Ë±∏£∫"+equip_num);
+		List<Maint_reg_tab> allMaint = maint_reg_tabDAO.list(equip_num);		
 		return allMaint;
 	}
 	
 	
 	@RequestMapping(value="/maint_reg_tab")
 	public ModelAndView listMaint_reg_tab(ModelAndView model) throws IOException{
-		List<Maint_reg_tab> listMaint_reg_tab = maint_reg_tabDAO.list();
+		List<Maint_reg_tab> listMaint_reg_tab = maint_reg_tabDAO.list("");
 		model.addObject("listMaint_reg_tab", listMaint_reg_tab);
 		model.setViewName("maint_reg_tab");
 		

@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,8 +25,9 @@ public class Equip_dyn_para_tabController {
 	@Autowired
 	private ContactDAO contactDAO;
 	@RequestMapping(value="/showequip_dyn_para_tab")  	
-	public @ResponseBody List<Equip_dyn_record> allState() throws IOException{
-		List<Equip_dyn_record> lastDynRecord = equip_dyn_para_tabDAO.getLastDynPara();		
+	public @ResponseBody List<Equip_dyn_record> allState(HttpServletRequest request) throws IOException{
+		String equip_num=request.getParameter("equip_num");
+		List<Equip_dyn_record> lastDynRecord = equip_dyn_para_tabDAO.getLastDynPara(equip_num);		
 		return lastDynRecord;
 	}
 	

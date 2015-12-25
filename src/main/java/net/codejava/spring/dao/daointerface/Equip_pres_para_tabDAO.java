@@ -21,5 +21,5 @@ public interface Equip_pres_para_tabDAO {
 	
 	public List<Equip_pres_para_tab> list();
 	
-	public List<Equip_pres_record> getLastPresStat();
+	public List<Equip_pres_record> getLastPresStat(String equip_num);
 }

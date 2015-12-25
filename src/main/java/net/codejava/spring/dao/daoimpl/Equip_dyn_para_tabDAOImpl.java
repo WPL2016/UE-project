@@ -2,6 +2,7 @@ package net.codejava.spring.dao.daoimpl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -22,12 +23,14 @@ public class Equip_dyn_para_tabDAOImpl implements  Equip_dyn_para_tabDAO{
 		jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 	@Override
-	public List<Equip_dyn_record> getLastDynPara() {
+	public List<Equip_dyn_record> getLastDynPara(String equip_num) {
 		String sql = " with lastunique  as (SELECT MAX(dyn_time) as dyn_time,a.para_num FROM equip_dyn_para_tab as a,equip_para_tab as b WHERE a.para_num=b.para_num group by a.para_num),"+
  "total as (Select a.para_num,a.dyn_num,a.product_num,a.dyn_para_val,a.dyn_time,b.down_lim_vall,b.equip_num,b.para_name,b.para_recorder_num,b.para_unit,b.up_lim_val from equip_dyn_para_tab as a,equip_para_tab as b "+
- "WHERE a.para_num=b.para_num) SELECT * FROM total,lastunique where total.dyn_time=lastunique.dyn_time and total.para_num=lastunique.para_num";
+ "WHERE a.para_num=b.para_num) SELECT * FROM total,lastunique where total.dyn_time=lastunique.dyn_time and total.para_num=lastunique.para_num and total.equip_num='"+equip_num+"'";
+		
+		
 		List<Equip_dyn_record> listEquip_dyn_para = jdbcTemplate.query(sql, new RowMapper<Equip_dyn_record>() {
-
+        
 			@Override
 			public Equip_dyn_record mapRow(ResultSet rs, int rowNum) throws SQLException {
 				

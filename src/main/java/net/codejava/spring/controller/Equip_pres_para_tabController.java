@@ -31,8 +31,9 @@ public class Equip_pres_para_tabController {
 	private Equip_pres_para_tabDAO equip_pres_para_tabDAO;
 	
 	@RequestMapping(value="/showequip_pres_para_tab")  	
-	public @ResponseBody List<Equip_pres_record> LastState() throws IOException{
-		List<Equip_pres_record> lastPresRecord = equip_pres_para_tabDAO.getLastPresStat();		
+	public @ResponseBody List<Equip_pres_record> LastState(HttpServletRequest request) throws IOException{
+		String equip_num=request.getParameter("equip_num");
+		List<Equip_pres_record> lastPresRecord = equip_pres_para_tabDAO.getLastPresStat(equip_num);		
 		return lastPresRecord;
 	}
 	

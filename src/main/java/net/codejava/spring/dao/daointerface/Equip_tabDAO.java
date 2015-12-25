@@ -20,4 +20,6 @@ public interface Equip_tabDAO {
 	public List<Equip_tab> list();
 	
 	public int updateSingleColumn(Equip_tab equip_tab,String column,String value);
+	
+	public List<Equip_tab> getSomeEquip(String type);
 }

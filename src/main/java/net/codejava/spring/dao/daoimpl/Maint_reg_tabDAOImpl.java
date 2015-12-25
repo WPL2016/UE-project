@@ -58,8 +58,8 @@ public class Maint_reg_tabDAOImpl implements Maint_reg_tabDAO {
 	}
 
 	@Override
-	public List<Maint_reg_tab> list() {
-		String sql = "SELECT * FROM maint_reg_tab";
+	public List<Maint_reg_tab> list(String equip_num) {
+		String sql = "SELECT * FROM maint_reg_tab where maint_reg_obj_num='"+equip_num+"'";
 		List<Maint_reg_tab> listMaint_reg_tab = jdbcTemplate.query(sql, new RowMapper<Maint_reg_tab>() {
 
 			@Override

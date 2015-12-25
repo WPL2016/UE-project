@@ -118,9 +118,9 @@ public class Equip_oper_stat_tabDAOImpl implements Equip_oper_stat_tabDAO {
 	}
 	
 	@Override
-	public List< Equip_oper_stat_tab> getLastUniqueRecord(){
+	public List< Equip_oper_stat_tab> getLastUniqueRecord(String equip_num){
 		String sql = "WITH lastunique as (SELECT stat_name, MAX(stat_time) as stat_time FROM equip_oper_stat_tab GROUP BY stat_name)"+
-",total as (SELECT * FROM equip_oper_stat_tab) SELECT * FROM total,lastunique WHERE total.stat_time=lastunique.stat_time AND total.stat_name=lastunique.stat_name ORDER BY total.stat_time";
+",total as (SELECT * FROM equip_oper_stat_tab) SELECT * FROM total,lastunique WHERE total.stat_time=lastunique.stat_time AND total.stat_name=lastunique.stat_name and total.equip_num="+"'"+equip_num+"' ORDER BY total.stat_time";
 		List<Equip_oper_stat_tab> listEquip_oper_stat_tab = jdbcTemplate.query(sql, new RowMapper<Equip_oper_stat_tab>() {
 
 			@Override
@@ -143,8 +143,8 @@ public class Equip_oper_stat_tabDAOImpl implements Equip_oper_stat_tabDAO {
 	}
 	
 	@Override
-	public int somedayStatTime(Date date,String  stat_name) {
-	        String sql = "SELECT datediff(ss,MIN(stat_time),MAX(stat_time)) as stat_time from equip_oper_stat_tab where stat_name=? and DATEDIFF(DD,stat_time,?)=0";
+	public int somedayStatTime(Date date,String  stat_name,String equip_num) {
+	        String sql = "SELECT datediff(ss,MIN(stat_time),MAX(stat_time)) as stat_time from equip_oper_stat_tab where stat_name=? and DATEDIFF(DD,stat_time,?)=0 and equip_num='"+equip_num+"'";
 	        //int i=jdbcTemplate.update(sql,column,value,equip_tab.getEquip_num());	
 	        System.out.println("updating result11:"+date);
 	        //date=new Date("2015-12-25 19:36:00.000");

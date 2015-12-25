@@ -112,5 +112,30 @@ public class Equip_tabDAOImpl implements Equip_tabDAO {
 	        System.out.println("updating result:"+i);
 	        return i;
 	}
+	@Override
+	public List<Equip_tab> getSomeEquip(String type){
+		String sql="";
+		if(type=="main") { sql = "SELECT * FROM equip_tab where equip_num not in(select equ_equip_num from equip_tab where equ_equip_num is NOT NULL)";}
+		  else if(type=="sup"){ sql = "SELECT * FROM equip_tab where equip_num in(select equ_equip_num from equip_tab where equ_equip_num is NOT NULL)";}
+		      else  sql = "SELECT * FROM equip_tab";
+		List<Equip_tab> listEquip_tab = jdbcTemplate.query(sql, new RowMapper<Equip_tab>() {
 
+			@Override
+			public Equip_tab mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Equip_tab aEquip_tab = new Equip_tab();
+	
+				aEquip_tab.setEquip_num(rs.getString("equip_num"));
+				aEquip_tab.setEqu_equip_num(rs.getString("equ_equip_num"));
+				aEquip_tab.setEquip_sup(rs.getString("equip_sup"));
+				aEquip_tab.setEquip_name(rs.getString("equip_name"));
+				aEquip_tab.setEquip_recorder_num(rs.getString("equip_recorder_num"));
+				
+				return aEquip_tab;
+			}
+			
+		});
+		
+		return listEquip_tab;
+	}
+	
 }

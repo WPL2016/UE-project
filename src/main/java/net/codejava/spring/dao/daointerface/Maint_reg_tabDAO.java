@@ -17,5 +17,5 @@ public interface Maint_reg_tabDAO {
 	
 	public Maint_reg_tab get(String maint_reg_num);
 	
-	public List<Maint_reg_tab> list();
+	public List<Maint_reg_tab> list(String equip_num);
 }

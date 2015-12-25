@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -56,7 +57,7 @@ setInterval(preSetStateAjax,1333000);
 
  function operStateAjax(){
 	  $.ajax({  
-     	// data:"name="+$("#name").val(),  
+     	  data:"equip_num="+$("#equip_in_stat").val(),  
 	       //用GET方法当请求参数不变时会因部分浏览器缓存而无法更新
 	       type:"POST",  
 	       dataType:'json',  
@@ -72,13 +73,13 @@ setInterval(preSetStateAjax,1333000);
 	        	var alerttime;
 	        	var stopreason;
 	        	var stoptime;
-	        	var a =document.createElement('link');
-                a.type='text/css';
-                a.rel='stylesheet';
-           
-                document.head.appendChild(a);
-	           var htmlstr="<table id='customers'><tr><td class='title' colspan='4'>压铸机运行状态</td></tr><tr>"+
-	           "<td>当前状态</td><td colspan='3' class='value'>"+data[0].stat_name+"</td></tr><tr>"+
+	        //	var a =document.createElement('link');
+            //    a.type='text/css';
+             //   a.rel='stylesheet';
+              if(data[0]!=null) $("#current_status").html(data[0].stat_name);
+              else $("#current_status").html("未知");
+                //document.head.appendChild(a);
+	           var htmlstr="<table id='customers'><tr>"+
 	           "</tr><tr><td>最新状态转变点</td></tr><tr>"
 	           $.each(data,function(idx,obj){
 	        	   
@@ -114,7 +115,7 @@ setInterval(preSetStateAjax,1333000);
  
  function operStateTimeAjax(){
 	  $.ajax({  
-    	 //data:"name="+$("#name").val(),  
+		  data:"equip_num="+$("#equip_in_stat").val(),    
 	       //用GET方法当请求参数不变时会因部分浏览器缓存而无法更新
 	       type:"POST",  
 	       dataType:'json',  
@@ -147,7 +148,7 @@ setInterval(preSetStateAjax,1333000);
  
  function dynamStateAjax(){
 	  $.ajax({  
-    	 //data:"name="+$("#name").val(),  
+		  data:"equip_num="+$("#equip_in_stat").val(),  
 	       //用GET方法当请求参数不变时会因部分浏览器缓存而无法更新
 	       type:"POST",  
 	       dataType:'json',  
@@ -196,7 +197,7 @@ setInterval(preSetStateAjax,1333000);
  
  function preSetStateAjax(){
 	 $.ajax({  
-    	 //data:"name="+$("#name").val(),  
+		 data:"equip_num="+$("#equip_in_stat").val(),  
 	       //用GET方法当请求参数不变时会因部分浏览器缓存而无法更新
 	       type:"POST",  
 	       dataType:'json',  
@@ -214,7 +215,7 @@ setInterval(preSetStateAjax,1333000);
              //  a.rel='stylesheet';
           
               // document.head.appendChild(a);
-	           var htmlstr="<table id='customers'><tr><td class='title' colspan='4'>压铸机动态参数</td></tr><tr>"
+	           var htmlstr="<table id='customers'><tr><td class='title' colspan='4'>压铸机预设参数</td></tr><tr>"
 	        	   $.each(data,function(idx,obj){
 		        	   
 	        		   //alert(obj.equip_pres_para_tab.pres_para_val);
@@ -262,7 +263,16 @@ setInterval(preSetStateAjax,1333000);
         <!--内容主体的div,请根据具体内容决定div的样式，table_container0最小，1次之，2最大，也可自行在div.css定义你自己想要的样式，要设置成左浮动以保证div水平排列-->     
         <div class="table_container0">    
          <div class="table_head">压铸机设备状态</div> 
-         <table id="customers">         
+        
+               <table id="customers">
+               <tr><td class="title" colspan="4">压铸机运行状态</td></tr><tr>
+	           <td>设备</td><td><select id="equip_in_stat" name="equip_in_stat" onChange="operStateAjax();operStateTimeAjax();dynamStateAjax();preSetStateAjax();">
+	           <c:forEach var="equip_tab" items="${mainequip}">
+	           <option value="${equip_tab.equip_num}">${equip_tab.equip_name}</option></c:forEach>
+	           </select></td><td>当前状态</td><td class="value"><div id="current_status"></div></td></tr>
+	           </table>
+	          
+	      <table id="customers">         
          <tr><td><div id="cloneTr0"></div></td></tr>
          </table>
          <table id="customers">         
@@ -343,16 +353,17 @@ setInterval(preSetStateAjax,1333000);
         		  var lastsel;
         		  jQuery("#jqGrid").jqGrid(
         		      {
-        		        url : "showemaint_reg_tab",
+        		        url : "showemaint_reg_tab?equip_num="+$("#equip_in_stat").val(),
+        		        
         		        datatype : "json",
-        		        colNames : [  '维修编号', '维修日期', '维修人员', '维修设备', '维修内容' ],
+        		        colNames : [  '维修编号', '维修日期', '维修人员', '维修内容' ],
         		        colModel : [ 
         		                     
         		                     {name : 'maint_reg_num',index :'maint_reg_num',width:80,sortable :true,editable :false,key:true},
         		                     {name : 'maint_reg_date',index : 'maint_reg_date',width:100,sortable : true,editable : false,formatter: 'date', formatoptions: { newformat: 'Y/m/d' }, editable: false, searchoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker();}}}, 
         		                          		                 
         		                     {name : 'maint_reg_per_num',index : 'maint_reg_per_num',width:80,sortable : true,editable : false},        		  
-        		                     {name : 'maint_reg_obj_num',index : 'maint_reg_obj_num',width:80,sortable : true,editable :false}, 
+        		                 //    {name : 'maint_reg_obj_num',index : 'maint_reg_obj_num',width:80,sortable : true,editable :false}, 
         		                     {name : 'maint_reg_cont',index : 'maint_reg_cont',width:320,sortable : true,editable : false}, 
         		                   ],
         		                   
@@ -415,7 +426,7 @@ setInterval(preSetStateAjax,1333000);
          	                    }
          	                 }
         	                );
-        		
+        		   $("#equip_in_stat").change(function(){$("#jqGrid").setGridParam({url : "showemaint_reg_tab?equip_num="+$("#equip_in_stat").val(),datatype:'json', page:1}).trigger('reloadGrid')});
         		 
 
         		 
@@ -508,8 +519,10 @@ setInterval(preSetStateAjax,1333000);
           		   $("#t_jqGrid1")
          	      .append(
          	          "<table><tr><td><label>选择设备:</label></td><td><select style='width:140px;height:25px;font-size:-3'>"+
-         	          "<option>五连杆给汤机</option><option>压铸机1号</option></select></td>"+
-         	          "<td><label>选择时间分段:</label></td><td><select style='width:140px;height:25px;font-size-3'>"+
+         	          "  <c:forEach var='equip_tab' items='${mainequip}'>"+
+       	                     "<option value='${equip_tab.equip_num}'>${equip_tab.equip_name}</option></c:forEach>"+
+    	                      "</select></td>"+
+         	          "<td><label>选择时间分段:</label></td><td><select style='width:140px;height:25px;font-size-3' >"+
          	          "<option>按日汇总</option><option>按周汇总</option><option>按月汇总</option><option>按年汇总</option></select></td></tr>"+
          	          "<tr><td><label>选择起始时间:</label></td><td><input type='text' id='starttime' style='width:140px;height:15px;font-size-3'></input></td><td><label>选择结束时间:</label></td><td><input type='text' id='endtime' style='width:140px;height:15px;font-size-3'></input><td></tr></table>");
          	  $("#starttime", "#t_jqGrid1").click(  $("#starttime").datepicker({

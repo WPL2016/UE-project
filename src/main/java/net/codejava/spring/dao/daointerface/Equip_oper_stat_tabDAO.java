@@ -19,7 +19,7 @@ public interface Equip_oper_stat_tabDAO {
 		
 		public int updateSingleColumn(Equip_oper_stat_tab equip_oper_stat_tab,String column,String value);
 		
-		public List< Equip_oper_stat_tab> getLastUniqueRecord();
+		public List< Equip_oper_stat_tab> getLastUniqueRecord(String equip_num);
 		
-		public int somedayStatTime(Date data,String stat_name);
+		public int somedayStatTime(Date data,String stat_name,String equip_num);
 }

@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,19 +29,22 @@ public class Equip_oper_stat_tabController {
 	
 	
 	@RequestMapping(value="/showequip_oper_stat_tab")  	
-	public @ResponseBody List<Equip_oper_stat_tab> allState() throws IOException{
-		List<Equip_oper_stat_tab> allEquip_tab = equip_oper_stat_tabDAO.getLastUniqueRecord();		
+	public @ResponseBody List<Equip_oper_stat_tab> allState(HttpServletRequest request) throws IOException{
+		String equip_num=request.getParameter("equip_num");
+		System.out.println("equip_num:"+equip_num);
+		List<Equip_oper_stat_tab> allEquip_tab = equip_oper_stat_tabDAO.getLastUniqueRecord(equip_num);		
 		return allEquip_tab;
 	}
 	
 	@RequestMapping(value="/todayequip_oper_stat_tab")  	
-	public @ResponseBody Map TodayStat() throws IOException{
+	public @ResponseBody Map TodayStat(HttpServletRequest request) throws IOException{
     Map<String,Object> map = new HashMap<String,Object>();
+    String equip_num=request.getParameter("equip_num");
     Timestamp time=new Timestamp(System.currentTimeMillis());
-    int totalstarttime=equip_oper_stat_tabDAO.somedayStatTime(time, "开机");
-    int totalalerttime=equip_oper_stat_tabDAO.somedayStatTime(time, "报警");
-    int totalstoptime=equip_oper_stat_tabDAO.somedayStatTime(time, "停机");
-    int totalwaittime=equip_oper_stat_tabDAO.somedayStatTime(time, "待机");
+    int totalstarttime=equip_oper_stat_tabDAO.somedayStatTime(time, "开机",equip_num);
+    int totalalerttime=equip_oper_stat_tabDAO.somedayStatTime(time, "报警",equip_num);
+    int totalstoptime=equip_oper_stat_tabDAO.somedayStatTime(time, "停机",equip_num);
+    int totalwaittime=equip_oper_stat_tabDAO.somedayStatTime(time, "待机",equip_num);
     map.put("totalstarttime",totalstarttime);
     map.put("totalalerttime",totalalerttime);
     map.put("totalstoptime",totalstoptime);
