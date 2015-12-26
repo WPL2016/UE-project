@@ -36,7 +36,7 @@ public class Product_tabDAOImpl implements Product_tabDAO {
 		if (i!=0) {
 			// update
 			String sql = "UPDATE product_tab SET product_name=?,"
-						+ "product_recorder_num=?,mater_num=?WHERE product_num=?";
+						+ "product_recorder_num=?,mater_num=? WHERE product_num=?";
 			jdbcTemplate.update(sql, product_tab.getProduct_name(), product_tab.getProduct_recorder_num(),
 					product_tab.getMater_num(),product_tab.getProduct_num());
 		} else {

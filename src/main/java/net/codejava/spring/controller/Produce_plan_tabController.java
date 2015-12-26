@@ -9,6 +9,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -50,13 +51,10 @@ public class Produce_plan_tabController {
 		produce_plan_tab.setProduce_plan_recorder_num(request.getUserPrincipal().getName());
 		
 		
-		String date=request.getParameter("plan_time");
-		date="2015-12-18 00:00:00.000";
-		System.out.println(date);
-		Date date1=new Date();
-		date1.parse("2015-12-18 00:00:00.000");
+		 Date date=@DateTimeFormat(pattern="yyyy-MM-dd") request.getParameter("plan_time");
 		
-		produce_plan_tab.setPlan_time(date1);
+
+		produce_plan_tab.setPlan_time(date);
 		
 		produce_plan_tab.setPlan_quan(Integer.parseInt(request.getParameter("plan_quan")));		
 		produce_plan_tab.setPlan_work_time(Integer.parseInt(request.getParameter("plan_work_time")));
