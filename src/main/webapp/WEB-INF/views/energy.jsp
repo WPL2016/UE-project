@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>   
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -16,7 +17,7 @@
 <script src="resources/jqGrid/js/i18n/grid.locale-cn.js" type="text/ecmascript"></script>
 <script src="resources/jqGrid/js/jquery.jqGrid.min.js" type="text/ecmascript"></script>
 
-
+<script src="resources/jquery-ui.js"></script>
 
 <!-- 添加csrf标记，防止crsf安全过滤器无法识别ajax访问的crsf_token-->
 <meta http-equiv="Content-Type" content="text/html; charset=utf8">  
@@ -24,6 +25,17 @@
 <!-- default header name is X-CSRF-TOKEN -->
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
 <title>电能消耗</title>  
+
+<script>
+ $(function() {
+
+            $.datepicker.regional["zh-CN"] = { closeText: "关闭", prevText: "&#x3c;上月", nextText: "下月&#x3e;", currentText: "今天", monthNames: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"], monthNamesShort: ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二"], dayNames: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"], dayNamesShort: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"], dayNamesMin: ["日", "一", "二", "三", "四", "五", "六"], weekHeader: "周", dateFormat: "yy-m-d", firstDay: 1, isRTL: !1, showMonthAfterYear: !0, yearSuffix: "年" }
+
+                         
+
+            $.datepicker.setDefaults($.datepicker.regional["zh-CN"]);
+ })
+</script>
 
 <script type="text/javascript">  
 <!--ajax访问时发送csrf token，以防止ajax访问被crsf过滤器拦截   -->
@@ -58,79 +70,27 @@ $(function () {
         <div class="table_container2">
                                                                                                          
           <div class="table_head">电能消耗状态</div>
-          <table width="100%" height="798" border="0" cellpadding="0" cellspacing="0">
+          <table width="100%" height="798" border="0" cellpadding="0" cellspacing="0">        
+          <tr><td>
+          
+          <label>选择起始时间：</label>
+ <input type="text" id="starttime" style="width:140px;height:15px;font-size-3" onClick="$('#starttime').datepicker()" ></input>
+            <label>选择结束时间：</label>
+ <input type='text' id='endtime' style='width:140px;height:15px;font-size-3' onClick="$('#endtime').datepicker()"></input>
+
+      <select style='width:140px;height:25px;font-size-3' id="timechoice">
+         	          <option value="0">按日汇总</option><option value="1">按月汇总</option><option value="2">按年汇总</option></select>
+        <c:forEach var="equip_tab" items="${mainequip}">
+	      <input type="checkbox" id="equip_selected" name="equip_selected" value="${equip_tab.equip_num}">${equip_tab.equip_name}</input> </c:forEach>
+             <input type="button" onClick="drawBar(),drawPie()">查询</input>
+           </td></tr>
+          
                <tr bgcolor="#E1EBF5">
                    <th height="35" colspan="10" scope="row"><div align="left"><strong><span class="style1"> 设备电能消耗查询</span></strong></div></th>
                    <td colspan="2">&nbsp;</td>
                    <td width="50">&nbsp;</td>
                </tr>
-               <tr bgcolor="#E1EBF5">
-                   <th width="44" height="39" scope="row"><div align="left"></div></th>
-                   <th width="87" scope="row"><strong>选择时间段</strong></th>
-                   <th width="92" bgcolor="#FFFFFF" scope="row"><strong>2015-10-10</strong></th>
-                   <th width="27" scope="row"><strong>至</strong></th>
-                   <th width="99" bgcolor="#FFFFFF" scope="row"><strong>2015-12-23</strong></th>
-                   <th width="14" scope="row">&nbsp;</th>
-                   <th width="75" scope="row"><div align="left"><strong>选择设备</strong></div></th>
-                   <th width="113" bgcolor="#FFFFFF" scope="row">
-                      <form action="" method="post" name="form1" class="style2"  >
-                      <div align="center">
-                         <select name="select" style="font-size:20px; width:100px; height:28px;">
-                         </select>
-                      </div>
-                     </form>
-                   </th>
-                   <th width="86" scope="row"><div align="left"><strong>选择产品</strong></div></th>
-                   <th width="113" bgcolor="#FFFFFF" scope="row">
-                      <form action="" method="post" name="form2">
-                          <strong><select name="select2" style="font-size:20px; width:100px; height:28px;"></select></strong>
-                      </form>
-                   </th>
-                   <td width="70"><strong>频率设定</strong></td>
-                   <td width="46">
-                        <form name="form3" method="post" action="">
-                           <select name="select3" style="font-size:20px; width:40px; height:28px;"></select>
-                        </form>
-                   </td>
-                   <td>&nbsp;</td>
-               </tr>
-               <tr bgcolor="#E1EBF5">
-                   <th height="32" scope="row">&nbsp;</th>
-                   <th height="32" colspan="2" scope="row">
-                      <form name="form4" method="post" action="">
-                        <input type="submit" name="Submit" value="查询总能耗值" style="font-size:20px; width:150px; height:30px;">
-                      </form></th>
-                   <th height="32" scope="row">&nbsp;</th>
-                   <th height="32" colspan="2" scope="row"><div align="left"><span class="style3">总能耗值为</span></div></th>
-                   <th height="32" bgcolor="#FFFFFF" scope="row">&nbsp;</th>
-                   <th height="32" colspan="2" scope="row">
-                      <form name="form5" method="post" action="">
-                         <input type="submit" name="Submit2" value="查询能耗统计表" style="font-size:20px; width:150px; height:30px;">
-                      </form>
-                   </th>
-                   <th height="32" colspan="3" scope="row">
-                      <form name="form6" method="post" action="">
-                         <input type="submit" name="Submit3" value="查询能耗折线图" style="font-size:20px; width:150px; height:30px;">
-                      </form>
-                   </th>
-                   <td>&nbsp;</td>
-               </tr>
-               <tr bgcolor="#E1EBF5">
-                   <th height="18" colspan="10" scope="row">&nbsp;</th>
-                   <td colspan="2">&nbsp;</td>
-                   <td>&nbsp;</td>
-               </tr>
-              
-               <tr bgcolor="#E1EBF5" align="center"> 
-                   <td height="10"  colspan="13" align="center" >
-                        <div style="width:80%">
-                            <table id="jqGrid"></table>
-                            <div id="jqGridPager"></div>
-                        </div>
-                    </td>
-                   
-               </tr>
-
+                        
  
   <tr bgcolor="#E1EBF5">
     <td height="257" colspan="13" align="center">
@@ -139,11 +99,7 @@ $(function () {
     </td>
   </tr>
   
-  <tr bgcolor="#E1EBF5">
-    <th height="32" colspan="10" scope="row"><div align="center"></div></th>
-    <td colspan="2">&nbsp;</td>
-    <td>&nbsp;</td>
-  </tr>
+  
 </table>                                                                                                    
         </div>
   
@@ -179,14 +135,15 @@ $(function () {
             DrawCharts
             );
             function DrawCharts(ec) {
-            drawBar(ec);
-            drawPie(ec);
+            drawBar();
+            drawPie();
              }
 
-            function drawBar(ec) {
+            function drawBar() {
                 // 基于准备好的dom，初始化echarts图表
-                var myChart = ec.init(document.getElementById('linechart')); 
-
+                //var myChart = ec.init(document.getElementById('linechart')); 
+                var dom=document.getElementById('linechart');
+                var myChart=require('echarts').init(dom);
 
 
                 var value=[];
@@ -238,8 +195,17 @@ $(function () {
                     series : [{},{}],}
                 
                
-                //通过ajax从后台获取图表所需数据               
+                //通过ajax从后台获取图表所需数据
+                
+                 var chk_value =[];   
+           $('input[name=equip_selected]:checked').each(function(){   
+              chk_value.push($(this).val());
+                      });
+                
+                
                $.ajax({  
+            	   data:"starttime="+$("#starttime").val()+"&endtime="+$("#endtime").val()+"&timechoice="+$("#timechoice").val()+"&equip_selected="+chk_value,
+        	       
     	       //data:"name="+$("#name").val(),  
     	       //用GET方法当请求参数不变时会因部分浏览器缓存而无法更新，所以有POST
     	       type:"POST", 
@@ -268,10 +234,11 @@ $(function () {
 
             }
             
-            function drawPie(ec) {
+            function drawPie() {
                 // 基于准备好的dom，初始化echarts图表
-            	  myChart = ec.init(document.getElementById('piechart'));            	
-            	 
+            	 // myChart = ec.init(document.getElementById('piechart'));            	
+            	  var dom=document.getElementById('piechart');
+             var myChart=require('echarts').init(dom);
             	  var option = {
             	      title : {
             	        text: '所选设备电能消耗比例',
@@ -308,11 +275,15 @@ $(function () {
             	      ]
             	    };
 
-            	  
+            	  var chk_value =[];   
+                  $('input[name=equip_selected]:checked').each(function(){   
+                     chk_value.push($(this).val());
+                             });
 
             	  //myChart.setOption(option);
                   $.ajax({  
-           	       data:"name="+$("#name").val(),  
+                	 data:"starttime="+$("#starttime").val()+"&endtime="+$("#endtime").val()+"&timechoice="+$("#timechoice").val()+"&equip_selected="+chk_value,
+            	         
            	       //用GET方法当请求参数不变时会因部分浏览器缓存而无法更新
            	       type:"POST", 
            	       async : false,

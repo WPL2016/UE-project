@@ -6,13 +6,16 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import net.codejava.spring.dao.daointerface.Equip_pres_para_tabDAO;
+import net.codejava.spring.model.Equip_dyn_record;
 import net.codejava.spring.model.Equip_pres_para_tab;
+import net.codejava.spring.model.Equip_pres_record;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -26,6 +29,15 @@ public class Equip_pres_para_tabController {
 
 	@Autowired
 	private Equip_pres_para_tabDAO equip_pres_para_tabDAO;
+	
+	@RequestMapping(value="/showequip_pres_para_tab")  	
+	public @ResponseBody List<Equip_pres_record> LastState(HttpServletRequest request) throws IOException{
+		String equip_num=request.getParameter("equip_num");
+		List<Equip_pres_record> lastPresRecord = equip_pres_para_tabDAO.getLastPresStat(equip_num);		
+		return lastPresRecord;
+	}
+	
+	
 	
 	@RequestMapping(value="/equip_pres_para_tab")
 	public ModelAndView listEquip_pres_para_tab(ModelAndView model) throws IOException{

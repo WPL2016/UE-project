@@ -23,7 +23,6 @@ public interface Ener_stat_tabDAO {
 	
 	public int updateSingleColumn(Ener_stat_tab ener_stat_tab,String column,String value);
 	
-	public List<Ener_stat_tab> GetSpecData(String equip_num, String start_time, String end_time, String ener_type);
-
+	public List<Ener_stat_tab> GetSpecData(String equip_num, String start_time, String end_time, String ener_type ,String timechoice);
 	
 }

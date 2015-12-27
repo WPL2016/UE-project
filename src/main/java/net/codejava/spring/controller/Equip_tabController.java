@@ -23,6 +23,14 @@ public class Equip_tabController {
 	@Autowired
 	private ContactDAO contactDAO;
 	
+	@RequestMapping(value="/getsomeequip")
+	public @ResponseBody  List<Equip_tab> listSomeEquip(ModelAndView model,HttpServletRequest request) throws IOException{
+		List<Equip_tab> mainequip=equip_tabDAO.getSomeEquip(request.getParameter("type"));
+		return mainequip;
+	}
+	
+	
+	
 	@RequestMapping(value="/toequip_tab")
 	public ModelAndView toequiptab(){
 		ModelAndView model=new ModelAndView();

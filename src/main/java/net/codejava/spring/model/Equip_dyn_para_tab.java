@@ -1,10 +1,11 @@
 package net.codejava.spring.model;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Equip_dyn_para_tab {
 	private Float dyn_para_val;
-	private SimpleDateFormat dyn_time = new SimpleDateFormat("yyyy-M-dd HH:mm:ss");
+	private Date dyn_time = new Date();
 	private String dyn_num;
 	private String para_num;
 	private String product_num;
@@ -12,7 +13,7 @@ public class Equip_dyn_para_tab {
 	public Equip_dyn_para_tab() {
 	}
 
-	public Equip_dyn_para_tab(Float dyn_para_val, SimpleDateFormat dyn_time,String dyn_num, String para_num, String product_num) {
+	public Equip_dyn_para_tab(Float dyn_para_val, Date dyn_time,String dyn_num, String para_num, String product_num) {
 		this.dyn_para_val = dyn_para_val;
 		this.dyn_time = dyn_time;
 		this.dyn_num = dyn_num;
@@ -28,11 +29,11 @@ public class Equip_dyn_para_tab {
 		this.dyn_para_val= dyn_para_val;
 	}
 
-	public SimpleDateFormat getDyn_time() {
+	public Date getDyn_time() {
 		return dyn_time;
 	}
 
-	public void setDyn_time(SimpleDateFormat dyn_time) {
+	public void setDyn_time(Date dyn_time) {
 		this.dyn_time = dyn_time;
 	}
 	
