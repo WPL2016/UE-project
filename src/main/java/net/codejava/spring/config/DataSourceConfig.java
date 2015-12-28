@@ -24,6 +24,7 @@ import net.codejava.spring.dao.daoimpl.Maint_reg_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.Mater_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.Mou_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.Mou_use_inf_tabDAOImpl;
+import net.codejava.spring.dao.daoimpl.OEE_calcuDAOImpl;
 import net.codejava.spring.dao.daoimpl.Produce_plan_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.Product_qual_asse_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.Product_tabDAOImpl;
@@ -46,6 +47,7 @@ import net.codejava.spring.dao.daointerface.Maint_reg_tabDAO;
 import net.codejava.spring.dao.daointerface.Mater_tabDAO;
 import net.codejava.spring.dao.daointerface.Mou_tabDAO;
 import net.codejava.spring.dao.daointerface.Mou_use_inf_tabDAO;
+import net.codejava.spring.dao.daointerface.OEE_calcuDAO;
 import net.codejava.spring.dao.daointerface.Produce_plan_tabDAO;
 import net.codejava.spring.dao.daointerface.Product_qual_asse_tabDAO;
 import net.codejava.spring.dao.daointerface.Product_tabDAO;
@@ -63,7 +65,7 @@ public class DataSourceConfig {
 	     dataSource.setUrl("jdbc:sqlserver://localhost:1433;databaseName=UEequipmanageDB");
 		//dataSource.setUrl("jdbc:sqlserver://192.168.1.11:1433;databaseName=UEequipmanageDB");
 		dataSource.setUsername("sa");
-		dataSource.setPassword("123");
+		dataSource.setPassword("88862187");
 		
 		return dataSource;
 	}
@@ -139,10 +141,16 @@ public class DataSourceConfig {
 	@Bean
 	public Equip_dyn_para_tabDAO getEquip_dyn_para_tabDAO() {
 		return new Equip_dyn_para_tabDAOImpl(getDataSource());
+	}
     @Bean
 	public Ener_stat_tabDAO getEner_stat_tabDAO() {
 		return new Ener_stat_tabDAOImpl(getDataSource());
 
 	}
+    @Bean
+   	public OEE_calcuDAO getOEE_calcuDAO() {
+   		return new OEE_calcuDAOImpl(getDataSource());
+
+   	} 
 	
 }

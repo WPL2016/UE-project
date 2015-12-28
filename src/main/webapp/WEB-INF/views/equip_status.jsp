@@ -21,7 +21,7 @@
 <!--重写jqgrid的样式，修改toolbar的高度  -->
 <style>
 .ui-jqgrid .ui-userdata {
-    height: 60px; /* default value in ui.jqgrid.CSS is 21px */
+    height: 90px; /* default value in ui.jqgrid.CSS is 21px */
 }
 </style>
 
@@ -143,8 +143,8 @@ setInterval(preSetStateAjax,1333000);
              //  document.head.appendChild(a);
 	           var htmlstr="";
 	           htmlstr=htmlstr+"<table id='customers'>"+
-	           "<tr><td>今日累计停机时间</td><td class='value'>"+data.totalstoptime+"</td><td>今日累计开机时间</td><td class='value'>"+data.totalstarttime+"</td></tr>"+
-	           "<tr><td>今日累计待机时间</td><td class='value'>"+data.totalwaittime+"</td><td>今日累计报警时间</td><td class='value'>"+data.totalalerttime+"</td></tr>";
+	           "<tr><td>今日累计停机时间</td><td class='value'>"+data.totalbreaktime+"  s</td><td>今日累计开机时间</td><td class='value'>"+data.totalstarttime+"  s</td></tr>"+
+	           "<tr><td>今日累计待机时间</td><td class='value'>"+data.totalwaittime+"  s</td><td>今日累计关机</td><td class='value'>"+data.totalstoptime+"  s</td></tr>";
 	           htmlstr=htmlstr+"</table>";
 	           $("#cloneTr1").html(htmlstr);
 	                        
@@ -449,16 +449,23 @@ setInterval(preSetStateAjax,1333000);
           		  var lastsel;
           		  jQuery("#jqGrid1").jqGrid(
           		      {
-          		        url : "showequip_tab",
-          		        datatype : "json",
-          		        colNames : [  '设备编号', '辅助设备', '辅助设备编号', '设备记录编号', '设备名称' ],
+          		        url : "getoeedata?equip_num="+$("#equip_num_in_OEE").val()+"&summarytype="+$("#summarytype").val()+"&starttime="+$("#starttime").val()+"&endtime="+$("#endtime").val(),
+          		        datatype : "local",
+          		        colNames : [  '开机时间', '关机时间', '停机时间', '待机时间', '生产量','不合格品数','日期','合格率','OEE' ],
           		        colModel : [ 
           		                     
-          		                     {name : 'equip_num',index :'equip_num',width : 90,sortable :true,editable :false,key:true},
-          		                     {name : 'equ_equip_num',index : 'equ_equip_num',width : 80,sortable : true,editable :false}, 
-          		                     {name : 'equip_sup',index : 'equip_sup',width : 90,sortable : true,editable : false},        		                 
-          		                     {name : 'equip_recorder_num',index : 'equip_recorder_num',width : 80,sortable : true,editable : false},        		  
-          		                     {name : 'equip_name',index : 'equip_name',width : 150,sortable : true,editable : false}, 
+          		                     {name : 'runtime',index :'runtime',width : 90,sortable :true,editable :false,key:true},
+          		                     {name : 'stoptime',index : 'stoptime',width : 80,sortable : true,editable :false}, 
+          		                     {name : 'breaktime',index : 'breaktime',width : 90,sortable : true,editable : false},        		                 
+          		                     {name : 'waittime',index : 'waittime',width : 80,sortable : true,editable : false},        		  
+          		                     {name : 'quantity',index : 'quantity',width : 80,sortable : true,editable : false}, 
+          		                     {name : 'infe_quantity',index : 'infe_quantity',width : 80,sortable : true,editable : false}, 
+          		                     {name : 'startdate',index :'startdate',width : 80,sortable : true,editable : false}, 
+          		                     {name : 'passrate',index : 'passrate', width : 80,sortable : true,editable : false}, 
+          		                     {name : 'oeerate',index : 'oeerate',width : 80,sortable : true,editable : false}, 
+          		                    
+          		               
+          		               
           		                     
           		                   ],
           		                   
@@ -527,13 +534,14 @@ setInterval(preSetStateAjax,1333000);
           		 
           		   $("#t_jqGrid1")
          	      .append(
-         	          "<table><tr><td><label>选择设备:</label></td><td><select style='width:140px;height:25px;font-size:-3'>"+
+         	          "<table><tr><td><label>选择设备:</label></td><td><select id='equip_num_in_OEE'   style='width:140px;height:25px;font-size:-3'>"+
          	          "  <c:forEach var='equip_tab' items='${mainequip}'>"+
        	                     "<option value='${equip_tab.equip_num}'>${equip_tab.equip_name}</option></c:forEach>"+
     	                      "</select></td>"+
-         	          "<td><label>选择时间分段:</label></td><td><select style='width:140px;height:25px;font-size-3' >"+
-         	          "<option>按日汇总</option><option>按周汇总</option><option>按月汇总</option><option>按年汇总</option></select></td></tr>"+
-         	          "<tr><td><label>选择起始时间:</label></td><td><input type='text' id='starttime' style='width:140px;height:15px;font-size-3'></input></td><td><label>选择结束时间:</label></td><td><input type='text' id='endtime' style='width:140px;height:15px;font-size-3'></input><td></tr></table>");
+         	          "<td><label>选择时间分段:</label></td><td><select id='summarytype' style='width:140px;height:25px;font-size-3' >"+
+         	          "<option value='day'>按日汇总</option><option value='week'>按周汇总</option><option value='month'>按月汇总</option><option value='year'>按年汇总</option></select></td></tr>"+
+         	          "<tr><td><label>选择起始时间:</label></td><td><input type='text' id='starttime' style='width:140px;height:15px;font-size-3'></input></td><td><label>选择结束时间:</label></td><td><input type='text' id='endtime' style='width:140px;height:15px;font-size-3'></input><td></tr>"+
+         	          "<tr><td><input id='search' type='button' value='查询'/></td></tr></table>");
          	  $("#starttime", "#t_jqGrid1").click(  $("#starttime").datepicker({
          	      showWeek: true,
          	      firstDay: 1
@@ -543,6 +551,9 @@ setInterval(preSetStateAjax,1333000);
          	      firstDay: 1
          	    }))
          	   
+         	      $("#search", "#t_jqGrid1").click(  function(){$("#jqGrid1").setGridParam({url : "getoeedata?equip_num="+$("#equip_num_in_OEE").val()+"&summarytype="+$("#summarytype").val()+"&starttime="+$("#starttime").val()+"&endtime="+$("#endtime").val(),datatype:'json', page:1}).trigger('reloadGrid')})
+         	    
+         	    
           		} 
         		
    </script>
@@ -574,14 +585,15 @@ setInterval(preSetStateAjax,1333000);
             DrawCharts
             );
             function DrawCharts(ec) {	
-            drawBar(ec);
-            drawPie(ec);
+            drawBar();
+            drawPie();
              }
 
-            function drawBar(ec) {
+            function drawBar() {
                 // 基于准备好的dom，初始化echarts图表
-                var myChart = ec.init(document.getElementById('linechart')); 
-
+               // var myChart = ec.init(document.getElementById('linechart')); 
+                  var dom=document.getElementById('linechart');
+                  var myChart=require('echarts').init(dom);
 
 
                 var value=[];
@@ -664,9 +676,11 @@ setInterval(preSetStateAjax,1333000);
             }
             
             function drawPie(ec) {
-                // 基于准备好的dom，初始化echarts图表
-            	  myChart = ec.init(document.getElementById('piechart'));            	
-            	 
+                   // 基于准备好的dom，初始化echarts图表
+            	  //myChart = ec.init(document.getElementById('piechart'));            	
+            	  var dom=document.getElementById('piechart');
+                  var myChart=require('echarts').init(dom);
+                  
             	  var option = {
             	      title : {
             	        text: 'OEE分析饼图',

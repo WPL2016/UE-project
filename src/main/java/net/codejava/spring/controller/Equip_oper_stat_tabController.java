@@ -42,13 +42,14 @@ public class Equip_oper_stat_tabController {
     String equip_num=request.getParameter("equip_num");
     Timestamp time=new Timestamp(System.currentTimeMillis());
     int totalstarttime=equip_oper_stat_tabDAO.somedayStatTime(time, "开机",equip_num);
-    int totalalerttime=equip_oper_stat_tabDAO.somedayStatTime(time, "报警",equip_num);
-    int totalstoptime=equip_oper_stat_tabDAO.somedayStatTime(time, "停机",equip_num);
+    int totalbreaktime=equip_oper_stat_tabDAO.somedayStatTime(time, "停机",equip_num);
+    int totalstoptime=equip_oper_stat_tabDAO.somedayStatTime(time, "关机",equip_num);
     int totalwaittime=equip_oper_stat_tabDAO.somedayStatTime(time, "待机",equip_num);
     map.put("totalstarttime",totalstarttime);
-    map.put("totalalerttime",totalalerttime);
+    map.put("totalbreaktime",totalbreaktime);
     map.put("totalstoptime",totalstoptime);
     map.put("totalwaittime",totalwaittime);
+    System.out.println(totalstarttime+""+totalbreaktime+""+totalstoptime+""+totalwaittime);
     return map;
 	
 		
