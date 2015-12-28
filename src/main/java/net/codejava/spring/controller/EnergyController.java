@@ -57,7 +57,7 @@ public class EnergyController {
         		   
         		   equip_name[j]=Ener_stat_tab_for_a_equip.get(0).getEquip_num();
         		   
-        		   System.out.println("1111111111"+equip_name[j]+"22222222");
+        		   //System.out.println("1111111111"+equip_name[j]+"22222222");
         		   
             	   for(int i=0;i<Ener_stat_tab_for_a_equip.size();i++){  
 		           equip_num.get(j).add(Ener_stat_tab_for_a_equip.get(i).getEquip_num());
@@ -68,7 +68,7 @@ public class EnergyController {
 		          
 		           }   
             	   
-            	   series.add(j,new Series(user_select_equip[j],"line",ener_val.get(j),ener_collect_time.get(j)));
+            	   series.add(j,new Series(equip_name[j],"line",ener_val.get(j),ener_collect_time.get(j)));
             	  
             	   if (Ener_stat_tab_for_a_equip.size()>maxsize){maxsize=Ener_stat_tab_for_a_equip.size(); maxsizeflag=j;}
             	   
@@ -106,7 +106,7 @@ public class EnergyController {
 	       List<String> equip_label= new ArrayList<String>();
 	       
 	       List<Ener_stat_tab> Ener_stat_tab_for_a_equip = new ArrayList<Ener_stat_tab>();
-	       List<List<String>> equip_num = new ArrayList<List<String>>(equip_serie_num); 
+	     //  List<List<String>> equip_num = new ArrayList<List<String>>(equip_serie_num); 
            List<List<String>> ener_collect_time = new ArrayList<List<String>>(equip_serie_num);
            List<List<Float>> ener_val= new ArrayList<List<Float>>(); 
            
@@ -114,7 +114,7 @@ public class EnergyController {
  
         	   Ener_stat_tab_for_a_equip = ener_stat_tabDAO.GetSpecData(user_select_equip[j],start_time,end_time,"electric",timechoice);             	   
     		   
-     		   equip_num.add(j, new ArrayList<String>());
+     		 //  equip_num.add(j, new ArrayList<String>());
      		   ener_collect_time.add(j, new ArrayList<String>());
      		   ener_val.add(j, new ArrayList<Float>());
      		   
@@ -124,12 +124,12 @@ public class EnergyController {
     		   equip_name[j]=Ener_stat_tab_for_a_equip.get(0).getEquip_num();
 
          	   for(int i=0;i<Ener_stat_tab_for_a_equip.size();i++){  
-		           equip_num.get(j).add(Ener_stat_tab_for_a_equip.get(i).getEquip_num());
+		        //   equip_num.get(j).add(Ener_stat_tab_for_a_equip.get(i).getEquip_num());
 		           ener_collect_time.get(j).add(Ener_stat_tab_for_a_equip.get(i).getEner_collect_time());
 		           ener_val.get(j).add(Ener_stat_tab_for_a_equip.get(i).getEner_val());
 		           
 		           total_energy.set(j,total_energy.get(j)+ener_val.get(j).get(i));
-		           equip_label.set(j, user_select_equip[j]);
+		           equip_label.set(j, equip_name[j]);
          	   }
            }
            

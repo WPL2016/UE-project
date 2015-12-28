@@ -42,7 +42,7 @@ public class GasController {
 		       
 		       List<Series> series = new ArrayList<Series>(); 
 		       
-		       List<List<String>> equip_num = new ArrayList<List<String>>(equip_serie_num); 
+		    //   List<List<String>> equip_num = new ArrayList<List<String>>(equip_serie_num); 
 	           List<List<String>> ener_collect_time = new ArrayList<List<String>>(equip_serie_num);
 	           List<List<Float>> ener_val= new ArrayList<List<Float>>(); 
 	           
@@ -51,11 +51,11 @@ public class GasController {
                for (j=0;j<equip_serie_num;j++){
         		   Ener_stat_tab_for_a_equip = ener_stat_tabDAO.GetSpecData(user_select_equip[j],start_time,end_time,"gas",timechoice);             	   
     		   
-        		   equip_num.add(j, new ArrayList<String>());
+        		//   equip_num.add(j, new ArrayList<String>());
         		   ener_collect_time.add(j, new ArrayList<String>());
         		   ener_val.add(j, new ArrayList<Float>());
-        		   
-
+       		   
+        		   equip_name[j]=Ener_stat_tab_for_a_equip.get(0).getEquip_num();
         		  
             	   for(int i=0;i<Ener_stat_tab_for_a_equip.size();i++){  
 		         // equip_num.get(j).add(Ener_stat_tab_for_a_equip.get(i).getEquip_num());
@@ -66,7 +66,7 @@ public class GasController {
 		          
 		           }   
             	   
-            	   series.add(j,new Series(user_select_equip[j],"line",ener_val.get(j),ener_collect_time.get(j)));
+            	   series.add(j,new Series(equip_name[j],"line",ener_val.get(j),ener_collect_time.get(j)));
             	  
             	   if (Ener_stat_tab_for_a_equip.size()>maxsize){maxsize=Ener_stat_tab_for_a_equip.size(); maxsizeflag=j;}
             	   
@@ -74,7 +74,7 @@ public class GasController {
 		       //序列的值
 		        	   		    		       
 		       //数据分组 
-		       List<String> legend = new ArrayList<String>(Arrays.asList(user_select_equip)); 
+		       List<String> legend = new ArrayList<String>(Arrays.asList(equip_name)); 
 		        //横坐标名称
 		       List<String> category = ener_collect_time.get(maxsizeflag);
 		       //序列的值
@@ -104,7 +104,7 @@ public class GasController {
 	       List<String> equip_label= new ArrayList<String>();
 	       
 	       List<Ener_stat_tab> Ener_stat_tab_for_a_equip = new ArrayList<Ener_stat_tab>();
-	       List<List<String>> equip_num = new ArrayList<List<String>>(equip_serie_num); 
+	  //     List<List<String>> equip_num = new ArrayList<List<String>>(equip_serie_num); 
            List<List<String>> ener_collect_time = new ArrayList<List<String>>(equip_serie_num);
            List<List<Float>> ener_val= new ArrayList<List<Float>>(); 
            
@@ -112,26 +112,27 @@ public class GasController {
  
         	   Ener_stat_tab_for_a_equip = ener_stat_tabDAO.GetSpecData(user_select_equip[j],start_time,end_time,"gas",timechoice);             	   
     		   
-     		   equip_num.add(j, new ArrayList<String>());
+     		  // equip_num.add(j, new ArrayList<String>());
      		   ener_collect_time.add(j, new ArrayList<String>());
      		   ener_val.add(j, new ArrayList<Float>());
      		   
      		   total_energy.add(j, new Float(0));
      		   equip_label.add(j, "");
-     		   
+     		  
+    		   equip_name[j]=Ener_stat_tab_for_a_equip.get(0).getEquip_num();
 
          	   for(int i=0;i<Ener_stat_tab_for_a_equip.size();i++){  
-		           equip_num.get(j).add(Ener_stat_tab_for_a_equip.get(i).getEquip_num());
+		          // equip_num.get(j).add(Ener_stat_tab_for_a_equip.get(i).getEquip_num());
 		           ener_collect_time.get(j).add(Ener_stat_tab_for_a_equip.get(i).getEner_collect_time());
 		           ener_val.get(j).add(Ener_stat_tab_for_a_equip.get(i).getEner_val());
 		           
 		           total_energy.set(j,total_energy.get(j)+ener_val.get(j).get(i));
-		           equip_label.set(j, user_select_equip[j]);
+		           equip_label.set(j, equip_name[j]);
          	   }
            }
            
            //数据分组
-		   List<String> legend = new ArrayList<String>(Arrays.asList(user_select_equip));  
+		   List<String> legend = new ArrayList<String>(Arrays.asList(equip_name));  
 	       //饼图没有横坐标哦，所以赋予空值
 		   List<String> category = new ArrayList<String>(Arrays.asList(new String []{""}));
 		   

@@ -142,34 +142,43 @@ public class Ener_stat_tabDAOImpl implements Ener_stat_tabDAO {
 				+ "ener_type='"+ener_type+"' AND DATEDIFF(SS,'"+start_time+"',ener_collect_time)>=0 AND "
 				+ "DATEDIFF(SS,'"+end_time+"',ener_collect_time)<=0 order by ener_collect_time asc";*/
 		if(timechoice.equals("0")){
-			sql ="SELECT DATENAME(year,ener_collect_time) AS nian ,DATENAME(month,ener_collect_time)AS yue, DATENAME(day,ener_collect_time)AS ri,"
-					+ "SUM(ener_val) AS val FROM ener_stat_tab"+ 
-	        " WHERE equip_num='"+equip_num+"' AND ener_type='"+ener_type+"' AND"+ 
-	        " DATEDIFF(SS,'"+start_time+"',ener_collect_time)>=0"+ 
-	        " AND DATEDIFF(SS,'"+end_time+"',ener_collect_time)<=0"+
-	        " GROUP BY DATENAME(month,ener_collect_time)"+
-	        " ,DATENAME(year,ener_collect_time), DATENAME(day,ener_collect_time) order by nian, yue, ri asc"+
-	        " SELECT equip_name FROM equip_tab WHERE equip_num='"+equip_num+"'";
+			sql="WITH ener_static (nian , yue, ri, val,equip_num) AS"+
+					" (SELECT DATENAME(year,ener_collect_time), DATENAME(month,ener_collect_time), DATENAME(day,ener_collect_time),SUM(ener_val),equip_num"+
+					" FROM ener_stat_tab"+
+					" WHERE ener_stat_tab.equip_num='"+equip_num+"' AND ener_type='"+ener_type+"' AND"+ 
+			        " DATEDIFF(SS,'"+start_time+"',ener_collect_time)>=0"+ 
+			        " AND DATEDIFF(SS,'"+end_time+"',ener_collect_time)<=0"+
+					" GROUP BY equip_num, DATENAME(day,ener_collect_time), DATENAME(month,ener_collect_time)"+
+					" ,DATENAME(year,ener_collect_time))"+
+					" SELECT nian , yue, ri, val, equip_name"+
+					" FROM ener_static  JOIN equip_tab ON ener_static .equip_num = equip_tab.equip_num";
 			
 		}
 		if(timechoice.equals("1")){
-			sql = "SELECT DATENAME(year,ener_collect_time) AS nian ,DATENAME(month,ener_collect_time)AS yue,SUM(ener_val) AS val"+
-	                " FROM ener_stat_tab"+ 
-	                " WHERE equip_num='"+equip_num+"' AND ener_type='"+ener_type+"' AND"+ 
-	                " DATEDIFF(SS,'"+start_time+"',ener_collect_time)>=0"+ 
-	                " AND DATEDIFF(SS,'"+end_time+"',ener_collect_time)<=0"+
-	                " GROUP BY DATENAME(month,ener_collect_time)"+
-	                " ,DATENAME(year,ener_collect_time) order by nian, yue asc"+
-	    	        " SELECT equip_name FROM equip_tab WHERE equip_num='"+equip_num+"'";
+			sql="WITH ener_static (nian , yue, val,equip_num) AS"+
+					" (SELECT DATENAME(year,ener_collect_time)  ,DATENAME(month,ener_collect_time),SUM(ener_val),equip_num"+
+					" FROM ener_stat_tab"+
+					" WHERE ener_stat_tab.equip_num='"+equip_num+"' AND ener_type='"+ener_type+"' AND"+ 
+			        " DATEDIFF(SS,'"+start_time+"',ener_collect_time)>=0"+ 
+			        " AND DATEDIFF(SS,'"+end_time+"',ener_collect_time)<=0"+
+					" GROUP BY equip_num ,DATENAME(month,ener_collect_time)"+
+					" ,DATENAME(year,ener_collect_time))"+
+					" SELECT nian , yue, val, equip_name"+
+					" FROM ener_static  JOIN equip_tab ON ener_static .equip_num = equip_tab.equip_num";
 		}
 		if(timechoice.equals("2")){
-			sql = "SELECT DATENAME(year,ener_collect_time) AS nian ,SUM(ener_val) AS val"+
-	                " FROM ener_stat_tab"+ 
-	                " WHERE equip_num='"+equip_num+"' AND ener_type='"+ener_type+"' AND"+ 
-	                " DATEDIFF(SS,'"+start_time+"',ener_collect_time)>=0"+ 
-	                " AND DATEDIFF(SS,'"+end_time+"',ener_collect_time)<=0"+
-	                " GROUP BY DATENAME(year,ener_collect_time) order by nian asc"+
-	    	        " SELECT equip_name FROM equip_tab WHERE equip_num='"+equip_num+"'";
+			
+			sql="WITH ener_static (nian, val,equip_num) AS"+
+			" (SELECT DATENAME(year,ener_collect_time), SUM(ener_val),equip_num"+
+			" FROM ener_stat_tab"+
+			" WHERE ener_stat_tab.equip_num='"+equip_num+"' AND ener_type='"+ener_type+"' AND"+ 
+	        " DATEDIFF(SS,'"+start_time+"',ener_collect_time)>=0"+ 
+	        " AND DATEDIFF(SS,'"+end_time+"',ener_collect_time)<=0"+
+			" GROUP BY equip_num,"+
+			" DATENAME(year,ener_collect_time))"+
+			" SELECT nian, val, equip_name"+
+			" FROM ener_static  JOIN equip_tab ON ener_static .equip_num = equip_tab.equip_num";
+	
 		}
 		//System.out.println("3333");
 		listEner_stat_tab = jdbcTemplate.query(sql, new RowMapper<Ener_stat_tab>() {
