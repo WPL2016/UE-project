@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -34,7 +35,7 @@ public class Produce_plan_tabController {
 		model.addObject("recordnum",recordnum+"");
 		return model;
 	}
-	
+	 
 	@RequestMapping(value="/showproduce_plan_tab")  	
 	public @ResponseBody List<Produce_plan_tab> allContact() throws IOException{
 		List<Produce_plan_tab> allProduce_plan_tab = produce_plan_tabDAO.list();		
@@ -42,7 +43,7 @@ public class Produce_plan_tabController {
 	}
 	
 	@RequestMapping(value="/editproduce_plan_tab")  	
-	public @ResponseBody String editJqGrid(HttpServletRequest request) throws ParseException {
+	public @ResponseBody String editJqGrid(HttpServletRequest request,@RequestParam(value ="plan_time",required=false) @DateTimeFormat(pattern="yyyy-MM-dd") Date date) throws ParseException {
 		Produce_plan_tab produce_plan_tab=new Produce_plan_tab();
 		String oper=request.getParameter("oper");
 		String produce_plan_num=request.getParameter("produce_plan_num");
@@ -51,14 +52,16 @@ public class Produce_plan_tabController {
 		produce_plan_tab.setProduce_plan_recorder_num(request.getUserPrincipal().getName());
 		
 		
-		 Date date=@DateTimeFormat(pattern="yyyy-MM-dd") request.getParameter("plan_time");
+		
 		
 
 		produce_plan_tab.setPlan_time(date);
-		
-		produce_plan_tab.setPlan_quan(Integer.parseInt(request.getParameter("plan_quan")));		
+		if(request.getParameter("plan_quan")!=null)
+		{produce_plan_tab.setPlan_quan(Integer.parseInt(request.getParameter("plan_quan")));	
+				}
+		if(request.getParameter("plan_work_time")!=null)
 		produce_plan_tab.setPlan_work_time(Integer.parseInt(request.getParameter("plan_work_time")));
-		produce_plan_tab.setEquip_product_relat_num(request.getParameter("Equip_product_relat_num"));
+		produce_plan_tab.setEquip_product_relat_num(request.getParameter("equip_product_relat_num"));
 		 
 		System.out.println("oper:"+oper);
 		System.out.println("produce_plan_num:"+produce_plan_num);
@@ -70,7 +73,7 @@ public class Produce_plan_tabController {
 	    //System.out.println("½øÈë0");
 		System.out.println(produce_plan_tab.getProduce_plan_num());
 		if(oper != null && oper.equals("edit")){
-		if(produce_plan_tab.getProduce_plan_num()=="") produce_plan_tab.setProduce_plan_num(null);
+		if(produce_plan_tab.getProduce_plan_num()=="")produce_plan_tab.setProduce_plan_num(null);
 		produce_plan_tabDAO.saveOrUpdate(produce_plan_tab);   
 		
 		}

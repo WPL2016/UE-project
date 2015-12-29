@@ -38,10 +38,12 @@ public class Produce_plan_tabDAOImpl implements Produce_plan_tabDAO {
 		int i=jdbcTemplate.queryForInt(abc,produce_plan_tab.getProduce_plan_num());
 		if (i!=0) {
 			// update
-			String sql = "UPDATE produce_plan_tab SET equip_product_relat_num=?,"
-						+ "plan_time=?,plan_quan=?,plan_work_time=?,produce_plan_recorder_num=?WHERE produce_plan_num=?";
+			String sql = "UPDATE produce_plan_tab SET equip_product_relat_num= ?,plan_time=?,plan_quan= ?,plan_work_time= ?,produce_plan_recorder_num= ?"+
+ " WHERE produce_plan_num= ?";
+					//	+ "plan_time=?,plan_quan=?,plan_work_time=?,produce_plan_recorder_num=?WHERE produce_plan_num=?";
 			jdbcTemplate.update(sql, produce_plan_tab.getEquip_product_relat_num(), produce_plan_tab.getPlan_time(),
-					produce_plan_tab.getPlan_quan(),produce_plan_tab.getPlan_work_time(),produce_plan_tab.getProduce_plan_recorder_num(), produce_plan_tab.getProduce_plan_num());
+				produce_plan_tab.getPlan_quan(),produce_plan_tab.getPlan_work_time(),produce_plan_tab.getProduce_plan_recorder_num(), produce_plan_tab.getProduce_plan_num());
+			//jdbcTemplate.update(sql);
 		} else {
 			// insert
 			String sql = "INSERT INTO produce_plan_tab (equip_product_relat_num,produce_plan_num,plan_time,plan_quan,plan_work_time,produce_plan_recorder_num)"

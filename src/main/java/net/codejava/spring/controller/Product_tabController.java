@@ -26,7 +26,7 @@ public class Product_tabController {
 	@RequestMapping(value="/toproduct_tab")
 	public ModelAndView toproduct_tab(){
 		ModelAndView model=new ModelAndView();
-		model.setViewName("mater_tab");
+		model.setViewName("product_tab");
 		int recordnum=contactDAO.countRecord();
 		model.addObject("recordnum",recordnum+"");
 		return model;

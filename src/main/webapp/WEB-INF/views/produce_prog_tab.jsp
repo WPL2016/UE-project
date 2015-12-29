@@ -102,17 +102,17 @@ $(function () {
         		      {
         		        url : "showproduce_plan_tab",
         		        datatype : "json",
-        		        colNames : [  '生产计划编号', '生产计划时间 ', '设备名称', '产品名称','计划产量','计划工作时间', '生产计划记录人编号','设备与产品关系表'],
+        		        colNames : [  '生产计划编号', '生产计划时间 ', '设备名称', '产品名称','计划产量','计划工作时间', '生产计划记录人姓名','设备与产品关系编号'],
         		        colModel : [ 
 
         		                     {name : 'produce_plan_num',index :'produce_plan_num',width : 90,align : "center",sortable :true,editable : true,key:true},
-        		                     {name : 'plan_time',index : 'plan_time',width : 150,align : "center",sortable : true,editable : true,searchoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}},addoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}},editoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}}} ,
-        		                     {name : 'product_name',index : 'product_name',width : 150,align : "center",sortable : true,editable : false}, 
-        		                     {name : 'equip_name',index : 'equip_name',width : 150,align : "center",sortable : true,editable : false}, 
-        		                     {name : 'plan_quan',index : 'plan_quan',width : 90,align : "center",sortable : true,editable : true},        		                 
-        			                 {name : 'plan_work_time',index : 'plan_work_time',width : 80,align : "center",sortable : true,editable : true}, 
-        		                     {name : 'produce_plan_recorder_num',index : 'produce_plan_recorder_num',width : 80,align : "center",sortable : true,editable : false},       
-        		                     {name : 'equip_product_relat_num',index : 'equip_product_relat_num',width : 80,align : "center",sortable : true,editable : true},         		                     
+        		                     {name : 'plan_time',index : 'plan_time',width : 130,align : "center",sortable : true,editable : true,searchoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}},addoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}},editoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}}} ,
+        		                     {name : 'product_name',index : 'product_name',width : 100,align : "center",sortable : true,editable : false}, 
+        		                     {name : 'equip_name',index : 'equip_name',width : 100,align : "center",sortable : true,editable : false}, 
+        		                     {name : 'plan_quan',index : 'plan_quan',width : 70,align : "center",sortable : true,editable : true},        		                 
+        			                 {name : 'plan_work_time',index : 'plan_work_time',width : 90,align : "center",sortable : true,editable : true}, 
+        		                     {name : 'produce_plan_recorder_num',index : 'produce_plan_recorder_num',width : 150,align : "center",sortable : true,editable : false},       
+        		                     {name : 'equip_product_relat_num',index : 'equip_product_relat_num',width : 150,align : "center",sortable : true,editable : true},         		                     
         		                   ],
         		                   
         		        //下载数据到本地，可以实现在前端排序、搜索，这种方式好处是这里的排序和搜索都无需后台处理，无需额外代码，而且支持多条件复杂搜索

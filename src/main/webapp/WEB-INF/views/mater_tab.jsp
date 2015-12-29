@@ -23,7 +23,7 @@
 <meta name="_csrf" content="${_csrf.token}"/>
 <!-- default header name is X-CSRF-TOKEN -->
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
-<title>物料信息</title>  
+<title>原材料信息</title>  
 
 <script type="text/javascript">  
 <!--ajax访问时发送csrf token，以防止ajax访问被crsf过滤器拦截   -->
@@ -57,23 +57,17 @@ $(function () {
        
         <!--内容主体的div,请根据具体内容决定div的样式，table_container0最小，1次之，2最大，也可自行在div.css定义你自己想要的样式，要设置成左浮动以保证div水平排列-->     
       <div class="table_container2">
-           <div class="table_head">产品表</div>  
+           <div class="table_head">原材料信息表</div>  
                   <table id="customers">
         
           
        </table>
              
              <div>
-                  <table id="jqGrid1"></table>
-                  <div id="jqGridPager1"></div>
-                     <button id="deldata">批量修改（如审核等）</button>
-                  <button id="deldata1">批量修改1（如审核等）</button>   
-                <div class="table_head">原材料表</div>  
-                                   
                   <table id="jqGrid"></table>
                   <div id="jqGridPager"></div>
-                    <button id="deldata">批量修改（如审核等）</button>
-                  <button id="deldata1">批量修改1（如审核等）</button>   
+                    
+              
             </div>
        </div>
    
@@ -84,7 +78,7 @@ $(function () {
   <script type="text/javascript"> 
         $(document).ready(function () {
         		  pageInit();
-        		  pageInit1();
+        		  //pageInit1();
         		 // pageInit2();
         		});
         		function pageInit(){
@@ -93,7 +87,7 @@ $(function () {
         		      {
         		        url : "showmater_tab",
         		        datatype : "json",
-        		        colNames : [  '原材料编号', '原材料名称 ','原材料规格', '原材料供应商',  '原材料记录人编号' ],
+        		        colNames : [  '原材料编号', '原材料名称 ','原材料规格', '原材料供应商',  '原材料记录人姓名' ],
         		        colModel : [ 
 
         		                     {name : 'mater_num',index :'mater_num',width : 90,align : "center",sortable :true,editable : true,key:true},
@@ -233,7 +227,7 @@ $(function () {
         	                 }
         	                );
         		 
-        		   //批量修改
+        		   /*批量修改
         		   $("#deldata").click(function() {
         			   //alert("Please Select Row to delete!1")
         			   var gr = $("#jqGrid").jqGrid('getGridParam', 'selarrrow');
@@ -326,9 +320,9 @@ $(function () {
         			  });          		 
         		          		          		 
         			    	
-        		}
+        		}*/
         		
-        		function pageInit1(){
+        		/*function pageInit1(){
             		  var lastsel;
             		  jQuery("#jqGrid1").jqGrid(
             		      {
@@ -560,7 +554,7 @@ $(function () {
             	        			    
             	        			   
             	        			    
-            	        			  });
+            	        			  });*/
             	        		 
             	        		  
             	        		 
