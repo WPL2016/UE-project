@@ -1,10 +1,15 @@
 package net.codejava.spring.model;
 
-import java.text.SimpleDateFormat;
+
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class Atype_use_inf_tab {
 	private String atype_use_inf_num;
-	private SimpleDateFormat chan_date = new SimpleDateFormat("yyyy-M-dd");
+	 @DateTimeFormat( pattern = "yyyy-MM-dd" )
+
+	private Date chan_date = new Date();
 	private int chan_quan;
 	private String chan_per_num;
 	private String atype_num;
@@ -13,7 +18,7 @@ public class Atype_use_inf_tab {
 	public Atype_use_inf_tab() {
 	}
 
-	public Atype_use_inf_tab(String atype_use_inf_num, SimpleDateFormat chan_date, int chan_quan, String chan_per_num, String atype_num, String equip_num) {
+	public Atype_use_inf_tab(String atype_use_inf_num, Date chan_date, int chan_quan, String chan_per_num, String atype_num, String equip_num) {
 		this.atype_use_inf_num = atype_use_inf_num;
 		this.chan_date = chan_date;
 		this.chan_quan = chan_quan;
@@ -30,11 +35,11 @@ public class Atype_use_inf_tab {
 		this.atype_use_inf_num = atype_use_inf_num;
 	}
 
-	public SimpleDateFormat getChan_date() {
+	public Date getChan_date() {
 		return chan_date;
 	}
 
-	public void setChan_date(SimpleDateFormat chan_date) {
+	public void setChan_date(Date chan_date) {
 		this.chan_date = chan_date;
 	}
 

@@ -28,7 +28,9 @@ import net.codejava.spring.dao.daoimpl.OEE_calcuDAOImpl;
 import net.codejava.spring.dao.daoimpl.Produce_plan_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.Product_qual_asse_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.Product_tabDAOImpl;
+import net.codejava.spring.dao.daoimpl.RolesDAOImpl;
 import net.codejava.spring.dao.daoimpl.User_tabDAOImpl;
+import net.codejava.spring.dao.daoimpl.UsersDAOImpl;
 import net.codejava.spring.dao.daointerface.Atype_tabDAO;
 import net.codejava.spring.dao.daointerface.Atype_use_inf_tabDAO;
 import net.codejava.spring.dao.daointerface.ContactDAO;
@@ -51,7 +53,9 @@ import net.codejava.spring.dao.daointerface.OEE_calcuDAO;
 import net.codejava.spring.dao.daointerface.Produce_plan_tabDAO;
 import net.codejava.spring.dao.daointerface.Product_qual_asse_tabDAO;
 import net.codejava.spring.dao.daointerface.Product_tabDAO;
+import net.codejava.spring.dao.daointerface.RolesDAO;
 import net.codejava.spring.dao.daointerface.User_tabDAO;
+import net.codejava.spring.dao.daointerface.UsersDAO;
 
 
 @Configuration
@@ -152,5 +156,15 @@ public class DataSourceConfig {
    		return new OEE_calcuDAOImpl(getDataSource());
 
    	} 
-	
+    @Bean
+   	public UsersDAO getUsersDAO() {
+   		return new UsersDAOImpl(getDataSource());
+
+   	} 
+    @Bean
+   	public RolesDAO getRolesDAO() {
+   		return new RolesDAOImpl(getDataSource());
+
+   	} 
+    
 }

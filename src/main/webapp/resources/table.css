@@ -59,6 +59,9 @@
 	 text-align:left;
 
 	}
+	#customers tr.gap_change td{
+	 background-color:#FFFFFF;
+	 text-align:center;	}
 
 
 

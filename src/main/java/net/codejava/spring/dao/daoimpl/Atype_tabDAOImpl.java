@@ -35,7 +35,7 @@ public class Atype_tabDAOImpl implements Atype_tabDAO {
 		int i=jdbcTemplate.queryForInt(abc,atype_tab.getAtype_num());
 		if (i!=0) {
 			// update
-			String sql = "UPDATE atype_tab SET atype_sup=?, atype_name=?, atype_recorder_num=?, "
+			String sql = "UPDATE atype_tab SET atype_sup=?, atype_name=?, atype_recorder_num=?  "
 						+ " WHERE atype_num=?";
 			jdbcTemplate.update(sql, atype_tab.getAtype_sup(), atype_tab.getAtype_name(),
 					atype_tab.getAtype_recorder_num(), atype_tab.getAtype_num());

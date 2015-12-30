@@ -2,32 +2,33 @@ package net.codejava.spring.model;
 
 
 public class Roles {
-	private int id;
-	private String name;
+	private int role_id;
+	private String role_name;
 
 
 	public Roles() {
 	}
 
-	public Roles(String name) {
-		this.name = name;
+	public Roles(String role_name,int role_id) {
+		this.role_name = role_name;
+		this.role_id=role_id;
 
 	}
 
-	public int getId() {
-		return id;
+	public int getRole_id() {
+		return role_id;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setRole_id(int role_id) {
+		this.role_id = role_id;
 	}
 
-	public String getName() {
-		return name;
+	public String getRole_name() {
+		return role_name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setRole_name(String role_name) {
+		this.role_name = role_name;
 	}
 
 
