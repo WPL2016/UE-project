@@ -6,16 +6,18 @@ public class Mater_tab {
 	private String mater_recorder_num;
 	private String mater_num;
 	private String mater_stan;
+	private String mater_unit;
 	
 	public Mater_tab() {
 	}
 
-	public Mater_tab(String mater_sup, String mater_name, String mater_recorder_num, String mater_num,String mater_stan) {
+	public Mater_tab(String mater_sup, String mater_name, String mater_recorder_num, String mater_num,String mater_stan,String mater_unit) {
 		this.mater_sup = mater_sup;
 		this.mater_name = mater_name;
 		this.mater_recorder_num = mater_recorder_num;	
 		this.mater_num = mater_num;
 		this.mater_stan = mater_stan;
+		this.mater_unit = mater_unit;
 	}
 
 	public String getMater_sup() {
@@ -57,4 +59,12 @@ public class Mater_tab {
 	public void setMater_name(String mater_name) {
 		this.mater_name = mater_name;
 	}
+	public String getMater_unit() {
+		return mater_unit;
+	}
+
+	public void setMater_unit(String mater_unit) {
+		this.mater_unit = mater_unit;
+	}
+
 }

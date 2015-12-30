@@ -2,11 +2,14 @@ package net.codejava.spring.model;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class Mater_pur_tab {
 	private String mater_num;
 	private String mater_name;
 	private String stock_stat_per_num;
 	private String stock_stat_num;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date stock_stat_time;
 	private Float stock_quan;
 	

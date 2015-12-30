@@ -42,9 +42,9 @@ public class Mater_pur_tabDAOImpl implements Mater_pur_tabDAO {
 					mater_pur_tab.getStock_stat_time(), mater_pur_tab.getStock_quan(), mater_pur_tab.getStock_stat_num());
 		} else {
 			// insert
-			String sql = "INSERT INTO mater_tab (mater_num, stock_stat_per_num,stock_stat_time,stock_quan,stock_stat_num)"
+			String sql = "INSERT INTO mater_stock_stat_tab (mater_num, stock_stat_per_num,stock_stat_time,stock_quan,stock_stat_num)"
 						+ " VALUES (?, ?, ?, ?, ?)";
-			jdbcTemplate.update(sql, sql, mater_pur_tab.getMater_num(), mater_pur_tab.getStock_stat_per_num(),
+			jdbcTemplate.update(sql,  mater_pur_tab.getMater_num(), mater_pur_tab.getStock_stat_per_num(),
 					mater_pur_tab.getStock_stat_time(), mater_pur_tab.getStock_quan(), mater_pur_tab.getStock_stat_num());
 		}
 		
@@ -52,7 +52,7 @@ public class Mater_pur_tabDAOImpl implements Mater_pur_tabDAO {
 
 	@Override
 	public void delete(String stock_stat_num) {
-		String sql = "DELETE FROM mater_stock_stat_tab WHEREstock_stat_num=?";
+		String sql = "DELETE FROM mater_stock_stat_tab WHERE stock_stat_num=?";
 		jdbcTemplate.update(sql, stock_stat_num);
 	}
 

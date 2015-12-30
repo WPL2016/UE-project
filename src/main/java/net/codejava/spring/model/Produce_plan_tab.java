@@ -1,4 +1,4 @@
-package net.codejava.spring.model;
+ package net.codejava.spring.model;
 
 import java.util.Date;
 

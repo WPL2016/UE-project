@@ -87,12 +87,13 @@ $(function () {
         		      {
         		        url : "showmater_tab",
         		        datatype : "json",
-        		        colNames : [  '原材料编号', '原材料名称 ','原材料规格', '原材料供应商',  '原材料记录人姓名' ],
+        		        colNames : [  '原材料编号', '原材料名称 ','原材料规格','单位', '原材料供应商',  '原材料记录人姓名' ],
         		        colModel : [ 
 
         		                     {name : 'mater_num',index :'mater_num',width : 90,align : "center",sortable :true,editable : true,key:true},
         		                     {name : 'mater_name',index : 'mater_name',width : 150,align : "center",sortable : true,editable : true}, 
         		                     {name : 'mater_stan',index : 'mater_stan',width : 90,align : "center",sortable : false,editable : true},        		                 
+        		                     {name : 'mater_unit',index : 'mater_unit',width : 90,align : "center",sortable : false,editable : true},
         		                     {name : 'mater_sup',index : 'mater_sup',width : 80,align : "center",sortable : true,editable : true},        		  
         		            		 {name : 'mater_recorder_num',index : 'mater_recorder_num',width : 80,align : "center",sortable : true,editable : false},       
         		                            		                     

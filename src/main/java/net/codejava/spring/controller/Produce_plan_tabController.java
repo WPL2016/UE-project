@@ -60,7 +60,7 @@ public class Produce_plan_tabController {
 		{produce_plan_tab.setPlan_quan(Integer.parseInt(request.getParameter("plan_quan")));	
 				}
 		if(request.getParameter("plan_work_time")!=null)
-		produce_plan_tab.setPlan_work_time(Integer.parseInt(request.getParameter("plan_work_time")));
+		{produce_plan_tab.setPlan_work_time(Integer.parseInt(request.getParameter("plan_work_time")));}
 		produce_plan_tab.setEquip_product_relat_num(request.getParameter("equip_product_relat_num"));
 		 
 		System.out.println("oper:"+oper);

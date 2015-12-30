@@ -346,12 +346,14 @@ $(function () {
             		      {
             		        url : "showproduce_static_tab",
             		        datatype : "json",
-            		        colNames : [  '设备名称','产品名称', '当前产量','当前合格品量'],
+            		        colNames : [  '设备名称','产品名称', '当前产量','当前合格品量','生产计划量','执行生产计划编号'],
             		        colModel : [ 
             		                    {name : 'equip_name',index : 'equip_name',width : 90,align : "center",sortable :false,editable :false,key:false },
             		                    {name : 'product_name',index : 'product_name',width : 100,align : "center",sortable : false,editable :false},        		         
             		                    {name : 'value',index : 'value',width : 100,align : "center",sortable : false,editable : false},        		                 
             		                    {name : 'count_qulified_product',index : 'count_qulified_product',width : 80,align : "center",sortable :false,editable :false}, 
+            		                    {name : 'plan_quan',index : 'plan_quan',width : 90,align : "center",sortable : false,editable : false},  
+            		                    {name : 'produce_plan_num',index : 'produce_plan_num',width : 100,align : "center",sortable :false,editable :false}, 
             		                    
             		                   ],
             		                   //下载数据到本地，可以实现在前端排序、搜索，这种方式好处是这里的排序和搜索都无需后台处理，无需额外代码，而且支持多条件复杂搜索

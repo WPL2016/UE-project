@@ -49,6 +49,7 @@ public class Mater_tabController {
 		mater_tab.setMater_sup(request.getParameter("mater_sup"));
 		mater_tab.setMater_recorder_num(request.getUserPrincipal().getName());
 		mater_tab.setMater_stan(request.getParameter("mater_stan"));
+		mater_tab.setMater_unit(request.getParameter("mater_unit"));
 		
 	
 		

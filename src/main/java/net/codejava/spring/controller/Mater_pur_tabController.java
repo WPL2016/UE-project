@@ -1,13 +1,17 @@
 package net.codejava.spring.controller;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -40,7 +44,7 @@ public class Mater_pur_tabController {
 	}
 	
 	@RequestMapping(value="/editmater_pur_tab")  	
-	public @ResponseBody String editJqGrid(HttpServletRequest request) {
+	public @ResponseBody String editJqGrid(HttpServletRequest request,@RequestParam(value ="stock_stat_time",required=false) @DateTimeFormat(pattern="yyyy-MM-dd") Date date) throws ParseException{
 		Mater_pur_tab mater_pur_tab=new Mater_pur_tab();
 		String oper=request.getParameter("oper");
 		String stock_stat_num=request.getParameter("stock_stat_num");
@@ -49,8 +53,9 @@ public class Mater_pur_tabController {
 		mater_pur_tab.setMater_num(request.getParameter("mater_num"));
 		mater_pur_tab.setStock_stat_per_num(request.getUserPrincipal().getName());
 		mater_pur_tab.setStock_stat_num(request.getParameter("stock_stat_num"));
-		mater_pur_tab.setStock_stat_time(request.getParameter("stock_stat_time"));
-		mater_pur_tab.setStock_quan(Float.valueOf(request.getParameter("stock_quan")));
+		mater_pur_tab.setStock_stat_time(date);
+		if(request.getParameter("stock_quan")!=null)
+		{mater_pur_tab.setStock_quan(Float.valueOf(request.getParameter("stock_quan")));}
 		
 	
 		
