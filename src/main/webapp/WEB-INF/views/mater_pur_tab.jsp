@@ -23,7 +23,7 @@
 <meta name="_csrf" content="${_csrf.token}"/>
 <!-- default header name is X-CSRF-TOKEN -->
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
-<title>原材料状态</title>  
+<title>原材料采购信息</title>  
 <script>
  $(function() {
 
@@ -66,20 +66,12 @@ $(function () {
        
         <!--内容主体的div,请根据具体内容决定div的样式，table_container0最小，1次之，2最大，也可自行在div.css定义你自己想要的样式，要设置成左浮动以保证div水平排列-->     
       <div class="table_container2">
-           <div class="table_head">当前新料、旧料使用状态</div>  
-                  <table id="customers"> </table>    
+           
           
       
              
              <div>
-                  <table id="jqGrid1"></table>
-                  <div id="jqGridPager1"></div>
-                                
-                 
-                <div class="table_head">当前原材料库存状态</div>  
-                                   
-                  <table id="jqGrid"></table>
-                  <div id="jqGridPager"></div>
+                  
                   
                 <div class="table_head">原材料采购情况表</div>  
                                    
@@ -95,11 +87,11 @@ $(function () {
   
   <script type="text/javascript"> 
         $(document).ready(function () {
-        		  pageInit();
-        		  pageInit1();
+        		  //pageInit();
+        		  //pageInit1();
         		  pageInit2();
         		});
-        		function pageInit(){
+        		/*function pageInit(){
         		  var lastsel;
         		  jQuery("#jqGrid").jqGrid(
         		      {
@@ -576,8 +568,8 @@ $(function () {
             	        		 
             	        		          		          		 
             	        			    	
-            	        		} 
-            	        		/*function pageInit2(){
+            	        		} */
+            	        		function pageInit2(){
             	          		  var lastsel;
             	          		  jQuery("#jqGrid2").jqGrid(
             	          		      {
@@ -722,7 +714,7 @@ $(function () {
             	          	                    }
             	          	                 }
             	          	                );
-            	          		   */
+            	          		   
             	          		 
             	          		 /*  //批量修改
             	          		   $("#deldata").click(function() {

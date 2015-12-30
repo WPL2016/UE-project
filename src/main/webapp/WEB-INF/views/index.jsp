@@ -30,6 +30,7 @@
 <a href="toproduce_prog_tab">生产状态</a><br/>
 <a href="toauthority">权限管理</a><br/>
 <a href="tomater_tab">原材料信息</a><br/>
+<a href="tomater_pur_tab">原材料采购信息</a><br/>
 <a href="toproduct_tab">产品信息</a><br/>
 <a href="tomater_use_stock_tab">原材料状态</a><br/>
 <!--  <a href="tohello">3号输入</a><br/>-->

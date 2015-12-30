@@ -59,7 +59,7 @@ public class Mater_pur_tabDAOImpl implements Mater_pur_tabDAO {
 	@Override
 	public List<Mater_pur_tab> list() {
 		String sql = "SELECT  stock_stat_num, stock_stat_time, stock_quan, "+
-        " stock_stat_per_num, mater_name, mater_stock_stat_tab.mater_num"+
+        " stock_stat_per_num, mater_name, mater_stock_stat_tab.mater_num,mater_unit"+
 " FROM   mater_stock_stat_tab  JOIN mater_tab ON mater_stock_stat_tab.mater_num = mater_tab.mater_num ";
 		List<Mater_pur_tab> listMater_pur_tab = jdbcTemplate.query(sql, new RowMapper<Mater_pur_tab>() {
 
@@ -73,6 +73,7 @@ public class Mater_pur_tabDAOImpl implements Mater_pur_tabDAO {
 				aMater_pur_tab.setStock_stat_num(rs.getString("stock_stat_num"));
 				aMater_pur_tab.setStock_stat_time(rs.getDate("stock_stat_time"));
 				aMater_pur_tab.setStock_quan(rs.getFloat("stock_quan"));
+				aMater_pur_tab.setMater_unit(rs.getString("mater_unit"));
 				return aMater_pur_tab;
 			}
 			
@@ -97,7 +98,7 @@ public class Mater_pur_tabDAOImpl implements Mater_pur_tabDAO {
 					aMater_pur_tab.setStock_stat_num(rs.getString("stock_stat_num"));
 					aMater_pur_tab.setStock_stat_time(rs.getDate("stock_stat_time"));
 					aMater_pur_tab.setStock_quan(rs.getFloat("stock_quan"));
-					
+					aMater_pur_tab.setMater_unit(rs.getString("mater_unit"));
 					return aMater_pur_tab;
 				}
 				

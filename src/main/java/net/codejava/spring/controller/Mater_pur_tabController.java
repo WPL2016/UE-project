@@ -31,7 +31,7 @@ public class Mater_pur_tabController {
 	@RequestMapping(value="/tomater_pur_tab")
 	public ModelAndView tomatertab(){
 		ModelAndView model=new ModelAndView();
-		model.setViewName("mater_use_stock_tab");
+		model.setViewName("mater_pur_tab");
 		int recordnum=contactDAO.countRecord();
 		model.addObject("recordnum",recordnum+"");
 		return model;

@@ -12,19 +12,27 @@ public class Mater_pur_tab {
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date stock_stat_time;
 	private Float stock_quan;
+	private String mater_unit;
 	
 	public Mater_pur_tab() {
 	}
 
-	public Mater_pur_tab(String mater_num, String mater_name, String stock_stat_per_num,String stock_stat_num, Date stock_stat_time,Float stock_quan) {
+	public Mater_pur_tab(String mater_num, String mater_name, String stock_stat_per_num,String stock_stat_num, Date stock_stat_time,Float stock_quan,String mater_unit) {
 		this.mater_num = mater_num;
 		this.mater_name = mater_name;
 		this.stock_stat_per_num = stock_stat_per_num;	
 		this.stock_stat_num = stock_stat_num;
 		this.stock_stat_time = stock_stat_time;
 		this.stock_quan = stock_quan;
+		this.mater_unit = mater_unit;
+	}
+	public String getMater_unit() {
+		return mater_unit;
 	}
 
+	public void setMater_unit(String mater_unit) {
+		this.mater_unit = mater_unit;
+	}
 	public String getMater_num() {
 		return mater_num;
 	}
@@ -72,4 +80,8 @@ public class Mater_pur_tab {
 	public void setStock_stat_time(Date stock_stat_time) {
 		this.stock_stat_time = stock_stat_time;
 	}
+
+
+		
+	
 }
