@@ -38,17 +38,17 @@ public class Produce_plan_tabDAOImpl implements Produce_plan_tabDAO {
 		int i=jdbcTemplate.queryForInt(abc,produce_plan_tab.getProduce_plan_num());
 		if (i!=0) {
 			// update
-			String sql = "UPDATE produce_plan_tab SET equip_product_relat_num= ?,plan_time=?,plan_quan= ?,plan_work_time= ?,produce_plan_recorder_num= ?"+
+			String sql = "UPDATE produce_plan_tab SET equip_product_relat_num= ?,plan_start_time=?,plan_end_time=?,plan_quan= ?,plan_work_time= ?,produce_plan_recorder_num= ?"+
  " WHERE produce_plan_num= ?";
 					//	+ "plan_time=?,plan_quan=?,plan_work_time=?,produce_plan_recorder_num=?WHERE produce_plan_num=?";
-			jdbcTemplate.update(sql, produce_plan_tab.getEquip_product_relat_num(), produce_plan_tab.getPlan_time(),
+			jdbcTemplate.update(sql, produce_plan_tab.getEquip_product_relat_num(), produce_plan_tab.getPlan_start_time(), produce_plan_tab.getPlan_end_time(),
 				produce_plan_tab.getPlan_quan(),produce_plan_tab.getPlan_work_time(),produce_plan_tab.getProduce_plan_recorder_num(), produce_plan_tab.getProduce_plan_num());
 			//jdbcTemplate.update(sql);
 		} else {
 			// insert
-			String sql = "INSERT INTO produce_plan_tab (equip_product_relat_num,produce_plan_num,plan_time,plan_quan,plan_work_time,produce_plan_recorder_num)"
-						+ " VALUES (?, ?, ?,?,?,?)";
-			jdbcTemplate.update(sql, produce_plan_tab.getEquip_product_relat_num(), produce_plan_tab.getProduce_plan_num(),produce_plan_tab.getPlan_time(),
+			String sql = "INSERT INTO produce_plan_tab (equip_product_relat_num,produce_plan_num,plan_start_time,plan_end_time,plan_quan,plan_work_time,produce_plan_recorder_num)"
+						+ " VALUES (?, ?,?, ?,?,?,?)";
+			jdbcTemplate.update(sql, produce_plan_tab.getEquip_product_relat_num(), produce_plan_tab.getProduce_plan_num(),produce_plan_tab.getPlan_start_time(), produce_plan_tab.getPlan_end_time(),
 					produce_plan_tab.getPlan_quan(),produce_plan_tab.getPlan_work_time(),produce_plan_tab.getProduce_plan_recorder_num());
 		}
 		
@@ -62,7 +62,7 @@ public class Produce_plan_tabDAOImpl implements Produce_plan_tabDAO {
 
 	@Override
 	public List<Produce_plan_tab> list() {
-		String sql = "SELECT produce_plan_num,produce_plan_tab.equip_product_relat_num,plan_time,plan_quan,plan_work_time,produce_plan_recorder_num,product_name,equip_name"+ 
+		String sql = "SELECT produce_plan_num,produce_plan_tab.equip_product_relat_num,plan_start_time,plan_end_time,plan_quan,plan_work_time,produce_plan_recorder_num,product_name,equip_name"+ 
 " FROM produce_plan_tab JOIN equip_product_relat_tab"+ 
 " ON produce_plan_tab.equip_product_relat_num=equip_product_relat_tab.equip_product_relat_num "+
 " JOIN equip_tab ON equip_product_relat_tab.equip_num = equip_tab.equip_num "+
@@ -77,7 +77,8 @@ public class Produce_plan_tabDAOImpl implements Produce_plan_tabDAO {
 				aProduce_plan_tab.setEquip_product_relat_num(rs.getString("equip_product_relat_num"));
 					
 				
-				aProduce_plan_tab.setPlan_time(rs.getDate("plan_time"));
+				aProduce_plan_tab.setPlan_start_time(rs.getDate("plan_start_time"));
+				aProduce_plan_tab.setPlan_end_time(rs.getDate("plan_end_time"));
 				
 				aProduce_plan_tab.setPlan_quan(rs.getInt("plan_quan"));
 				aProduce_plan_tab.setPlan_work_time(rs.getInt("plan_work_time"));
@@ -108,7 +109,8 @@ public class Produce_plan_tabDAOImpl implements Produce_plan_tabDAO {
 					aProduce_plan_tab.setEquip_product_relat_num(rs.getString("equip_product_relat_num"));
 						
 					
-					aProduce_plan_tab.setPlan_time(rs.getDate("plan_time"));
+					aProduce_plan_tab.setPlan_start_time(rs.getDate("plan_start_time"));
+					aProduce_plan_tab.setPlan_end_time(rs.getDate("plan_end_time"));
 					
 					aProduce_plan_tab.setPlan_quan(rs.getInt("plan_quan"));
 					aProduce_plan_tab.setPlan_work_time(rs.getInt("plan_work_time"));

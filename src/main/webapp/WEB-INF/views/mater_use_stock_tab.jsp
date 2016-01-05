@@ -66,7 +66,7 @@ $(function () {
        
         <!--内容主体的div,请根据具体内容决定div的样式，table_container0最小，1次之，2最大，也可自行在div.css定义你自己想要的样式，要设置成左浮动以保证div水平排列-->     
       <div class="table_container2">
-           <div class="table_head">当前新料、旧料使用状态</div>  
+           <div class="table_head">当前新料、回炉料使用状态</div>  
                   <table id="customers"> </table>    
           
       
@@ -80,11 +80,14 @@ $(function () {
                                    
                   <table id="jqGrid"></table>
                   <div id="jqGridPager"></div>
-                  
-                <div class="table_head">原材料采购情况表</div>  
-                                   
-                  <table id="jqGrid2"></table>
+            
+                   <div class="horiz_blank" style="height:30px"></div>
+             <div class="table_head">原材料信息表</div>
+                    <table id="jqGrid2"></table>
                   <div id="jqGridPager2"></div>
+            
+            
+         
                   
             </div>
        </div>
@@ -99,19 +102,20 @@ $(function () {
         		  pageInit1();
         		  pageInit2();
         		});
+        var mater_num_sel;
         		function pageInit(){
         		  var lastsel;
         		  jQuery("#jqGrid").jqGrid(
         		      {
         		        url : "showmater_stock_stat_tab",
         		        datatype : "json",
-        		        colNames : [  '原材料编号', '原材料名称 ', '原材料库存数量'],
+        		        colNames : [  '原材料编号', '原材料名称 ', '原材料库存数量','单位'],
         		        colModel : [ 
 
         		                     {name : 'mater_num',index :'mater_num',width : 90,align : "center",sortable :true,editable :false,key:true},
         		                     {name : 'mater_name',index : 'mater_name',width : 150,align : "center",sortable : true,editable : false} ,
         		                     {name : 'mater_quan',index : 'mater_quan',width : 150,align : "center",sortable : true,editable : false}, 
-        		                     	                     
+        		                     {name : 'mater_unit',index : 'mater_unit',width : 90,align : "center",sortable : false,editable :false}, 	                     
         		                   ],
         		                   
         		        //下载数据到本地，可以实现在前端排序、搜索，这种方式好处是这里的排序和搜索都无需后台处理，无需额外代码，而且支持多条件复杂搜索
@@ -133,7 +137,7 @@ $(function () {
         		        height:100,
         		        rowList : [ 20, 40, 60 ],
         		        pager : '#jqGridPager',
-        		        multiselect:true,
+        		        //multiselect:true,
         		        sortname :'mater_name',
         		        viewrecords : true,
         		        sortorder : "desc",
@@ -345,13 +349,17 @@ $(function () {
             		      {
             		        url : "showmater_use_stock_tab",
             		        datatype : "json",
-            		        colNames : [  '设备名称','产品名称', '新料使用量','回炉料使用量','新料与回炉料投入比例'],
+            		        colNames : [   '原材料编号', '原材料名称','设备名称','产品名称', '新料使用量','新料单位','回炉料使用量','回炉料单位','新料与回炉料投入比例'],
             		        colModel : [ 
-            		                    {name : 'equip_name',index : 'equip_name',width : 90,align : "center",sortable :false,editable :false,key:false },
+            		                    {name : 'mater_num',index :'mater_num',width : 90,align : "center",sortable :true,editable : false,key:true},
+           		                        {name : 'mater_name',index : 'mater_name',width : 100,align : "center",sortable : true,editable : false}, 
+            		                    {name : 'equip_name',index : 'equip_name',width : 90,align : "center",sortable :false,editable :false },
             		                    {name : 'product_name',index : 'product_name',width : 100,align : "center",sortable : false,editable :false},        		         
-            		                    {name : 'new_value',index : 'new_value',width : 100,align : "center",sortable : false,editable :false}, 
-            		                    {name : 'fou_value',index : 'fou_value',width : 100,align : "center",sortable : false,editable :false}, 
-            		                    {name : 'mater_percent',index : 'mater_percent',width : 80,align : "center",sortable :false,editable :false}, 
+            		                    {name : 'new_value',index : 'new_value',width : 90,align : "center",sortable : false,editable :false}, 
+            		                    {name : 'mater_unit',index : 'mater_unit',width : 90,align : "center",sortable : false,editable :false}, 
+            		                    {name : 'fou_value',index : 'fou_value',width : 90,align : "center",sortable : false,editable :false}, 
+            		                    {name : 'mater_unit',index : 'mater_unit',width : 90,align : "center",sortable : false,editable :false}, 
+            		                    {name : 'mater_percent',index : 'mater_percent',width : 140,align : "center",sortable :false,editable :false}, 
             		                   ],
             		                   //下载数据到本地，可以实现在前端排序、搜索，这种方式好处是这里的排序和搜索都无需后台处理，无需额外代码，而且支持多条件复杂搜索
             	        	        	//缺点是一次导入所有数据，数据量大时会存在一些问题，此时需要在后台实现搜索，只载入符合条件的数据,此外表格不自动刷新，需要reload
@@ -372,7 +380,7 @@ $(function () {
             	        		        height:100,
             	        		        rowList : [ 20, 40, 60 ],
             	        		        pager : '#jqGridPager1',
-            	        		        multiselect:true,
+            	        		    //    multiselect:true,
             	        		        sortname :'equip_name',
             	        		        viewrecords : true,
             	        		        sortorder : "desc",
@@ -577,6 +585,76 @@ $(function () {
             	        		          		          		 
             	        			    	
             	        		} 
+            	        		function pageInit2(){
+            	            		  var lastsel;
+            	            		  jQuery("#jqGrid2").jqGrid(
+            	            		      {
+            	            		    	  url : "showmater_tab",
+            	              		        datatype : "json",
+            	              		        colNames : [  '原材料编号', '原材料名称 ','原材料规格','单位', '原材料供应商',  '原材料记录人姓名' ],
+            	              		        colModel : [ 
+
+            	              		                     {name : 'mater_num',index :'mater_num',width : 90,align : "center",sortable :true,editable : true,key:true},
+            	              		                     {name : 'mater_name',index : 'mater_name',width : 150,align : "center",sortable : true,editable : true}, 
+            	              		                     {name : 'mater_stan',index : 'mater_stan',width : 90,align : "center",sortable : false,editable : true},        		                 
+            	              		                     {name : 'mater_unit',index : 'mater_unit',width : 90,align : "center",sortable : false,editable : true},
+            	              		                     {name : 'mater_sup',index : 'mater_sup',width : 80,align : "center",sortable : true,editable : true},        		  
+            	              		            		 {name : 'mater_recorder_num',index : 'mater_recorder_num',width : 80,align : "center",sortable : true,editable : false},       
+            	              		                            		                     
+            	              		                   ],
+            	            		                   
+            	            		        //下载数据到本地，可以实现在前端排序、搜索，这种方式好处是这里的排序和搜索都无需后台处理，无需额外代码，而且支持多条件复杂搜索
+            	            	        	//缺点是一次导入所有数据，数据量大时会存在一些问题，此时需要在后台实现搜索，只载入符合条件的数据,此外表格不自动刷新，需要reload
+            	            	        	//请根据需要选择养已经完成好的前台查询和排序还是自行实现后台排序和搜索  
+            	            	        
+            	            		        loadonce:true,
+            	            		        //当加载出错时提供错误信息
+            	            		        loadError: function(xhr,status,error){  
+            	            		        	 alert(status + " loading data of " + $(this).attr("id") + " : " + error );    },  
+
+            	            		       // caption:"原材料使用状况", //height : 80,align : "center",
+            	            		       
+            	            		        prmNames: { id: "mater_num" },
+            	            		        rowNum : 20,
+            	            		        height:150,
+            	            		        rowList : [ 20, 40, 60 ],
+            	            		        pager : '#jqGridPager2',
+            	            		       // multiselect:true,
+            	            		        sortname :'mater_num',
+            	            		        viewrecords : true,
+            	            		        sortorder : "desc",
+            	            		        autowidth:true,
+            	            		        onSelectRow : function(id) {
+            	            		        
+            	            		        //生成从表
+            	            		          mater_num_sel=id; 	
+            	            		        $("#jqGrid1").setGridParam({datatype:'json', page:1,url:"showsomemater_use_stock_tab?mater_num="+id}).trigger('reloadGrid');
+            	               		        $("#jqGrid").setGridParam({datatype:'json', page:1,url:"showsomemater_stock_stat_tab?mater_num="+id}).trigger('reloadGrid');
+            	            		          
+            	          		               
+            	            		        },
+            	            		       
+            	            		       
+            	            		      });
+            	            		  
+            	            		   $('#jqGrid2').navGrid('#jqGridPager2',
+            	            	                // the buttons to appear on the toolbar of the grid
+            	            	                { edit: false, add: false, del: false, search: true, refresh: true, view: true, position: "left", cloneToTop: false },
+            	            	             
+            	            	                // options for the Search Dailog
+            	            	                {
+            	            	                	multipleSearch:true,
+            	            	                	multipleGroup:true,
+            	            	                	recreateForm: true,
+            	            	                	closeAfterSearch: true,       	            
+            	            	                	errorTextFormat: function (data) {
+            	            	                        return '搜索失败，请重新尝试!'+ data.responseText
+            	            	                    }
+            	            	                 }
+            	            	                );
+            	            		          		 
+            	            			    	
+            	            		}
             	        		/*function pageInit2(){
             	          		  var lastsel;
             	          		  jQuery("#jqGrid2").jqGrid(
@@ -814,11 +892,11 @@ $(function () {
             	          			    
             	          			   
             	          			    
-            	          			  });*/
+            	          			  });
             	          		 
             	          		          		          		 
             	          			    	
-            	          		}
+            	          		}*/
             	          		
         		
    </script>

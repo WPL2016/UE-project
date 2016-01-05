@@ -1,10 +1,11 @@
 package net.codejava.spring.model;
 
-import java.text.SimpleDateFormat;
+
+import java.util.Date;
 
 public class Equip_pres_para_tab {
 	private Float pres_para_val;
-	private SimpleDateFormat pres_date = new SimpleDateFormat("yyyy-M-dd");
+	private Date pres_date = new Date();
 	private String pres_num;
 	private String product_num;
 	private String para_num;
@@ -12,7 +13,7 @@ public class Equip_pres_para_tab {
 	public Equip_pres_para_tab() {
 	}
 
-	public Equip_pres_para_tab(Float pres_para_val, SimpleDateFormat pres_date, String pres_num, String product_num, String para_num) {
+	public Equip_pres_para_tab(Float pres_para_val, Date pres_date, String pres_num, String product_num, String para_num) {
 		this.pres_para_val = pres_para_val;
 		this.pres_date = pres_date;
 		this.pres_num = pres_num;
@@ -28,11 +29,11 @@ public class Equip_pres_para_tab {
 		this.pres_para_val = pres_para_val;
 	}
 
-	public SimpleDateFormat getPres_date() {
+	public Date getPres_date() {
 		return pres_date;
 	}
 
-	public void setPres_date(SimpleDateFormat pres_date) {
+	public void setPres_date(Date pres_date) {
 		this.pres_date = pres_date;
 	}
 

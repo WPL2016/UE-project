@@ -5,26 +5,53 @@ public class Mater_use_stock_tab {
 	private String equip_name;
 
 	private String product_name;
+	
+	private String mater_name;
+	
+	private String mater_num;
 
 	private String new_value;
 
 	private String fou_value;
 	
 	private String mater_percent;
-
+	
+	private String mater_unit;
 	public Mater_use_stock_tab() {
 	}
 
-	public Mater_use_stock_tab(String product_name, String equip_name, String new_value, String fou_value, String mater_percent) {
+	public Mater_use_stock_tab(String mater_num,String mater_name,String product_name, String equip_name, String new_value, String fou_value, String mater_percent,String mater_unit) {
+		this.mater_num = mater_num;
+		this.mater_name = mater_name;
 		this.product_name = product_name;
 		this.equip_name = equip_name;
 		this.new_value = new_value;
 		this.fou_value = fou_value;
 		this.mater_percent = mater_percent;
+		this.mater_unit = mater_unit;
 		
 	}
+	
+	public String getMater_unit() {
+		return mater_unit;
+	}
+	public void setMater_unit(String mater_unit) {
+		this.mater_unit = mater_unit;
+	}
+	
+	public String getMater_name() {
+		return mater_name;
+	}
+	public void setMater_name(String mater_name) {
+		this.mater_name = mater_name;
+	}
 
-
+	public String getMater_num() {
+		return mater_num;
+	}
+	public void setMater_num(String mater_num) {
+		this.mater_num = mater_num;
+	}
 
 	public String getEquip_name() {
 		return equip_name;

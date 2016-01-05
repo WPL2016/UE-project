@@ -8,7 +8,9 @@ public class Produce_plan_tab {
 	private String produce_plan_recorder_num;
 	private String produce_plan_num;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
-	private Date plan_time;
+	private Date plan_start_time;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	private Date plan_end_time;
 	private int plan_quan;
 	private int plan_work_time;
 	private String equip_product_relat_num;
@@ -17,10 +19,11 @@ public class Produce_plan_tab {
 	public Produce_plan_tab() {
 	}
 
-	public Produce_plan_tab(String produce_plan_recorder_num, String produce_plan_num,@DateTimeFormat(pattern="yyyy-MM-dd") Date plan_time,int plan_quan,int plan_work_time, String equip_product_relat_num) {
+	public Produce_plan_tab(String produce_plan_recorder_num, String produce_plan_num,@DateTimeFormat(pattern="yyyy-MM-dd") Date plan_start_time,@DateTimeFormat(pattern="yyyy-MM-dd") Date plan_end_time,int plan_quan,int plan_work_time, String equip_product_relat_num) {
 		this.produce_plan_recorder_num = produce_plan_recorder_num;
 		this.produce_plan_num = produce_plan_num;
-		this.plan_time = plan_time;	
+		this.plan_start_time = plan_start_time;	
+		this.plan_end_time = plan_end_time;
 		this.plan_quan = plan_quan;	
 		this.plan_work_time = plan_work_time;	
 		this.equip_product_relat_num = equip_product_relat_num;
@@ -58,12 +61,19 @@ public class Produce_plan_tab {
 		this.produce_plan_num = produce_plan_num;
 	}
 
-	public @DateTimeFormat(pattern="yyyy-MM-dd") Date getPlan_time() {
-		return plan_time;
+	public @DateTimeFormat(pattern="yyyy-MM-dd") Date getPlan_start_time() {
+		return plan_start_time;
 	}
 
-	public void setPlan_time(@DateTimeFormat(pattern="yyyy-MM-dd") Date date) {
-		this.plan_time = date;
+	public void setPlan_start_time(@DateTimeFormat(pattern="yyyy-MM-dd") Date date) {
+		this.plan_start_time = date;
+	}
+	public @DateTimeFormat(pattern="yyyy-MM-dd") Date getPlan_end_time() {
+		return plan_end_time;
+	}
+
+	public void setPlan_end_time(@DateTimeFormat(pattern="yyyy-MM-dd") Date date) {
+		this.plan_end_time = date;
 	}
 	
 	public int getPlan_quan() {

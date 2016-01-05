@@ -23,4 +23,6 @@ public interface Produce_prog_tabDAO {
 	public int updateSingleColumn(Produce_prog_tab produce_prog_tab,String column,String value);
 	
 	public List<Produce_static_tab> listProduce_static_tab();
+	
+	public List<Produce_static_tab> list(String produce_plan_num);
 }

@@ -43,7 +43,7 @@ public class Atype_use_inf_tabDAOImpl implements Atype_use_inf_tabDAO {
 					atype_use_inf_tab.getChan_per_num(), atype_use_inf_tab.getAtype_num(),atype_use_inf_tab.getEquip_num(),atype_use_inf_tab.getAtype_use_inf_num());
 		} else {
 			// insert
-			String sql = "INSERT INTO Atype_tab (Atype_use_inf_num,Chan_date, Chan_quan, Chan_per_num,Atype_num,Equip_num)"
+			String sql = "INSERT INTO atype_use_inf_tab (Atype_use_inf_num,Chan_date, Chan_quan, Chan_per_num,Atype_num,Equip_num)"
 						+ " VALUES (?, ?, ?,?, ?,?)";
 			jdbcTemplate.update(sql, atype_use_inf_tab.getAtype_use_inf_num(), atype_use_inf_tab.getChan_date(),
 					atype_use_inf_tab.getChan_quan(),atype_use_inf_tab.getChan_per_num(),atype_use_inf_tab.getAtype_num(),atype_use_inf_tab.getEquip_num());
@@ -68,10 +68,7 @@ public class Atype_use_inf_tabDAOImpl implements Atype_use_inf_tabDAO {
 	
 				aAtype_use_inf_tab.setAtype_use_inf_num(rs.getString("atype_use_inf_num"));
 				
-				Format formatter = new SimpleDateFormat("yyyy-M-dd");
-				String str = formatter.format(rs.getDate("chan_date"));
-				SimpleDateFormat simple= new SimpleDateFormat(str);
-				aAtype_use_inf_tab.setChan_date(simple);
+				aAtype_use_inf_tab.setChan_date(rs.getDate("chan_date"));
 				
 				aAtype_use_inf_tab.setChan_quan(rs.getInt("chan_quan"));
 				aAtype_use_inf_tab.setChan_per_num(rs.getString("chan_per_num"));
@@ -88,6 +85,35 @@ public class Atype_use_inf_tabDAOImpl implements Atype_use_inf_tabDAO {
 	}
 
 	@Override
+	public List<Atype_use_inf_tab> list(String atype_num) {
+		String sql = "SELECT * FROM atype_use_inf_tab where atype_num='"+atype_num+"'";
+		List<Atype_use_inf_tab> listAtype_use_inf_tab = jdbcTemplate.query(sql, new RowMapper<Atype_use_inf_tab>() {
+
+			@Override
+			public Atype_use_inf_tab mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Atype_use_inf_tab aAtype_use_inf_tab = new Atype_use_inf_tab();
+	
+				aAtype_use_inf_tab.setAtype_use_inf_num(rs.getString("atype_use_inf_num"));
+				
+				aAtype_use_inf_tab.setChan_date(rs.getDate("chan_date"));
+				
+				aAtype_use_inf_tab.setChan_quan(rs.getInt("chan_quan"));
+				aAtype_use_inf_tab.setChan_per_num(rs.getString("chan_per_num"));
+				aAtype_use_inf_tab.setAtype_num(rs.getString("atype_num"));
+				aAtype_use_inf_tab.setEquip_num(rs.getString("equip_num"));
+	
+				
+				return aAtype_use_inf_tab;
+			}
+			
+		});
+		
+		return listAtype_use_inf_tab;
+	}	
+	
+	
+	
+	@Override
 	public Atype_use_inf_tab get(String atype_use_inf_num) {
 		String sql = "SELECT * FROM atype_use_inf_tab WHEREatype_use_inf_num=" + atype_use_inf_num;
 		return jdbcTemplate.query(sql, new ResultSetExtractor<Atype_use_inf_tab>() {
@@ -101,10 +127,9 @@ public class Atype_use_inf_tabDAOImpl implements Atype_use_inf_tabDAO {
 					
 					aAtype_use_inf_tab.setAtype_use_inf_num(rs.getString("atype_use_inf_num"));
 					
-					Format formatter = new SimpleDateFormat("yyyy-M-dd");
-					String str = formatter.format(rs.getDate("chan_date"));
-					SimpleDateFormat simple= new SimpleDateFormat(str);
-					aAtype_use_inf_tab.setChan_date(simple);
+					
+				
+					aAtype_use_inf_tab.setChan_date(rs.getDate("chan_date"));
 					
 					aAtype_use_inf_tab.setChan_quan(rs.getInt("chan_quan"));
 					aAtype_use_inf_tab.setChan_per_num(rs.getString("chan_per_num"));

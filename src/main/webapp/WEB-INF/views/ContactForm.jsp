@@ -6,7 +6,20 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>New/Edit Contact</title>
+<meta name="_csrf" content="${_csrf.token}"/>
+	<!-- default header name is X-CSRF-TOKEN -->
+	<meta name="_csrf_header" content="${_csrf.headerName}"/>
+
+<title>Insert title here</title>  
+<script type="text/javascript">  
+$(function () {
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$(document).ajaxSend(function(e, xhr, options) {
+		xhr.setRequestHeader(header, token);
+	});
+	});
+</script>
 </head>
 <body>
 	<div align="center">

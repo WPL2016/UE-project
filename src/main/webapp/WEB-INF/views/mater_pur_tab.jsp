@@ -575,14 +575,15 @@ $(function () {
             	          		      {
             	          		        url : "showmater_pur_tab",
             	          		        datatype : "json",
-            	          		        colNames : [  '采购编号','原材料编号', '原材料名称 ', '原材料采购时间','原材料采购数量','原材料采购记录人姓名'],
+            	          		        colNames : [  '采购编号','原材料编号', '原材料名称 ', '原材料采购时间','原材料采购数量','单位','原材料采购记录人姓名'],
             	          		        colModel : [ 
 
             	          		                     {name : 'stock_stat_num',index :'stock_stat_num',width : 90,align : "center",sortable :true,editable :true,key:true},
             	          		                     {name : 'mater_num',index : 'mater_num',width : 150,align : "center",sortable : true,editable : true} ,
             	          		                     {name : 'mater_name',index : 'mater_name',width : 150,align : "center",sortable : true,editable : false}, 
             	          		                     {name : 'stock_stat_time',index : 'stock_stat_time',width : 150,align : "center",sortable : true,editable : true,searchoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}},addoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}},editoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}}}, 
-            	          		                     {name : 'stock_quan',index : 'stock_quan',width : 150,align : "center",sortable : true,editable :true}, 	                     
+            	          		                     {name : 'stock_quan',index : 'stock_quan',width : 150,align : "center",sortable : true,editable :true}, 	            
+            	          		                     {name : 'mater_unit',index : 'mater_unit',width : 150,align : "center",sortable : true,editable :false}, 	                     
             	          		                     {name : 'stock_stat_per_num',index : 'stock_stat_per_num',width : 150,align : "center",sortable : true,editable : false}, 
             	          		                     ],
             	          		                   

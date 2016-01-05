@@ -26,13 +26,21 @@
 <a href="toschedule">生产进度管理</a><br/>
 <a href="toinput2">电能消耗</a><br/>
 <a href="togas">天然气消耗</a><br/>
+<a href="toatype_use_inf_tab">A类易耗品更换记录</a><br/>
+<a href="toatype_tab">A类易耗品信息维护</a><br/>
 <a href="toequip_tab">设备</a><br/>
+
 <a href="toproduce_prog_tab">生产状态</a><br/>
+
+<a href="tomou_use_inf_tab">模具使用信息记录</a><br/>
+<a href="tomou_tab">模具基础信息维护</a><br/>
+
 <a href="toauthority">权限管理</a><br/>
 <a href="tomater_tab">原材料信息</a><br/>
 <a href="tomater_pur_tab">原材料采购信息</a><br/>
 <a href="toproduct_tab">产品信息</a><br/>
 <a href="tomater_use_stock_tab">原材料状态</a><br/>
+<a href="toproduce_plan_tab">生产计划</a><br/>
 <!--  <a href="tohello">3号输入</a><br/>-->
 </body>
 </html>

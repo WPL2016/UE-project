@@ -66,7 +66,7 @@ $(function () {
        
         <!--内容主体的div,请根据具体内容决定div的样式，table_container0最小，1次之，2最大，也可自行在div.css定义你自己想要的样式，要设置成左浮动以保证div水平排列-->     
       <div class="table_container2">
-           <div class="table_head">当前生产进度</div>  
+           <div class="table_head">当前生产计划执行进度</div>  
                   <table id="customers">
         
           
@@ -76,13 +76,12 @@ $(function () {
                   <table id="jqGrid1"></table>
                   <div id="jqGridPager1"></div>
                                 
-                 
+                 <div class="horiz_blank" style="height:30px"></div>
                 <div class="table_head">生产计划</div>  
                                    
                   <table id="jqGrid"></table>
                   <div id="jqGridPager"></div>
-                  <button id="deldata">批量修改（如审核等）</button>
-                  <button id="deldata1">批量修改1（如审核等）</button>
+                 
             </div>
        </div>
    
@@ -96,21 +95,23 @@ $(function () {
         		  pageInit1();
         		 // pageInit2();
         		});
+        var produce_plan_num_sel;
         		function pageInit(){
         		  var lastsel;
         		  jQuery("#jqGrid").jqGrid(
         		      {
         		        url : "showproduce_plan_tab",
         		        datatype : "json",
-        		        colNames : [  '生产计划编号', '生产计划时间 ', '设备名称', '产品名称','计划产量','计划工作时间', '生产计划记录人姓名','设备与产品关系编号'],
+        		        colNames : [  '生产计划编号', '生产计划开始时间 ', '生产计划结束时间 ','设备名称', '产品名称','计划产量(件)','计划工作时间', '生产计划记录人姓名','设备与产品关系编号'],
         		        colModel : [ 
 
-        		                     {name : 'produce_plan_num',index :'produce_plan_num',width : 90,align : "center",sortable :true,editable : true,key:true},
-        		                     {name : 'plan_time',index : 'plan_time',width : 130,align : "center",sortable : true,editable : true,searchoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}},addoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}},editoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}}} ,
+        		                     {name : 'produce_plan_num',index :'produce_plan_num',width : 100,align : "center",sortable :true,editable : true,key:true},
+        		                     {name : 'plan_start_time',index : 'plan_start_time',width : 130,align : "center",sortable : true,editable : true,searchoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}},addoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}},editoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}}} ,
+        		                     {name : 'plan_end_time',index : 'plan_end_time',width : 130,align : "center",sortable : true,editable : true,searchoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}},addoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}},editoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}}} ,
         		                     {name : 'product_name',index : 'product_name',width : 100,align : "center",sortable : true,editable : false}, 
         		                     {name : 'equip_name',index : 'equip_name',width : 100,align : "center",sortable : true,editable : false}, 
-        		                     {name : 'plan_quan',index : 'plan_quan',width : 70,align : "center",sortable : true,editable : true},        		                 
-        			                 {name : 'plan_work_time',index : 'plan_work_time',width : 90,align : "center",sortable : true,editable : true}, 
+        		                     {name : 'plan_quan',index : 'plan_quan',width : 90,align : "center",sortable : true,editable : true},        		                 
+        			                 {name : 'plan_work_time',index : 'plan_work_time',width : 100,align : "center",sortable : true,editable : true}, 
         		                     {name : 'produce_plan_recorder_num',index : 'produce_plan_recorder_num',width : 150,align : "center",sortable : true,editable : false},       
         		                     {name : 'equip_product_relat_num',index : 'equip_product_relat_num',width : 150,align : "center",sortable : true,editable : true},         		                     
         		                   ],
@@ -134,25 +135,25 @@ $(function () {
         		        height:180,
         		        rowList : [ 20, 40, 60 ],
         		        pager : '#jqGridPager',
-        		        multiselect:true,
-        		        sortname :'plan_time',
+        		       // multiselect:false,
+        		        sortname :'plan_num',
         		        viewrecords : true,
         		        sortorder : "desc",
         		        autowidth:true,
         		        onSelectRow : function(id) {
-        		          if (id && id !== lastsel) {
-        		            jQuery('#jqGrid').jqGrid('restoreRow', lastsel);
-        		            jQuery('#jqGrid').jqGrid('editRow', id, true);
-        		            lastsel = id;
-        		          }
-        		        },
-        		        editurl : "editproduce_plan_tab",
+              		        
+              		        //生成从表
+              		          produce_plan_num_sel=id; 	
+              		        $("#jqGrid1").setGridParam({datatype:'json', page:1,url:"showsomeproduce_static_tab?produce_plan_num="+id}).trigger('reloadGrid');
+              		          
+            		              
+              		        },
         		       
         		      });
         		  
         		   $('#jqGrid').navGrid('#jqGridPager',
         	                // the buttons to appear on the toolbar of the grid
-        	                { edit: true, add: true, del: true, search: true, refresh: true, view: false, position: "left", cloneToTop: false },
+        	                { edit: false, add: false, del:false, search: true, refresh: true, view: false, position: "left", cloneToTop: false },
         	                // options for the Edit Dialog
         	                {
         	                    editCaption: "编辑记录",
@@ -346,7 +347,7 @@ $(function () {
             		      {
             		        url : "showproduce_static_tab",
             		        datatype : "json",
-            		        colNames : [  '设备名称','产品名称', '当前产量','当前合格品量','生产计划量','执行生产计划编号'],
+            		        colNames : [  '设备名称','产品名称', '当前产量(件)','当前合格品量(件)','生产计划量(件)','执行生产计划编号'],
             		        colModel : [ 
             		                    {name : 'equip_name',index : 'equip_name',width : 90,align : "center",sortable :false,editable :false,key:false },
             		                    {name : 'product_name',index : 'product_name',width : 100,align : "center",sortable : false,editable :false},        		         

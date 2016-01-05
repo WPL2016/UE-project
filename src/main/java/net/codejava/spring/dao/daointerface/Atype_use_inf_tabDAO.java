@@ -19,5 +19,6 @@ public interface Atype_use_inf_tabDAO {
 	public Atype_use_inf_tab get(String atyp_use_infe_num);
 	
 	public List<Atype_use_inf_tab> list();
+	public List<Atype_use_inf_tab> list(String atype_num);
 }
 	

@@ -30,7 +30,7 @@ public class Produce_plan_tabController {
 	@RequestMapping(value="/toproduce_plan_tab")
 	public ModelAndView toproduce_plan_tab(){
 		ModelAndView model=new ModelAndView();
-		model.setViewName("produce_prog_tab");
+		model.setViewName("produce_plan_tab");
 		int recordnum=contactDAO.countRecord();
 		model.addObject("recordnum",recordnum+"");
 		return model;
@@ -43,7 +43,7 @@ public class Produce_plan_tabController {
 	}
 	
 	@RequestMapping(value="/editproduce_plan_tab")  	
-	public @ResponseBody String editJqGrid(HttpServletRequest request,@RequestParam(value ="plan_time",required=false) @DateTimeFormat(pattern="yyyy-MM-dd") Date date) throws ParseException {
+	public @ResponseBody String editJqGrid(HttpServletRequest request,@RequestParam(value ="plan_start_time",required=false) @DateTimeFormat(pattern="yyyy-MM-dd") Date date,@RequestParam(value ="plan_end_time",required=false) @DateTimeFormat(pattern="yyyy-MM-dd") Date date1) throws ParseException {
 		Produce_plan_tab produce_plan_tab=new Produce_plan_tab();
 		String oper=request.getParameter("oper");
 		String produce_plan_num=request.getParameter("produce_plan_num");
@@ -55,7 +55,8 @@ public class Produce_plan_tabController {
 		
 		
 
-		produce_plan_tab.setPlan_time(date);
+		produce_plan_tab.setPlan_start_time(date);
+		produce_plan_tab.setPlan_end_time(date1);
 		if(request.getParameter("plan_quan")!=null)
 		{produce_plan_tab.setPlan_quan(Integer.parseInt(request.getParameter("plan_quan")));	
 				}
@@ -65,7 +66,8 @@ public class Produce_plan_tabController {
 		 
 		System.out.println("oper:"+oper);
 		System.out.println("produce_plan_num:"+produce_plan_num);
-		System.out.println("plan_time:"+request.getParameter("plan_time"));
+		System.out.println("plan_time:"+request.getParameter("plan_start_time"));
+		System.out.println("plan_time:"+request.getParameter("plan_end_time"));
 		System.out.println("plan_quan:"+request.getParameter("plan_quan"));
 		System.out.println("plan_work_time:"+request.getParameter("plan_work_time"));
 		System.out.println("equip_product_relat_num:"+request.getParameter("equip_product_relat_num"));

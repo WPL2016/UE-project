@@ -1,3 +1,4 @@
+
 package net.codejava.spring.controller;
 
 import java.io.IOException;
@@ -21,6 +22,14 @@ public class Equip_tabController {
 	private Equip_tabDAO equip_tabDAO;
 	@Autowired
 	private ContactDAO contactDAO;
+	
+	@RequestMapping(value="/getsomeequip")
+	public @ResponseBody  List<Equip_tab> listSomeEquip(ModelAndView model,HttpServletRequest request) throws IOException{
+		List<Equip_tab> mainequip=equip_tabDAO.getSomeEquip(request.getParameter("type"));
+		return mainequip;
+	}
+	
+	
 	
 	@RequestMapping(value="/toequip_tab")
 	public ModelAndView toequiptab(){
@@ -91,3 +100,4 @@ public class Equip_tabController {
 	
 	
 }
+

@@ -4,20 +4,17 @@ package net.codejava.spring.dao.daointerface;
 import java.util.List;
 
 import net.codejava.spring.model.Contact;
+import net.codejava.spring.model.Users;
 
 /**
  * Defines DAO operations for the contact model.
  * 
  *
  */
-public interface UserDAO {
+public interface UsersDAO {
 	
-	public void saveOrUpdate(Contact contact);
 	
-	public void delete(int contactId);
 	
-	public Contact get(int contactId);
-	
-	public List<Contact> list();
+	public List<Users> list();
 	
 }

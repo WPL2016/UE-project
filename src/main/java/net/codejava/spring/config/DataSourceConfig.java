@@ -9,6 +9,12 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import net.codejava.spring.dao.daoimpl.Atype_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.Atype_use_inf_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.ContactDAOImpl;
+
+import net.codejava.spring.dao.daoimpl.Equip_dyn_para_tabDAOImpl;
+import net.codejava.spring.dao.daoimpl.Equip_oper_stat_tabDAOImpl;
+
+import net.codejava.spring.dao.daoimpl.Ener_stat_tabDAOImpl;
+
 import net.codejava.spring.dao.daoimpl.Equip_para_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.Equip_pres_para_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.Equip_product_relat_tabDAOImpl;
@@ -21,14 +27,23 @@ import net.codejava.spring.dao.daoimpl.Mater_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.Mater_use_stock_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.Mou_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.Mou_use_inf_tabDAOImpl;
+import net.codejava.spring.dao.daoimpl.OEE_calcuDAOImpl;
 import net.codejava.spring.dao.daoimpl.Produce_plan_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.Produce_prog_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.Product_qual_asse_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.Product_tabDAOImpl;
+import net.codejava.spring.dao.daoimpl.RolesDAOImpl;
 import net.codejava.spring.dao.daoimpl.User_tabDAOImpl;
+import net.codejava.spring.dao.daoimpl.UsersDAOImpl;
 import net.codejava.spring.dao.daointerface.Atype_tabDAO;
 import net.codejava.spring.dao.daointerface.Atype_use_inf_tabDAO;
 import net.codejava.spring.dao.daointerface.ContactDAO;
+
+import net.codejava.spring.dao.daointerface.Equip_dyn_para_tabDAO;
+import net.codejava.spring.dao.daointerface.Equip_oper_stat_tabDAO;
+
+import net.codejava.spring.dao.daointerface.Ener_stat_tabDAO;
+
 import net.codejava.spring.dao.daointerface.Equip_para_tabDAO;
 import net.codejava.spring.dao.daointerface.Equip_pres_para_tabDAO;
 import net.codejava.spring.dao.daointerface.Equip_product_relat_tabDAO;
@@ -41,11 +56,14 @@ import net.codejava.spring.dao.daointerface.Mater_tabDAO;
 import net.codejava.spring.dao.daointerface.Mater_use_stock_tabDAO;
 import net.codejava.spring.dao.daointerface.Mou_tabDAO;
 import net.codejava.spring.dao.daointerface.Mou_use_inf_tabDAO;
+import net.codejava.spring.dao.daointerface.OEE_calcuDAO;
 import net.codejava.spring.dao.daointerface.Produce_plan_tabDAO;
 import net.codejava.spring.dao.daointerface.Produce_prog_tabDAO;
 import net.codejava.spring.dao.daointerface.Product_qual_asse_tabDAO;
 import net.codejava.spring.dao.daointerface.Product_tabDAO;
+import net.codejava.spring.dao.daointerface.RolesDAO;
 import net.codejava.spring.dao.daointerface.User_tabDAO;
+import net.codejava.spring.dao.daointerface.UsersDAO;
 
 
 @Configuration
@@ -56,7 +74,9 @@ public class DataSourceConfig {
 		dataSource.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 		//dataSource.setUrl("jdbc:sqlserver://192.168.21.117:1433;databaseName=UEequipmanageDB");
 		//dataSource.setUrl("jdbc:sqlserver://localhost:1433;databaseName=xukai");
+
 	    dataSource.setUrl("jdbc:sqlserver://localhost:1433;databaseName=UEequipmanageDB");
+
 		dataSource.setUsername("sa");
 		//dataSource.setPassword("123");
 		dataSource.setPassword("SWJYYSD1");
@@ -128,6 +148,7 @@ public class DataSourceConfig {
 		return new Product_qual_asse_tabDAOImpl(getDataSource());
 	}
 	@Bean
+
 	public Produce_prog_tabDAO getProduce_prog_tabDAO() {
 		return new Produce_prog_tabDAOImpl(getDataSource());
 	}
@@ -143,4 +164,35 @@ public class DataSourceConfig {
 	public Mater_pur_tabDAO getMater_pur_tabDAO () {
 		return new Mater_pur_tabDAOImpl(getDataSource());
 	}
+
+@Bean
+	public Equip_oper_stat_tabDAO getEquip_oper_stat_tabDAO() {
+		return new Equip_oper_stat_tabDAOImpl(getDataSource());
+	}
+	@Bean
+	public Equip_dyn_para_tabDAO getEquip_dyn_para_tabDAO() {
+		return new Equip_dyn_para_tabDAOImpl(getDataSource());
+	}
+    @Bean
+	public Ener_stat_tabDAO getEner_stat_tabDAO() {
+		return new Ener_stat_tabDAOImpl(getDataSource());
+
+	}
+    @Bean
+   	public OEE_calcuDAO getOEE_calcuDAO() {
+   		return new OEE_calcuDAOImpl(getDataSource());
+
+   	} 
+    @Bean
+   	public UsersDAO getUsersDAO() {
+   		return new UsersDAOImpl(getDataSource());
+
+   	} 
+    @Bean
+   	public RolesDAO getRolesDAO() {
+   		return new RolesDAOImpl(getDataSource());
+
+   	} 
+    
+
 }

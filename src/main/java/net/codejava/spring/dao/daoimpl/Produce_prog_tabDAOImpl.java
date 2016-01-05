@@ -9,6 +9,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import net.codejava.spring.dao.daointerface.Produce_prog_tabDAO;
+import net.codejava.spring.model.Atype_use_inf_tab;
 import net.codejava.spring.model.Produce_prog_tab;
 import net.codejava.spring.model.Produce_static_tab;
 import net.codejava.spring.model.Product_qual_stat_tab;
@@ -120,71 +121,33 @@ public class Produce_prog_tabDAOImpl implements Produce_prog_tabDAO {
 
 		@Override
 		public List<Produce_static_tab> listProduce_static_tab() {
-			// TODO Auto-generated method stub
-			/*
-			List<Produce_static_tab> listProduce_static_tab = new ArrayList<Produce_static_tab>(); 
-			
-			String sql = "SELECT * FROM produce_prog_tab";
-			List<Produce_prog_tab> listProduce_prog_tab = jdbcTemplate.query(sql, new RowMapper<Produce_prog_tab>() {
-
-				@Override
-				public Produce_prog_tab mapRow(ResultSet rs, int rowNum) throws SQLException {
-					Produce_prog_tab aProduce_prog_tab = new Produce_prog_tab();
-		
-					aProduce_prog_tab.setProduce_prog_num(rs.getString("produce_prog_num"));
-					aProduce_prog_tab.setEquip_product_relat_num(rs.getString("equip_product_relat_num"));
-						
-			
-				//	aProduce_prog_tab.setBat_produce_start_time(rs.getTimestamp ("bat_produce_start_time"));
-					
-													
-					return aProduce_prog_tab;
-				}
 				
-			});
-			
-			sql = "SELECT * FROM product_qual_stat_tab";
-			List<Product_qual_stat_tab> listProduct_qual_stat_tab = jdbcTemplate.query(sql, new RowMapper<Product_qual_stat_tab>() {
-
-				@Override
-				public Product_qual_stat_tab mapRow(ResultSet rs, int rowNum) throws SQLException {
-					Product_qual_stat_tab aProduct_qual_stat_tab = new Product_qual_stat_tab();
-		
-					aProduct_qual_stat_tab.setQual_stat_num(rs.getString("qual_stat_num"));
-					//aProduct_qual_stat_tab.setInfe_rea(rs.getString("infe_rea"));
-					aProduct_qual_stat_tab.setProduct_num(rs.getString("product_num"));
-			
-				//	aProduct_qual_stat_tab.setInfe_time(rs.getSimpleDateFormat ("infe_time"));
-					
-													
-					return aProduct_qual_stat_tab;
-				}
-				
-			});*/
-			
          
 			
-			String sql= "    WITH count_product_quantity(value,equip_product_relat_num,produce_plan_num) AS "+ 
-					 "(SELECT  COUNT( produce_prog_tab.produce_prog_num) ,  produce_prog_tab.equip_product_relat_num ,produce_plan_num"+
-					 " FROM  produce_prog_tab JOIN produce_plan_tab ON  produce_prog_tab.equip_product_relat_num=produce_plan_tab.equip_product_relat_num"+
-					 "  WHERE datediff(dd, bat_produce_start_time , getdate())=1  "+
-					 "  GROUP BY  produce_plan_tab.produce_plan_num,produce_prog_tab.equip_product_relat_num ),  "+
-					 "   count_qulifiedproduct_quantity(qulified_product,equip_product_relat_num,produce_plan_num) AS  "+
-					 "    (SELECT  COUNT( product_qual_stat_tab.qual_stat_num) ,  product_qual_stat_tab.equip_product_relat_num,produce_plan_num"+
-					 "    FROM  product_qual_stat_tab    JOIN produce_plan_tab ON product_qual_stat_tab.equip_product_relat_num=produce_plan_tab.equip_product_relat_num"+
-		                		 "    WHERE datediff(dd, infe_time , getdate())=1"+
-		                		 "   GROUP BY  produce_plan_tab.produce_plan_num,product_qual_stat_tab.equip_product_relat_num )  "+
-		                		 "     SELECT DISTINCT equip_name  ,product_name , value* mou_hole_num AS value  ,value-qulified_product AS count_qulified_product  ,produce_plan_tab.plan_quan AS plan_quan,"+
-		                		" produce_plan_tab.produce_plan_num AS produce_plan_num "+
-		                		 "    FROM  count_product_quantity   JOIN  equip_product_relat_tab ON count_product_quantity.equip_product_relat_num =  equip_product_relat_tab.equip_product_relat_num     "+
-		                		 "    JOIN count_qulifiedproduct_quantity ON count_qulifiedproduct_quantity.equip_product_relat_num =  equip_product_relat_tab.equip_product_relat_num    "+ 
-		                		 "     JOIN equip_tab ON  equip_product_relat_tab.equip_num =  equip_tab.equip_num     "+
-		                		 "     JOIN produce_module_time_mapping ON produce_module_time_mapping.equip_num = equip_tab.equip_num   "+
-		                		 "   JOIN mou_use_inf_tab ON mou_use_inf_tab.equip_num = equip_tab.equip_num   "+
-		                		 "   JOIN mou_tab ON mou_tab.mou_num=mou_use_inf_tab.mou_num    "+
-		                		 "   JOIN product_tab ON  mou_tab.product_num =  product_tab.product_num  "+
-		                		 "   JOIN produce_plan_tab ON count_product_quantity.produce_plan_num=produce_plan_tab .produce_plan_num"+
-                         " WHERE  produce_module_time_mapping.mou_chan_time = mou_use_inf_tab.mou_chan_time ";
+			String sql= " WITH count_product_quantity(value,equip_product_relat_num)AS"+
+" (SELECT  COUNT( produce_prog_tab.produce_prog_num) ,  produce_prog_tab.equip_product_relat_num"+
+" FROM  produce_prog_tab JOIN  recent_produce_start_time ON produce_prog_tab.equip_product_relat_num=recent_produce_start_time.equip_product_relat_num"+
+" WHERE produce_prog_tab.bat_produce_start_time > recent_produce_start_time.recent_start_time"+
+" GROUP BY  produce_prog_tab.equip_product_relat_num ),"+
+" count_qulifiedproduct_quantity(qulified_product,equip_product_relat_num)AS"+
+" (SELECT  COUNT( product_qual_stat_tab.qual_stat_num) ,  product_qual_stat_tab.equip_product_relat_num"+
+"  FROM  product_qual_stat_tab   JOIN  recent_produce_start_time ON product_qual_stat_tab .equip_product_relat_num= recent_produce_start_time.equip_product_relat_num"+
+" WHERE product_qual_stat_tab.infe_time > recent_produce_start_time.recent_start_time"+
+" GROUP BY  product_qual_stat_tab.equip_product_relat_num "+
+" )"+
+" SELECT DISTINCT equip_name  ,product_name ,value*mou_hole_num  AS value ,value*mou_hole_num-qulified_product AS count_qulified_product,"+
+" produce_plan_tab.plan_quan AS  plan_quan,produce_plan_tab.produce_plan_num AS produce_plan_num"+
+" FROM  count_product_quantity   JOIN  equip_product_relat_tab ON count_product_quantity.equip_product_relat_num =  equip_product_relat_tab.equip_product_relat_num "+ 
+" JOIN count_qulifiedproduct_quantity ON count_qulifiedproduct_quantity.equip_product_relat_num =  equip_product_relat_tab.equip_product_relat_num   "+
+" JOIN equip_tab ON  equip_product_relat_tab.equip_num =  equip_tab.equip_num   "+
+" JOIN  produce_module_time_mapping ON produce_module_time_mapping.equip_num=equip_tab.equip_num "+
+" JOIN  mou_use_inf_tab ON mou_use_inf_tab.equip_num=equip_tab.equip_num"+
+" JOIN  mou_tab ON mou_tab.mou_num=mou_use_inf_tab.mou_num "+
+" JOIN  product_tab ON   mou_tab.product_num =  product_tab.product_num "+
+" JOIN  produce_plan_tab ON produce_plan_tab.equip_product_relat_num =equip_product_relat_tab.equip_product_relat_num "+
+" JOIN  produce_plan_exe_stat_tab ON produce_plan_exe_stat_tab.produce_plan_num=produce_plan_tab.produce_plan_num "+
+" JOIN  recent_produce_start_time ON produce_plan_exe_stat_tab.exe_start_time=recent_produce_start_time.recent_start_time"+
+" WHERE  produce_module_time_mapping.mou_chan_time=mou_use_inf_tab.mou_chan_time ";
 			List<Produce_static_tab> listProduce_static_tab =jdbcTemplate.query(sql, new RowMapper<Produce_static_tab>() {
 
 				@Override
@@ -207,5 +170,55 @@ public class Produce_prog_tabDAOImpl implements Produce_prog_tabDAO {
 			
 			return listProduce_static_tab;
 		}
+		
+		@Override
+		public List<Produce_static_tab> list(String produce_plan_num) {
+			String sql = " WITH count_product_quantity(value,equip_product_relat_num)AS"+
+" (SELECT  COUNT( produce_prog_tab.produce_prog_num) ,  produce_prog_tab.equip_product_relat_num"+
+" FROM  produce_prog_tab JOIN  recent_produce_start_time ON produce_prog_tab.equip_product_relat_num=recent_produce_start_time.equip_product_relat_num"+
+" WHERE produce_prog_tab.bat_produce_start_time > recent_produce_start_time.recent_start_time"+
+" GROUP BY  produce_prog_tab.equip_product_relat_num ),"+
+" count_qulifiedproduct_quantity(qulified_product,equip_product_relat_num)AS"+
+" (SELECT  COUNT( product_qual_stat_tab.qual_stat_num) ,  product_qual_stat_tab.equip_product_relat_num"+
+"  FROM  product_qual_stat_tab   JOIN  recent_produce_start_time ON product_qual_stat_tab .equip_product_relat_num= recent_produce_start_time.equip_product_relat_num"+
+" WHERE product_qual_stat_tab.infe_time > recent_produce_start_time.recent_start_time"+
+" GROUP BY  product_qual_stat_tab.equip_product_relat_num "+
+" )"+
+" SELECT DISTINCT equip_name  ,product_name ,value*mou_hole_num  AS value ,value*mou_hole_num-qulified_product AS count_qulified_product,"+
+" produce_plan_tab.plan_quan AS  plan_quan,produce_plan_tab.produce_plan_num AS produce_plan_num"+
+" FROM  count_product_quantity   JOIN  equip_product_relat_tab ON count_product_quantity.equip_product_relat_num =  equip_product_relat_tab.equip_product_relat_num "+ 
+" JOIN count_qulifiedproduct_quantity ON count_qulifiedproduct_quantity.equip_product_relat_num =  equip_product_relat_tab.equip_product_relat_num   "+
+" JOIN equip_tab ON  equip_product_relat_tab.equip_num =  equip_tab.equip_num   "+
+" JOIN  produce_module_time_mapping ON produce_module_time_mapping.equip_num=equip_tab.equip_num "+
+" JOIN  mou_use_inf_tab ON mou_use_inf_tab.equip_num=equip_tab.equip_num"+
+" JOIN  mou_tab ON mou_tab.mou_num=mou_use_inf_tab.mou_num "+
+" JOIN  product_tab ON   mou_tab.product_num =  product_tab.product_num "+
+" JOIN  produce_plan_tab ON produce_plan_tab.equip_product_relat_num =equip_product_relat_tab.equip_product_relat_num "+
+" JOIN  produce_plan_exe_stat_tab ON produce_plan_exe_stat_tab.produce_plan_num=produce_plan_tab.produce_plan_num "+
+" JOIN  recent_produce_start_time ON produce_plan_exe_stat_tab.exe_start_time=recent_produce_start_time.recent_start_time"+
+" WHERE  produce_module_time_mapping.mou_chan_time=mou_use_inf_tab.mou_chan_time AND produce_plan_tab.produce_plan_num='"+produce_plan_num+"'";
+			List<Produce_static_tab> listProduce_static_tab = jdbcTemplate.query(sql, new RowMapper<Produce_static_tab>() {
+
+				@Override
+				public Produce_static_tab mapRow(ResultSet rs, int rowNum) throws SQLException {
+					Produce_static_tab aProduce_static_tab = new Produce_static_tab();
+					
+					aProduce_static_tab.setEquip_name(rs.getString("equip_name"));
+					aProduce_static_tab.setProduct_name(rs.getString("product_name"));
+					aProduce_static_tab.setValue(rs.getString("value"));
+					aProduce_static_tab.setCount_qulified_product(rs.getString("count_qulified_product"));
+					aProduce_static_tab.setPlan_quan(rs.getFloat("plan_quan"));
+					aProduce_static_tab.setProduce_plan_num(rs.getString("produce_plan_num"));
+				
+					
+				
+					return aProduce_static_tab;
+				}
+				
+			});
+			
+			return listProduce_static_tab;
+		}	
+		
 
 }

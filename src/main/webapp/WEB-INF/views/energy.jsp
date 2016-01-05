@@ -23,7 +23,7 @@
 <meta name="_csrf" content="${_csrf.token}"/>
 <!-- default header name is X-CSRF-TOKEN -->
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
-<title>基础模板</title>  
+<title>电能消耗</title>  
 
 <script type="text/javascript">  
 <!--ajax访问时发送csrf token，以防止ajax访问被crsf过滤器拦截   -->
@@ -57,10 +57,10 @@ $(function () {
         
         <div class="table_container2">
                                                                                                          
-          <div class="table_head">能耗状态</div>
+          <div class="table_head">电能消耗状态</div>
           <table width="100%" height="798" border="0" cellpadding="0" cellspacing="0">
                <tr bgcolor="#E1EBF5">
-                   <th height="35" colspan="10" scope="row"><div align="left"><strong><span class="style1"> 设备能耗查询</span></strong></div></th>
+                   <th height="35" colspan="10" scope="row"><div align="left"><strong><span class="style1"> 设备电能消耗查询</span></strong></div></th>
                    <td colspan="2">&nbsp;</td>
                    <td width="50">&nbsp;</td>
                </tr>
@@ -120,12 +120,9 @@ $(function () {
                    <td colspan="2">&nbsp;</td>
                    <td>&nbsp;</td>
                </tr>
-               <tr bgcolor="#E1EBF5">
-                   <th  colspan="13" height=100  style="font-size:22px;vertical-align:center; text-alig:center; font-family:黑体; font-weight:bolder;"><span class="style3">压铸能耗设备统计表</span></th>
-                   
-               </tr>
+              
                <tr bgcolor="#E1EBF5" align="center"> 
-                   <td height="275"  colspan="13" align="center" >
+                   <td height="10"  colspan="13" align="center" >
                         <div style="width:80%">
                             <table id="jqGrid"></table>
                             <div id="jqGridPager"></div>
@@ -133,21 +130,7 @@ $(function () {
                     </td>
                    
                </tr>
-  <tr bgcolor="#E1EBF5">
-    <th height="25" scope="row">&nbsp;</th>
-    <th height="25" scope="row">&nbsp;</th>
-    <th height="25" scope="row">&nbsp;</th>
-    <th height="25" scope="row">&nbsp;</th>
-    <th height="25" scope="row">&nbsp;</th>
-    <th height="25" scope="row">&nbsp;</th>
-    <th height="25" scope="row">&nbsp;</th>
-    <th height="25" scope="row">&nbsp;</th>
-    <th height="25" colspan="2" scope="row">&lt;&lt;点击查看全部</th>
-    <td colspan="2"><form name="form7" method="post" action="">
-      <input type="submit" name="Submit4" value="导出统计图">
-    </form></td>
-    <td>&nbsp;</td>
-  </tr>
+
  
   <tr bgcolor="#E1EBF5">
     <td height="257" colspan="13" align="center">
@@ -155,21 +138,7 @@ $(function () {
         <div id="piechart" style="width:80%; height:500px"></div>
     </td>
   </tr>
-  <tr bgcolor="#E1EBF5">
-    <th height="32" scope="row">&nbsp;</th>
-    <th height="32" scope="row">&nbsp;</th>
-    <th height="32" scope="row">&nbsp;</th>
-    <th height="32" scope="row">&nbsp;</th>
-    <th height="32" scope="row">&nbsp;</th>
-    <th height="32" scope="row">&nbsp;</th>
-    <th height="32" scope="row">&nbsp;</th>
-    <th height="32" scope="row">&nbsp;</th>
-    <th height="32" colspan="2" scope="row">&lt;&lt;点击查看全部</th>
-    <td colspan="2">
-       <input type="submit" name="Submit42" value="导出统计图">
-    </td>
-    <td>&nbsp;</td>
-  </tr>
+  
   <tr bgcolor="#E1EBF5">
     <th height="32" colspan="10" scope="row"><div align="center"></div></th>
     <td colspan="2">&nbsp;</td>
@@ -185,94 +154,13 @@ $(function () {
   <div>
   <%@ include file="./component/2_foot.jsp"%>
   </div>  
-  
-    <script type="text/javascript"> 
-        $(document).ready(function () {
-        		  pageInit();
-        		});
-        		function pageInit(){
-        		  var lastsel;
-        		  jQuery("#jqGrid").jqGrid(
-        		      {
-        		        url : "showjqgrid",
-        		        datatype : "json",
-        		        colNames : [ 'Inv No', 'Date', 'Client', 'Amount', 'Tax', 'Notes' ],
-        		        colModel : [ 
-        		                     {name : 'id',index : 'id',width : 55},
-        		                     {name : 'telephone',index : 'invdate',width : 90,sortable : false,editable : true}, 
-        		                     {name : 'name',index : 'name',width : 100,sortable : false,editable : true}, 
-        		                     {name : 'email',index : 'amount',width : 80,align : "right",sortable : false,editable : true}, 
-        		                     {name : 'address',index : 'tax',width : 80,align : "right",sortable : false,editable : true},        		  
-        		                     {name : 'reason',index : 'note',edittype : "select",editoptions : {value : "1:通过;0:待审核;-1:驳回"},width : 150,sortable : false,editable : true} 
-        		                   ],
-        		        rowNum : 20,
-        		        height:300,
-        		        zIndex:-2,
-        		        rowList : [ 20, 40, 60 ],
-        		        pager : '#jqGridPager',
-        		        sortname : 'id',
-        		        viewrecords : true,
-        		        sortorder : "desc",
-        		        autowidth:true,
-        		        onSelectRow : function(id) {
-        		          if (id && id !== lastsel) {
-        		            jQuery('#jqGrid').jqGrid('restoreRow', lastsel);
-        		            jQuery('#jqGrid').jqGrid('editRow', id, true);
-        		            lastsel = id;
-        		          }
-        		        },
-        		        editurl : "editjqgrid",
-        		       
-        		      });
-        		  
-        		   $('#jqGrid').navGrid('#jqGridPager',
-        	                // the buttons to appear on the toolbar of the grid
-        	                { edit: true, add: true, del: true, search: false, refresh: false, view: false, position: "left", cloneToTop: false },
-        	                // options for the Edit Dialog
-        	                {
-        	                    editCaption: "The Edit Dialog",
-        	                    recreateForm: true,
-        						checkOnUpdate : true,
-        						checkOnSubmit : true,
-        	                    closeAfterEdit: true,
-        	                    errorTextFormat: function (data) {
-        	                        return 'Error: ' + data.responseText
-        	                    }
-        	                },
-        	                // options for the Add Dialog
-        	                {
-        	                    closeAfterAdd: true,
-        	                    recreateForm: true,
-        	                    errorTextFormat: function (data) {
-        	                        return 'Error: ' + data.responseText
-        	                    }
-        	                },
-        	                // options for the Delete Dailog
-        	                {
-        	                    errorTextFormat: function (data) {
-        	                        return 'Error: ' + data.responseText
-        	                    }
-        	                });
-        		  
-
-        		  
-        		 
-        		}
-
-   </script>  
-  
-  
-  
-  
+ 
    <!-- ECharts文件引入 -->
   
     <script src="resources/echarts/build/dist/echarts.js"></script>
     
     <script type="text/javascript">
-        
-    
-    
-    // 路径配置
+        // 路径配置
         require.config({
             paths: {
                 echarts: 'resources/echarts/build/dist'
@@ -298,22 +186,29 @@ $(function () {
             function drawBar(ec) {
                 // 基于准备好的dom，初始化echarts图表
                 var myChart = ec.init(document.getElementById('linechart')); 
-                
+
+
+
+                var value=[];
+                var label=[];
+               //设置图的选项
+
                 var option = {                		                  		
                 title : {
-                  	        text: '压铸设备能耗统计图',
+                  	        text: '设备电能消耗总量(千瓦时)',
                   	        subtext: '折线图（Line Chart）',
-                  	        x:'center',
-                  	       
+                  	        x:'center'
                   	      },	
                     tooltip: {
                         show: true
                     },
+                    //数据注释（对应数据分组的小按钮）
                     legend: {
                     	orient : 'vertical',
                         x : 'left',
-                        data:['第一周','第二周','第三周','第四周']
+                        data:[],
                     },
+                    //图标右上方的工具箱设置
                     toolbox: {
                         show : true,
                         feature : {
@@ -325,56 +220,61 @@ $(function () {
                         }
                     },
                     calculable:true,
-                    zIndex:-1,
+                    //x轴
                     xAxis : [
                         {
                             type : 'category',
-                            data : ["星期一","星期二","星期三","星期四","星期五","星期六"]
+                            data : [],
                         }
                     ],
+                    //y轴
                     yAxis : [
                         {
                             type : 'value'
                         }
                     ],
-                    series : [
-                        
-                       // {
-                       //     "name":"第一周",
-                       //     "type":"bar",
-                       //     "data":[95, 20, 40, 10, 10, 20]
-                       // },
-                       // {
-                       //     "name":"第二周",
-                       //     "type":"bar",
-                       //     "data":[56, 76, 34, 65, 76, 75]
-                       // },
-                       // {
-                       //     "name":"第三周",
-                       //     "type":"bar",
-                       //     "data":[24, 78, 90, 89, 76,78]
-                       // },
-                       // {
-                       //   "name":"第四周",
-                       //     "type":"bar",
-                       //    "data":[67, 98, 87, 32, 12, 43]
-                       // }
-                        
-                       ]
-                };
-             
-              
-         
+
+                    //数据系列，要显示几个系列酒填几个大括号，不然不会显示多出的系列
+                    series : [{},{}],}
+                
                
+                //通过ajax从后台获取图表所需数据               
+               $.ajax({  
+    	       //data:"name="+$("#name").val(),  
+    	       //用GET方法当请求参数不变时会因部分浏览器缓存而无法更新，所以有POST
+    	       type:"POST", 
+    	       async : false,
+    	       dataType: "json",  
+    	       url:"energylinedata",  
+    	       error:function(data){  
+    	            //alert("出错了！！:"+data[0].name);  
+    	        },  
+    	        success:function(data){     	          
+    	        	   option.legend.data = data.legend;  
+    	        	   option.xAxis[0].data = data.category;  
+    	        	   $.each(data.series,function(idx,obj){
+    	        	   //赋值操作
+    	        	   option.series[idx].data = data.series[idx].data; 
+    	        	   option.series[idx].name = data.series[idx].name; 
+    	        	   option.series[idx].type = data.series[idx].type; 
+    	        	  //alert(data.series[idx].data[0]);
+    	        	   })
+    	          
+    	          
+    	        }
+          }) 
+               //加载选项
+                 myChart.setOption(option); 
+
             }
             
             function drawPie(ec) {
                 // 基于准备好的dom，初始化echarts图表
-            	  myChart = ec.init(document.getElementById('piechart')); 
-            	  
+            	  myChart = ec.init(document.getElementById('piechart'));            	
+            	 
             	  var option = {
             	      title : {
-            	        text: '压住设备能耗扇形统计图',
+            	        text: '所选设备电能消耗比例',
             	        subtext: '饼图（Pie Chart）',
             	        x:'center'
             	      },
@@ -385,7 +285,7 @@ $(function () {
             	      legend: {
             	        orient : 'vertical',
             	        x : 'left',
-            	        data:['工人操作失误','机器故障','原材料不合格','运输损坏']
+            	        data:[],
             	      },
             	      toolbox: {
             	        show : true,
@@ -400,24 +300,57 @@ $(function () {
             	      series : [
             	        {
             	          name:'饼图实例',
-            	          type:'pie',
+            	          //type:'pie',
             	          radius : '55%',
             	          center: ['50%', '60%'],
-            	          data:[
-            	                {value:100, name:'工人操作失误'},
-            	                {value:200, name:'机器故障'},
-            	                {value:300, name:'原材料不合格'},
-            	                {value:400, name:'运输损坏'}]
+            	          data:[]
             	        }
             	      ]
             	    };
+
             	  
+
+            	  //myChart.setOption(option);
+                  $.ajax({  
+           	       data:"name="+$("#name").val(),  
+           	       //用GET方法当请求参数不变时会因部分浏览器缓存而无法更新
+           	       type:"POST", 
+           	       async : false,
+           	       dataType: "json",  
+           	       url:"energypiedata",  
+           	       error:function(data){  
+           	            alert("出错了！！:"+data[0].name);  
+           	        },  
+           	        success:function(data){     	          
+           	            var label=[];
+               	        var value=[];
+               	        var values=[];
+           	             //alert(option.series[0].data);
+           	        	 // alert(data);
+           	        	 //  option.legend.data = data.legend;  
+                            	        
+                   	 label=data.series[0].label;
+                   	 value=data.series[0].data;
+                   	 $.each(label,function(idx,obj){
+                   	values[idx]={'name':label[idx],'value':value[idx]}; 
+                   	 })
+                	
+                	 //alert(values);	                   
+           	        	
+                   	 	
+                   	 option.legend.data = data.legend;	
+           	         option.series[0].data = values;
+           	      option.series[0].type = data.series[0].type;
+                   // alert(option.series[0].data); 
+           	        }
+                 }) 
+
             	  // 为echarts对象加载数据 
-            	  myChart.setOption(option); 
+            	 myChart.setOption(option); 
 
             }
-               
-      
+           
+       
        
         
         

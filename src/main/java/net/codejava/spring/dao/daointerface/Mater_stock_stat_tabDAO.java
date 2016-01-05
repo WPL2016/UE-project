@@ -16,9 +16,11 @@ public interface Mater_stock_stat_tabDAO {
 	
 	//public void delete(String stock_num);
 	
-	//public Mater_stock_stat_tab get(String stock_num);
+	//public Mater_stock_stat_tab get(String mater_num);
 	
 	public List<Mater_stock_stat_tab> listMater_stock_stat_tab();
+	
+	public List<Mater_stock_stat_tab> listMater_stock_stat_tab(String mater_num);
 	
 	//public int updateSingleColumn(Mater_stock_stat_tab mater_stock_stat_tab,String column,String value);
 }

@@ -19,4 +19,6 @@ public interface Mou_use_inf_tabDAO {
 	public Mou_use_inf_tab get(String mou_use_inf_num);
 	
 	public List<Mou_use_inf_tab> list();
+	
+	public List<Mou_use_inf_tab> list(String mou_num);
 }

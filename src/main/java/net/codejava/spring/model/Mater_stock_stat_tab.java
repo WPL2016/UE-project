@@ -4,18 +4,27 @@ public class Mater_stock_stat_tab {
 	private String mater_name;
 	private String mater_num;
 	private Float mater_quan;
-	
+	private String mater_unit;
 	public Mater_stock_stat_tab() {
 	}
 
-	public Mater_stock_stat_tab(String mater_name, String mater_num,Float mater_quan) {
+	public Mater_stock_stat_tab(String mater_name, String mater_num,Float mater_quan,String mater_unit) {
 	
 		this.mater_name = mater_name;
 	
 		this.mater_num = mater_num;
 		this.mater_quan = mater_quan;
+		this.mater_unit = mater_unit;
 	}
 
+
+	public String getMater_unit() {
+		return mater_unit;
+	}
+
+	public void setMater_unit(String mater_unit) {
+		this.mater_unit = mater_unit;
+	}
 	
 	public Float getMater_quan() {
 		return mater_quan;

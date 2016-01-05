@@ -19,6 +19,7 @@ import net.codejava.spring.dao.daointerface.ContactDAO;
 import net.codejava.spring.dao.daointerface.Mater_stock_stat_tabDAO;
 import net.codejava.spring.dao.daointerface.Mater_use_stock_tabDAO;
 import net.codejava.spring.dao.daointerface.Produce_prog_tabDAO;
+import net.codejava.spring.model.Atype_use_inf_tab;
 import net.codejava.spring.model.Mater_stock_stat_tab;
 import net.codejava.spring.model.Mater_use_stock_tab;
 import net.codejava.spring.model.Produce_prog_tab;
@@ -31,7 +32,7 @@ public class Mater_stock_stat_tabController {
 	@Autowired
 	private ContactDAO contactDAO;
 	
-	@RequestMapping(value="/tomater_stock_stat_tab")
+	/*@RequestMapping(value="/tomater_stock_stat_tab")
 	public ModelAndView tomater_stock_stat_tab(){
 		ModelAndView model=new ModelAndView();
 		model.setViewName("mater_use_stock_tab");
@@ -40,16 +41,45 @@ public class Mater_stock_stat_tabController {
 		return model;
 	}
 	
-	/*@RequestMapping(value="/showproduce_prog_tab")  	
+	@RequestMapping(value="/showproduce_prog_tab")  	
 	public @ResponseBody List<Produce_prog_tab> allContact() throws IOException{
 		List<Produce_prog_tab> allProduce_prog_tab = produce_prog_tabDAO.list();		
 		return allProduce_prog_tab;
 	}*/
-	@RequestMapping(value="/showmater_stock_stat_tab")  	
+	/*@RequestMapping(value="/showmater_stock_stat_tab")  	
 	public @ResponseBody List<Mater_stock_stat_tab> allContact() throws IOException{
 		List<Mater_stock_stat_tab> allMater_stock_stat_tab = mater_stock_stat_tabDAO.listMater_stock_stat_tab();		
 		return allMater_stock_stat_tab;
+	}*/
+	
+	@RequestMapping(value="/tomater_stock_stat_tab")
+	public ModelAndView toMater_stock_stat_tab(ModelAndView model) throws IOException{
+	
+		int recordnum=contactDAO.countRecord();		
+		model.addObject("recordnum",recordnum+"");		
+		model.setViewName("mater_stock_stat_tab");		
+		return model;
 	}
+	@RequestMapping(value="/showmater_stock_stat_tab")  	
+	public @ResponseBody List<Mater_stock_stat_tab> allMater_tab(HttpServletRequest request) throws IOException{
+
+		List<Mater_stock_stat_tab> allMater_stock_stat_tab = mater_stock_stat_tabDAO.listMater_stock_stat_tab();		
+		return allMater_stock_stat_tab;
+	}
+	
+	@RequestMapping(value="/showsomemater_stock_stat_tab")  	
+	public @ResponseBody List<Mater_stock_stat_tab> someMater_tab(HttpServletRequest request) throws IOException{
+		String mater_num=request.getParameter("mater_num");
+		System.out.println(mater_num);
+		List<Mater_stock_stat_tab> someMater_stock_stat_tab = mater_stock_stat_tabDAO.listMater_stock_stat_tab(mater_num);		
+		return someMater_stock_stat_tab;
+	}
+	
+	
+	
+	
+	
+	
 	
 	/*@RequestMapping(value="/editproduce_prog_tab")  	
 	public @ResponseBody String editJqGrid(HttpServletRequest request) throws ParseException {

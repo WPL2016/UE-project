@@ -69,11 +69,11 @@ public class Mou_use_inf_tabDAOImpl implements Mou_use_inf_tabDAO {
 				aMou_use_inf_tab.setMou_use_inf_num(rs.getString("mou_use_inf_num"));
 				aMou_use_inf_tab.setMou_chan_per_num(rs.getString("mou_chan_per_num"));
 				
-				Format formatter = new SimpleDateFormat("yyyy-M-dd HH:mm:ss");
-				String str = formatter.format(rs.getDate("mou_chan_time"));
-				SimpleDateFormat simple= new SimpleDateFormat(str);
-				aMou_use_inf_tab.setMou_chan_time(simple);
 				
+				System.out.println("TIME:"+rs.getTimestamp("mou_chan_time"));
+				
+				aMou_use_inf_tab.setMou_chan_time(rs.getTimestamp("mou_chan_time"));
+				System.out.println("TIME2:"+aMou_use_inf_tab.getMou_chan_time());
 				aMou_use_inf_tab.setMou_num(rs.getString("mou_num"));
 				aMou_use_inf_tab.setEquip_num(rs.getString("equip_num"));
 				
@@ -85,6 +85,36 @@ public class Mou_use_inf_tabDAOImpl implements Mou_use_inf_tabDAO {
 		return listMou_use_inf_tab;
 	}
 
+	@Override
+	public List<Mou_use_inf_tab> list(String mou_num) {
+		String sql = "SELECT * FROM Mou_use_inf_tab where mou_num='"+mou_num+"'";
+		List<Mou_use_inf_tab> listMou_use_inf_tab = jdbcTemplate.query(sql, new RowMapper<Mou_use_inf_tab>() {
+
+			@Override
+			public Mou_use_inf_tab mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Mou_use_inf_tab aMou_use_inf_tab = new Mou_use_inf_tab();
+	
+				aMou_use_inf_tab.setMou_use_inf_num(rs.getString("mou_use_inf_num"));
+				aMou_use_inf_tab.setMou_chan_per_num(rs.getString("mou_chan_per_num"));
+				
+				
+				System.out.println("TIME:"+rs.getTimestamp("mou_chan_time"));
+				
+				aMou_use_inf_tab.setMou_chan_time(rs.getTimestamp("mou_chan_time"));
+				System.out.println("TIME2:"+aMou_use_inf_tab.getMou_chan_time());
+				aMou_use_inf_tab.setMou_num(rs.getString("mou_num"));
+				aMou_use_inf_tab.setEquip_num(rs.getString("equip_num"));
+				
+				return aMou_use_inf_tab;
+			}
+			
+		});
+		
+		return listMou_use_inf_tab;
+	}
+
+	
+	
 	@Override
 	public Mou_use_inf_tab get(String mou_use_inf_num) {
 		String sql = "SELECT * FROM mou_use_inf_tab WHERE mou_use_inf_num=" + mou_use_inf_num;
@@ -98,11 +128,9 @@ public class Mou_use_inf_tabDAOImpl implements Mou_use_inf_tabDAO {
 					
 					aMou_use_inf_tab.setMou_use_inf_num(rs.getString("mou_use_inf_num"));
 					aMou_use_inf_tab.setMou_chan_per_num(rs.getString("mou_chan_per_num"));
+					System.out.println("TIME:"+rs.getTimestamp("mou_chan_time"));
+					aMou_use_inf_tab.setMou_chan_time(rs.getTimestamp("mou_chan_time"));
 					
-					Format formatter = new SimpleDateFormat("yyyy-M-dd HH:mm:ss");
-					String str = formatter.format(rs.getDate("mou_chan_time"));
-					SimpleDateFormat simple= new SimpleDateFormat(str);
-					aMou_use_inf_tab.setMou_chan_time(simple);
 					
 					aMou_use_inf_tab.setMou_num(rs.getString("mou_num"));
 					aMou_use_inf_tab.setEquip_num(rs.getString("equip_num"));
