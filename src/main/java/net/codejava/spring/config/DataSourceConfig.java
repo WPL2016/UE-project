@@ -69,7 +69,7 @@ public class DataSourceConfig {
 	     dataSource.setUrl("jdbc:sqlserver://localhost:1433;databaseName=UEequipmanageDB");
 		//dataSource.setUrl("jdbc:sqlserver://192.168.1.11:1433;databaseName=UEequipmanageDB");
 		dataSource.setUsername("sa");
-		dataSource.setPassword("88862187");
+		dataSource.setPassword("123");
 		
 		return dataSource;
 	}
