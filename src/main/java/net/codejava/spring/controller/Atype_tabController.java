@@ -1,3 +1,4 @@
+
 package net.codejava.spring.controller;
 
 import java.io.IOException;
@@ -160,3 +161,4 @@ public class Atype_tabController {
 		return model;
 	}
 }
+

@@ -95,15 +95,16 @@ $( "#datepicker" ).datepicker();
         		      {
         		        url : "showequip_tab",
         		        datatype : "json",
-        		        colNames : [  '设备编号', '辅助设备', '辅助设备编号', '设备记录编号', '设备名称' ],
+        		        colNames : [  '设备编号', '设备名称','设备供应商', '设备记录人编号', '辅助设备编号' ],
         		        colModel : [ 
-        		                     
-        		                     {name : 'equip_num',index :'equip_num',width : 90,sortable :true,editable :true,key:true},
-        		                     {name : 'equ_equip_num',index : 'equ_equip_num',width : 80,align : "right",sortable : true,editable : true}, 
-        		                     {name : 'equip_sup',index : 'equip_sup',width : 90,sortable : true,editable : true},        		                 
-        		                     {name : 'equip_recorder_num',index : 'equip_recorder_num',width : 80,align : "right",sortable : true,editable : true},        		  
-        		                     {name : 'equip_name',index : 'equip_name',width : 150,sortable : true,editable : true}, 
-        		                     
+
+        		                     {name : 'equip_num',index :'equip_num',width : 90,align : "center",sortable :true,editable : true,key:true},
+        		                     {name : 'equip_name',index : 'equip_name',width : 150,align : "center",sortable : true,editable : true}, 
+        		                     {name : 'equip_sup',index : 'equip_sup',width : 90,align : "center",sortable : true,editable : true},        		                 
+        		                     {name : 'equip_recorder_num',index : 'equip_recorder_num',width : 80,align : "center",sortable : true,editable : false},        		  
+        		                     {name : 'equ_equip_num',index : 'equ_equip_num',width : 80,align : "center",sortable : true,editable : true}, 
+
+        		                            		                     
         		                   ],
         		                   
         		        //下载数据到本地，可以实现在前端排序、搜索，这种方式好处是这里的排序和搜索都无需后台处理，无需额外代码，而且支持多条件复杂搜索
@@ -115,8 +116,11 @@ $( "#datepicker" ).datepicker();
         		        loadError: function(xhr,status,error){  
         		        	 alert(status + " loading data of " + $(this).attr("id") + " : " + error );    },  
 
-        		        caption:"原材料使用状况", //height : 80,align : "center",
+
+        		        caption:"", height : 80,align : "center",
+
         		       
+
         		        prmNames: { id: "equip_num" },
         		        rowNum : 20,
         		        height:300,
@@ -156,6 +160,7 @@ $( "#datepicker" ).datepicker();
         	                    	else if(result=="Forbidden") message="您没有权限执行此操作，请联系上级或申请相应权限！";
         	                        alert(message);
         	                    },
+
         	                //执行完毕进行提示和更新数据  
         	                afterComplete:function(xhr){      
         	                	         //提示操作结果
@@ -166,6 +171,7 @@ $( "#datepicker" ).datepicker();
         	                             $("#jqGrid").setGridParam({datatype:'json', page:1}).trigger('reloadGrid');
 
         	                              },
+
         	                },
         	                // options for the Add Dialog
         	                {
@@ -205,6 +211,7 @@ $( "#datepicker" ).datepicker();
         	                    	else if(result=="Forbidden") message="您没有权限执行此操作，请联系上级或申请相应权限！";
         	                        alert(message);
         	                    },
+
         	                //执行完毕进行提示和更新数据  
         	                afterComplete:function(xhr){      
         	                	         //提示操作结果
@@ -215,6 +222,7 @@ $( "#datepicker" ).datepicker();
         	                             $("#jqGrid").setGridParam({datatype:'json', page:1}).trigger('reloadGrid');
 
         	                              },
+
         	                },
         	                // options for the Search Dailog
         	                {

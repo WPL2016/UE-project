@@ -57,13 +57,7 @@ $(function () {
        
         <!--内容主体的div,请根据具体内容决定div的样式，table_container0最小，1次之，2最大，也可自行在div.css定义你自己想要的样式，要设置成左浮动以保证div水平排列-->     
        <div class="table_container2">
-             <div class="table_head">生产计划</div>
-             <div>
-                  <table id="jqGrid"></table>
-                  <div id="jqGridPager"></div>
-                                   
-                 
-                <div class="table_head">生产进度</div>  
+            <div class="table_head">生产进度</div>  
                   <table id="customers">
             <tr class="alt" ><td colspan=4 class="title">当前生产进度</td></tr>
           <tr class="alt"><td>产品编号</td><td class="value" ></td>
@@ -73,7 +67,14 @@ $(function () {
                           <td>合格品数量</td><td  class="value"></td>
           
        </table>
+             
+             <div>
+                  <table id="jqGrid"></table>
+                  <div id="jqGridPager"></div>
+                                   
                  
+                <div class="table_head">生产计划</div>  
+                                   
                   <table id="jqGrid1"></table>
                   <div id="jqGridPager1"></div>
             </div>

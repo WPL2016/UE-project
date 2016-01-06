@@ -22,14 +22,6 @@ public class UITest {
 	private Equip_tabDAO equip_tabDAO;
 
 
-@RequestMapping(value="/toquality")
-public ModelAndView quality(){
-	ModelAndView model=new ModelAndView();
-	model.setViewName("quality");
-	int recordnum=contactDAO.countRecord();
-	model.addObject("recordnum",recordnum+"");
-	return model;
-}
 
 @RequestMapping(value="/toquality_product")
 public ModelAndView qualitypro(){

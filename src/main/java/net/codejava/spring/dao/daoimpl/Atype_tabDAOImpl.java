@@ -8,6 +8,7 @@ import javax.sql.DataSource;
 
 import net.codejava.spring.dao.daointerface.Atype_tabDAO;
 import net.codejava.spring.model.Atype_tab;
+import net.codejava.spring.model.Equip_tab;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -101,6 +102,15 @@ public class Atype_tabDAOImpl implements Atype_tabDAO {
 			}
 			
 		});
+	}
+	@Override
+	public int updateSingleColumn(Atype_tab atype_tab,String column,String value){
+		   System.out.println("updating...");
+	        String sql = "UPDATE atype_tab SET "+column+" = '"+value+"' WHERE atype_num='"+atype_tab.getAtype_num()+"'";
+	        //int i=jdbcTemplate.update(sql,column,value,equip_tab.getEquip_num());	
+	        int i=jdbcTemplate.update(sql);
+	        System.out.println("updating result:"+i);
+	        return i;
 	}
 
 }

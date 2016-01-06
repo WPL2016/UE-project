@@ -26,6 +26,18 @@
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
 <title>电能消耗</title>  
 
+<script type="text/javascript">  
+<!--ajax访问时发送csrf token，以防止ajax访问被crsf过滤器拦截   -->
+$(function () {
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$(document).ajaxSend(function(e, xhr, options) {
+		xhr.setRequestHeader(header, token);
+	});	
+   });
+</script>  
+
+
 <script>
  $(function() {
 
@@ -47,6 +59,15 @@ $(function () {
 	});	
    });
 </script>  
+
+<script>
+$(document).ready(function(){
+    $("#starttime").datepicker({showWeek:true, firstDay:1});
+    $("#endtime").datepicker({showWeek:true, firstDay:1});
+})
+</script> 
+
+
 </head>
 <body>
   <!-- 插入头部 -->
@@ -74,15 +95,15 @@ $(function () {
           <tr><td>
           
           <label>选择起始时间：</label>
- <input type="text" id="starttime" style="width:140px;height:15px;font-size-3" onClick="$('#starttime').datepicker()" ></input>
+ <input type="text" id="starttime" style="width:140px;height:15px;font-size-3" ></input>
             <label>选择结束时间：</label>
- <input type='text' id='endtime' style='width:140px;height:15px;font-size-3' onClick="$('#endtime').datepicker()"></input>
+ <input type='text' id='endtime' style='width:140px;height:15px;font-size-3'></input>
 
       <select style='width:140px;height:25px;font-size-3' id="timechoice">
          	          <option value="0">按日汇总</option><option value="1">按月汇总</option><option value="2">按年汇总</option></select>
         <c:forEach var="equip_tab" items="${mainequip}">
 	      <input type="checkbox" id="equip_selected" name="equip_selected" value="${equip_tab.equip_num}">${equip_tab.equip_name}</input> </c:forEach>
-             <input type="button" onClick="drawBar(),drawPie()">查询</input>
+             <input type="button" id="search" onClick="drawBar(),drawPie()">查询</input>
            </td></tr>
           
                <tr bgcolor="#E1EBF5">
@@ -90,32 +111,134 @@ $(function () {
                    <td colspan="2">&nbsp;</td>
                    <td width="50">&nbsp;</td>
                </tr>
-                        
+
+<tr><td>
+
+ <table id="jqGrid"></table>
+ <div id="jqGridPager"></div>
+</td></tr>
+
  
   <tr bgcolor="#E1EBF5">
     <td height="257" colspan="13" align="center">
         <div id="linechart" style="width:80%; height:500px"></div>
         <div id="piechart" style="width:80%; height:500px"></div>
     </td>
-  </tr>
+  </tr> 
   
   
 </table>                                                                                                    
         </div>
-  
-  
-  </div>
+    </div>
+ 
   <!-- 插入底部 -->  
-  
   <div>
   <%@ include file="./component/2_foot.jsp"%>
   </div>  
+
+<script type="text/javascript">        
+
+$(document).ready(function () {
+     		  
+	pageInit();
+        	
+        		});
+
+
+        		function pageInit(){
+        		  var lastsel;
+        		  var chk_value =[];  
+        		  jQuery("#jqGrid").jqGrid(
+        		      {
+        		        url : "showenergy_tab?starttime="+$("#starttime").val()+"&endtime="+$("#endtime").val()+"&timechoice="+$("#timechoice").val()+"&equip_selected="+chk_value,
+        		        datatype : "json",
+        		        colNames : [  '设备名称', '电能消耗时间','电能消耗值(千瓦时)'],
+        		        colModel : [ 
+
+        		                     {name : 'name',index :'name',width : 90,align : "center",sortable :false,editable : false,key:true},
+        		                     {name : 'time',index : 'time',width : 150,align : "center",sortable :false,editable : false}, 
+        		                     {name : 'val',index : 'val',width : 90,align : "center",sortable :false,editable : false},        		                 
+        		                  
+
+        		                            		                     
+        		                   ],
+        		                   
+        		        //下载数据到本地，可以实现在前端排序、搜索，这种方式好处是这里的排序和搜索都无需后台处理，无需额外代码，而且支持多条件复杂搜索
+        	        	//缺点是一次导入所有数据，数据量大时会存在一些问题，此时需要在后台实现搜索，只载入符合条件的数据,此外表格不自动刷新，需要reload
+        	        	//请根据需要选择养已经完成好的前台查询和排序还是自行实现后台排序和搜索  
+        	        
+        		        loadonce:true,
+        		        //当加载出错时提供错误信息
+        		        loadError: function(xhr,status,error){  
+        		        	 alert(status + " loading data of " + $(this).attr("id") + " : " + error );    },  
+
+
+        		        caption:"", height : 80,align : "center",
+
+        		       
+
+        		        prmNames: { id: "equip_num" },
+        		        rowNum : 20,
+        		        height:300,
+        		        rowList : [ 20, 40, 60 ],
+        		        pager : '#jqGridPager',
+        		        multiselect:true,
+        		        sortname :'name',
+        		        viewrecords : true,
+        		        sortorder : "desc",
+        		        autowidth:true,
+        		        onSelectRow : function(id) {
+        		          if (id && id !== lastsel) {
+        		            jQuery('#jqGrid').jqGrid('restoreRow', lastsel);
+        		            jQuery('#jqGrid').jqGrid('editRow', id, true);
+        		            lastsel = id;
+        		          }
+        		        },
+        		      //  editurl : "editequip_tab",
+        		       
+        		      });
+        		  
+        		   $('#jqGrid').navGrid('#jqGridPager',
+        	                // the buttons to appear on the toolbar of the grid
+        	                { edit: false, add: false, del: false, search: true, refresh: true, view: true, position: "left", cloneToTop: false },
+        	              
+        	                // options for the Search Dailog
+        	                {
+        	                	multipleSearch:true,
+        	                	multipleGroup:true,
+        	                	recreateForm: true,
+        	                	closeAfterSearch: true,       	            
+        	                	errorTextFormat: function (data) {
+        	                        return '搜索失败，请重新尝试!'+ data.responseText
+        	                    }
+        	                 }
+        	                );
+        		   $("#search").click(function(){
+        			   var chk_value =[];  
+        			   $('input[name=equip_selected]:checked').each(function(){   
+        			      chk_value.push($(this).val());
+        			              });
+        			   $("#jqGrid").setGridParam({url : "showenergy_tab?starttime="+$("#starttime").val()+"&endtime="+$("#endtime").val()+"&timechoice="+$("#timechoice").val()+"&equip_selected="+chk_value,datatype:'json', page:1}).trigger('reloadGrid')});
+        		  
+        		          		          		 
+        			    	
+        		}
+        		
+        	
+          		          		          		 
+          		
+        		
+   </script>
+  
  
    <!-- ECharts文件引入 -->
   
     <script src="resources/echarts/build/dist/echarts.js"></script>
     
+   
+    
     <script type="text/javascript">
+
         // 路径配置
         require.config({
             paths: {
@@ -135,9 +258,12 @@ $(function () {
             DrawCharts
             );
             function DrawCharts(ec) {
+            	
             drawBar();
             drawPie();
              }
+            
+           
 
             function drawBar() {
                 // 基于准备好的dom，初始化echarts图表
@@ -178,6 +304,7 @@ $(function () {
                     },
                     calculable:true,
                     //x轴
+
                     xAxis : [
                         {
                             type : 'category',
@@ -190,6 +317,7 @@ $(function () {
                             type : 'value'
                         }
                     ],
+
 
                     //数据系列，要显示几个系列酒填几个大括号，不然不会显示多出的系列
                     series : [{},{}],}
@@ -232,6 +360,7 @@ $(function () {
                //加载选项
                  myChart.setOption(option); 
 
+
             }
             
             function drawPie() {
@@ -241,7 +370,9 @@ $(function () {
              var myChart=require('echarts').init(dom);
             	  var option = {
             	      title : {
+
             	        text: '所选设备电能消耗比例',
+
             	        subtext: '饼图（Pie Chart）',
             	        x:'center'
             	      },
@@ -320,12 +451,18 @@ $(function () {
             	 myChart.setOption(option); 
 
             }
+
            
        
        
         
         
+
     </script>
+   
+   
+   
+  
     
 
       

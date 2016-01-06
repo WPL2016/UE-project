@@ -35,15 +35,15 @@ public class Mater_tabDAOImpl implements Mater_tabDAO {
 		if (i!=0) {
 			// update
 			String sql = "UPDATE mater_tab SET mater_sup=?, mater_name=?, mater_recorder_num=?, "
-						+ "mater_stan=? WHERE mater_num=?";
+						+ "mater_stan=?,mater_unit=? WHERE mater_num=?";
 			jdbcTemplate.update(sql, mater_tab.getMater_sup(), mater_tab.getMater_name(),
-					mater_tab.getMater_recorder_num(), mater_tab.getMater_stan(), mater_tab.getMater_num());
+					mater_tab.getMater_recorder_num(), mater_tab.getMater_stan(),mater_tab.getMater_unit(), mater_tab.getMater_num());
 		} else {
 			// insert
-			String sql = "INSERT INTO mater_tab (mater_num, mater_sup, mater_name, mater_recorder_num, mater_stan)"
-						+ " VALUES (?, ?, ?, ?, ?)";
+			String sql = "INSERT INTO mater_tab (mater_num, mater_sup, mater_name, mater_recorder_num, mater_stan,mater_unit)"
+						+ " VALUES (?, ?, ?, ?, ?,?)";
 			jdbcTemplate.update(sql, mater_tab.getMater_num(),mater_tab.getMater_sup(), mater_tab.getMater_name(),
-					mater_tab.getMater_recorder_num(), mater_tab.getMater_stan());
+					mater_tab.getMater_recorder_num(), mater_tab.getMater_stan(),mater_tab.getMater_unit());
 		}
 		
 	}
@@ -68,7 +68,7 @@ public class Mater_tabDAOImpl implements Mater_tabDAO {
 				aMater_tab.setMater_name(rs.getString("mater_name"));
 				aMater_tab.setMater_recorder_num(rs.getString("mater_recorder_num"));
 				aMater_tab.setMater_stan(rs.getString("mater_stan"));
-				
+				aMater_tab.setMater_unit(rs.getString("mater_unit"));
 				return aMater_tab;
 			}
 			
@@ -92,14 +92,23 @@ public class Mater_tabDAOImpl implements Mater_tabDAO {
 					aMater_tab.setMater_name(rs.getString("mater_name"));
 					aMater_tab.setMater_recorder_num(rs.getString("mater_recorder_num"));
 					aMater_tab.setMater_stan(rs.getString("mater_stan"));
-					
+					aMater_tab.setMater_unit(rs.getString("mater_unit"));
 					return aMater_tab;
 				}
 				
 				return null;
 			}
 			
-		});
-	}
-
+			});
+		}
+		
+		@Override
+		public int updateSingleColumn(Mater_tab mater_tab,String column,String value){
+			   System.out.println("updating...");
+		        String sql = "UPDATE mater_tab SET "+column+" = '"+value+"' WHERE mater_num='"+mater_tab.getMater_num()+"'";
+		        //int i=jdbcTemplate.update(sql,column,value,mater_tab.getMater_num());	
+		        int i=jdbcTemplate.update(sql);
+		        System.out.println("updating result:"+i);
+		        return i;
+		}
 }

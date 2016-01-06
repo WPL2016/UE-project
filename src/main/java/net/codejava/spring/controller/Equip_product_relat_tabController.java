@@ -5,65 +5,83 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import net.codejava.spring.dao.daointerface.ContactDAO;
 import net.codejava.spring.dao.daointerface.Equip_product_relat_tabDAO;
 import net.codejava.spring.model.Equip_product_relat_tab;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
 
-/**
- * This controller routes accesses to the application to the appropriate
- * hanlder methods. 
-
- *
- */
-@Controller
+@Controller 
 public class Equip_product_relat_tabController {
-
 	@Autowired
 	private Equip_product_relat_tabDAO equip_product_relat_tabDAO;
+	@Autowired
+	private ContactDAO contactDAO;
 	
-	@RequestMapping(value="/equip_product_relat_tab")
-	public ModelAndView listEquip_product_relat_tab(ModelAndView model) throws IOException{
-		List<Equip_product_relat_tab> listEquip_product_relat_tab = equip_product_relat_tabDAO.list();
-		model.addObject("listEquip_product_relat_tab", listEquip_product_relat_tab);
-		model.setViewName("equip_product_relat_tab");
+	@RequestMapping(value="/toequip_product_relat_tab")
+	public ModelAndView toequip_product_relattab(){
+		ModelAndView model=new ModelAndView();
+		model.setViewName("equip_product_relat");
+		int recordnum=contactDAO.countRecord();
+		model.addObject("recordnum",recordnum+"");
+		return model;
+	}
+	
+	@RequestMapping(value="/showequip_product_relat")  	
+	public @ResponseBody List<Equip_product_relat_tab> allContact() throws IOException{
+		List<Equip_product_relat_tab> allEquip_product_relat_tab= equip_product_relat_tabDAO.list();		
+		return allEquip_product_relat_tab;
+	}
+	
+	@RequestMapping(value="/editequip_product_relat_tab")  	
+	public @ResponseBody String editJqGrid(HttpServletRequest request) {
+		Equip_product_relat_tab equip_product_relat_tab=new Equip_product_relat_tab();
+		String oper=request.getParameter("oper");
+		String equip_product_relat_num=request.getParameter("equip_product_relat_num");
+			
+		equip_product_relat_tab.setEquip_product_relat_num(request.getParameter("equip_product_relat_num"));
+		equip_product_relat_tab.setEquip_num(request.getParameter("equip_num"));
+		equip_product_relat_tab.setProduct_num(request.getParameter("product_num"));
+		equip_product_relat_tab.setEquip_product_relat_recorder_num(request.getUserPrincipal().getName());
 		
-		return model;
-	}
-	
-	@RequestMapping(value = "equip_product_relat_tab/newEquip_product_relat_tab", method = RequestMethod.GET)
-	public ModelAndView newEquip_product_relat_tab(ModelAndView model) {
-		Equip_product_relat_tab newEquip_product_relat_tab = new Equip_product_relat_tab();
-		model.addObject("equip_product_relat_tab", newEquip_product_relat_tab);
-		model.setViewName("Equip_product_relat_tabForm");
-		return model;
-	}
-	
-	@RequestMapping(value = "equip_tab/saveEquip_product_relat_tab", method = RequestMethod.POST)
-	public ModelAndView saveContact(@ModelAttribute Equip_product_relat_tab equip_product_relat_tab) {
-		equip_product_relat_tabDAO.saveOrUpdate(equip_product_relat_tab);
-		return new ModelAndView("redirect:/equip_product_relat_tab");
-	}
-	
-	@RequestMapping(value = "equip_product_relat_tab/deleteEquip_product_relat_tab", method = RequestMethod.GET)
-	public ModelAndView deleteEquip_product_relat_tab(HttpServletRequest request) {
-		String equip_product_relat_num = request.getParameter("equip_product_relat_num");
-		equip_product_relat_tabDAO.delete(equip_product_relat_num);
-		return new ModelAndView("redirect:/equip_product_relat_tab");
-	}
-	
-	@RequestMapping(value = "equip_product_relat_tab/editEquip_product_relat_tab", method = RequestMethod.GET)
-	public ModelAndView editEquip_tab(HttpServletRequest request) {
-		String equip_product_relat_num = request.getParameter("equip_product_relat_num");
-		Equip_product_relat_tab equip_product_relat_tab = equip_product_relat_tabDAO.get(equip_product_relat_num);
-		ModelAndView model = new ModelAndView("Equip_product_relat_tabForm");
-		model.addObject("equip_product_relat_tab", equip_product_relat_tab);
 		
-		return model;
+		
+		
+		if(oper != null && oper.equals("edit")){
+		if(equip_product_relat_tab.getEquip_product_relat_num()=="") equip_product_relat_tab.setEquip_product_relat_num(null);
+		equip_product_relat_tabDAO.saveOrUpdate(equip_product_relat_tab);   
+		
+		}
+		else if(oper != null && oper.equals("add")){
+			if(equip_product_relat_tab.getEquip_product_relat_num()=="") equip_product_relat_tab.setEquip_product_relat_num(null);
+			equip_product_relat_tabDAO.saveOrUpdate(equip_product_relat_tab);
+		}
+		else if(oper != null && oper.equals("del")){
+			String[] ids=equip_product_relat_num.split(",");
+			for(int i=0;i<ids.length;i++)
+				equip_product_relat_tabDAO.delete(ids[i]);	
+		}
+		else if(oper != null && oper.equals("batch_edit")){
+			String[] ids=equip_product_relat_num.split(",");
+			String column_name=request.getParameter("column_name");
+			System.out.println("column_name:"+column_name);
+			String column_value=request.getParameter("column_value");
+			System.out.println("column_value:"+column_value);
+			for(int i=0;i<ids.length;i++)
+				  {equip_product_relat_tab.setEquip_num(ids[i]);
+			      System.out.println("update:"+ids[i]);
+			  
+			      System.out.println("update:"+equip_product_relat_tab.getEquip_product_relat_num());
+			     /* equip_product_relat_tabDAO.updateSingleColumn(equip_product_relat_tab,column_name,column_value);	
+				 */ }
+		     }
+		return "done";
 	}
+	
+	
 }

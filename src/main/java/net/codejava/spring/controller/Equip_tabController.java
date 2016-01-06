@@ -51,9 +51,7 @@ public class Equip_tabController {
 		Equip_tab equip_tab=new Equip_tab();
 		String oper=request.getParameter("oper");
 		String equip_num=request.getParameter("equip_num");
-		
-		
-		
+			
 		equip_tab.setEquip_num(request.getParameter("equip_num"));
 		equip_tab.setEquip_name(request.getParameter("equip_name"));
 		equip_tab.setEquip_sup(request.getParameter("equip_sup"));
@@ -68,10 +66,14 @@ public class Equip_tabController {
 		
 		 
 	    //System.out.println("½øÈë0");
+		System.out.println(equip_tab.getEqu_equip_num());
 		if(oper != null && oper.equals("edit")){
+		if(equip_tab.getEqu_equip_num()=="") equip_tab.setEqu_equip_num(null);
 		equip_tabDAO.saveOrUpdate(equip_tab);   
+		
 		}
 		else if(oper != null && oper.equals("add")){
+			if(equip_tab.getEqu_equip_num()=="") equip_tab.setEqu_equip_num(null);
 			equip_tabDAO.saveOrUpdate(equip_tab);
 		}
 		else if(oper != null && oper.equals("del")){

@@ -5,65 +5,84 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import net.codejava.spring.dao.daointerface.Product_tabDAO;
-import net.codejava.spring.model.Product_tab;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-/**
- * This controller routes accesses to the application to the appropriate
- * hanlder methods. 
+import net.codejava.spring.dao.daointerface.ContactDAO;
+import net.codejava.spring.dao.daointerface.Product_tabDAO;
 
- *
- */
-@Controller
+import net.codejava.spring.model.Product_tab;
+
+@Controller 
 public class Product_tabController {
-
 	@Autowired
 	private Product_tabDAO product_tabDAO;
+	@Autowired
+	private ContactDAO contactDAO;
 	
-	@RequestMapping(value="/product_tab")
-	public ModelAndView listProduct_tab(ModelAndView model) throws IOException{
-		List<Product_tab> listProduct_tab = product_tabDAO.list();
-		model.addObject("listProduct_tab", listProduct_tab);
+	@RequestMapping(value="/toproduct_tab")
+	public ModelAndView toproduct_tab(){
+		ModelAndView model=new ModelAndView();
 		model.setViewName("product_tab");
+		int recordnum=contactDAO.countRecord();
+		model.addObject("recordnum",recordnum+"");
+		return model;
+	}
+	
+	@RequestMapping(value="/showproduct_tab")  	
+	public @ResponseBody List<Product_tab> allContact() throws IOException{
+		List<Product_tab> allProduct_tab = product_tabDAO.list();		
+		return allProduct_tab;
+	}
+	
+	@RequestMapping(value="/editproduct_tab")  	
+	public @ResponseBody String editJqGrid(HttpServletRequest request) {
+		Product_tab product_tab=new Product_tab();
+		String oper=request.getParameter("oper");
+		String product_num=request.getParameter("product_num");
+		System.out.println("iiiuui"+product_num);	
+		product_tab.setProduct_num(request.getParameter("product_num"));
+		product_tab.setProduct_name(request.getParameter("product_name"));
+		product_tab.setProduct_recorder_num(request.getUserPrincipal().getName());
+		product_tab.setMater_num(request.getParameter("mater_num"));
 		
-		return model;
-	}
-	
-	@RequestMapping(value = "product_tab/newProduct_tab", method = RequestMethod.GET)
-	public ModelAndView newProduct_tab(ModelAndView model) {
-		Product_tab newProduct_tab = new Product_tab();
-		model.addObject("product_tab", newProduct_tab);
-		model.setViewName("Product_tabForm");
-		return model;
-	}
-	
-	@RequestMapping(value = "product_tab/saveProduct_tab", method = RequestMethod.POST)
-	public ModelAndView saveContact(@ModelAttribute Product_tab product_tab) {
-		product_tabDAO.saveOrUpdate(product_tab);
-		return new ModelAndView("redirect:/product_tab");
-	}
-	
-	@RequestMapping(value = "product_tab/deleteProduct_tab", method = RequestMethod.GET)
-	public ModelAndView deleteProduct_tab(HttpServletRequest request) {
-		String product_num = request.getParameter("product_num");
-		product_tabDAO.delete(product_num);
-		return new ModelAndView("redirect:/product_tab");
-	}
-	
-	@RequestMapping(value = "product_tab/editProduct_tab", method = RequestMethod.GET)
-	public ModelAndView editProduct_tab(HttpServletRequest request) {
-		String product_num = request.getParameter("product_num");
-		Product_tab product_tab = product_tabDAO.get(product_num);
-		ModelAndView model = new ModelAndView("Product_tabForm");
-		model.addObject("product_tab", product_tab);
 		
-		return model;
+		 
+	    //System.out.println("½øÈë0");
+		System.out.println(product_tab.getProduct_num());
+		if(oper != null && oper.equals("edit")){
+		if(product_tab.getProduct_num()=="") product_tab.setProduct_num(null);
+		product_tabDAO.saveOrUpdate(product_tab);   
+		
+		}
+		else if(oper != null && oper.equals("add")){
+			if(product_tab.getProduct_num()=="") product_tab.setProduct_num(null);
+			product_tabDAO.saveOrUpdate(product_tab);
+		}
+		else if(oper != null && oper.equals("del")){
+			String[] ids=product_num.split(",");
+			for(int i=0;i<ids.length;i++)
+				product_tabDAO.delete(ids[i]);	
+		}
+		else if(oper != null && oper.equals("batch_edit")){
+			String[] ids=product_num.split(",");
+			String column_name=request.getParameter("column_name");
+			System.out.println("column_name:"+column_name);
+			String column_value=request.getParameter("column_value");
+			System.out.println("column_value:"+column_value);
+			for(int i=0;i<ids.length;i++)
+				  {product_tab.setProduct_num(ids[i]);
+			      System.out.println("update:"+ids[i]);
+			  
+			      System.out.println("update:"+product_tab.getProduct_num());
+			      product_tabDAO.updateSingleColumn(product_tab,column_name,column_value);	
+				  }
+		     }
+		return "done";
 	}
+	
+	
 }

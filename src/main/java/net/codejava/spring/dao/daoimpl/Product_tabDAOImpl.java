@@ -36,7 +36,7 @@ public class Product_tabDAOImpl implements Product_tabDAO {
 		if (i!=0) {
 			// update
 			String sql = "UPDATE product_tab SET product_name=?,"
-						+ "product_recorder_num=?,mater_num=?WHERE product_num=?";
+						+ "product_recorder_num=?,mater_num=? WHERE product_num=?";
 			jdbcTemplate.update(sql, product_tab.getProduct_name(), product_tab.getProduct_recorder_num(),
 					product_tab.getMater_num(),product_tab.getProduct_num());
 		} else {
@@ -98,7 +98,17 @@ public class Product_tabDAOImpl implements Product_tabDAO {
 				return null;
 			}
 			
-		});
-	}
+			});
+		}
+		
+		@Override
+		public int updateSingleColumn(Product_tab product_tab,String column,String value){
+			   System.out.println("updating...");
+		        String sql = "UPDATE product_tab SET "+column+" = '"+value+"' WHERE product_num='"+product_tab.getProduct_num()+"'";
+		        //int i=jdbcTemplate.update(sql,column,value,product_tab.getProduct_num());	
+		        int i=jdbcTemplate.update(sql);
+		        System.out.println("updating result:"+i);
+		        return i;
+		}
 
 }
