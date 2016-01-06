@@ -1,13 +1,10 @@
 package net.codejava.spring.model;
 
-import java.text.SimpleDateFormat;
-
-
-
 public class Ener_stat_tab {
 	
 	private String equip_num;
-	private SimpleDateFormat ener_collect_time = new SimpleDateFormat("yyyy-M-dd HH:mm:ss");//ºá×ø±ê  
+	private String ener_collect_time;
+	//private SimpleDateFormat ener_collect_time = new SimpleDateFormat("yyyy-M-dd HH:mm:ss");//ºá×ø±ê  
     private Float ener_val;
        
 
@@ -18,7 +15,7 @@ public class Ener_stat_tab {
 	public Ener_stat_tab() {
 	}
 
-	public Ener_stat_tab(Float ener_val, String ener_stat_num, String ener_type, SimpleDateFormat ener_collect_time, String equip_num) {
+	public Ener_stat_tab(Float ener_val, String ener_stat_num, String ener_type, String ener_collect_time, String equip_num) {
 		this.ener_val = ener_val;
 		this.ener_stat_num = ener_stat_num;
 		this.ener_type = ener_type;
@@ -50,11 +47,11 @@ public class Ener_stat_tab {
 		this.ener_type = ener_type;
 	}
 
-	public SimpleDateFormat getEner_collect_time() {
+	public String getEner_collect_time() {
 		return ener_collect_time;
 	}
 
-	public void setEner_collect_time(SimpleDateFormat ener_collect_time) {
+	public void setEner_collect_time(String ener_collect_time) {
 		this.ener_collect_time = ener_collect_time;
 	}
 	public String getEquip_num() {

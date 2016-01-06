@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -73,8 +74,8 @@ public class Ener_stat_tabDAOImpl implements Ener_stat_tabDAO {
 				
 				Format formatter = new SimpleDateFormat("yyyy-M-dd HH:mm:ss");
 				String str = formatter.format(rs.getDate("ener_collect_time"));
-				SimpleDateFormat simple= new SimpleDateFormat(str);
-				aEner_stat_tab.setEner_collect_time(simple);
+				//SimpleDateFormat simple= new SimpleDateFormat(str);
+				aEner_stat_tab.setEner_collect_time(str);
 				
 				aEner_stat_tab.setEner_val(rs.getFloat("ener_val"));
 				aEner_stat_tab.setEner_type(rs.getString("ener_type"));
@@ -103,8 +104,8 @@ public class Ener_stat_tabDAOImpl implements Ener_stat_tabDAO {
 					
 					Format formatter = new SimpleDateFormat("yyyy-M-dd HH:mm:ss");
 					String str = formatter.format(rs.getDate("ener_collect_time"));
-					SimpleDateFormat simple= new SimpleDateFormat(str);
-					aEner_stat_tab.setEner_collect_time(simple);
+					//SimpleDateFormat simple= new SimpleDateFormat(str);
+					aEner_stat_tab.setEner_collect_time(str);
 					
 					aEner_stat_tab.setEner_val(rs.getFloat("ener_val"));
 					aEner_stat_tab.setEner_type(rs.getString("ener_type"));
@@ -130,29 +131,77 @@ public class Ener_stat_tabDAOImpl implements Ener_stat_tabDAO {
 	}
 	
 	@Override
-	public List<Ener_stat_tab> GetSpecData(String equip_num, String start_time, String end_time, String ener_type){
+	public List<Ener_stat_tab> GetSpecData(String equip_num, String start_time, String end_time, String ener_type, String timechoice){
 		// TODO Auto-generated method stub
-		String sql = "SELECT * FROM ener_stat_tab WHERE equip_num='"+equip_num+"' AND ener_type='"+ener_type+"' AND DATEDIFF(SS,'"+start_time+"',ener_collect_time)>=0 AND DATEDIFF(SS,'"+end_time+"',ener_collect_time)<=0" ;
-		List<Ener_stat_tab> listEner_stat_tab = jdbcTemplate.query(sql, new RowMapper<Ener_stat_tab>() {
+		String sql = new String();
+		final String str= timechoice;
+		//System.out.println("1111");
+		List<Ener_stat_tab> listEner_stat_tab = new ArrayList<Ener_stat_tab>();
+		//System.out.println("2222");
+		/*sql = "SELECT * FROM ener_stat_tab WHERE equip_num='"+equip_num+"' AND "
+				+ "ener_type='"+ener_type+"' AND DATEDIFF(SS,'"+start_time+"',ener_collect_time)>=0 AND "
+				+ "DATEDIFF(SS,'"+end_time+"',ener_collect_time)<=0 order by ener_collect_time asc";*/
+		if(timechoice.equals("0")){
+			sql="WITH ener_static (nian , yue, ri, val,equip_num) AS"+
+					" (SELECT DATENAME(year,ener_collect_time), DATENAME(month,ener_collect_time), DATENAME(day,ener_collect_time),SUM(ener_val),equip_num"+
+					" FROM ener_stat_tab"+
+					" WHERE ener_stat_tab.equip_num='"+equip_num+"' AND ener_type='"+ener_type+"' AND"+ 
+			        " DATEDIFF(SS,'"+start_time+"',ener_collect_time)>=0"+ 
+			        " AND DATEDIFF(SS,'"+end_time+"',ener_collect_time)<=0"+
+					" GROUP BY equip_num, DATENAME(year,ener_collect_time), DATENAME(month,ener_collect_time)"+
+					" ,DATENAME(day,ener_collect_time))"+
+					" SELECT nian , yue, ri, val, equip_name"+
+					" FROM ener_static  JOIN equip_tab ON ener_static .equip_num = equip_tab.equip_num ORDER BY nian,yue,ri asc";
+			
+		}
+		if(timechoice.equals("1")){
+			sql="WITH ener_static (nian , yue, val,equip_num) AS"+
+					" (SELECT DATENAME(year,ener_collect_time)  ,DATENAME(month,ener_collect_time),SUM(ener_val),equip_num"+
+					" FROM ener_stat_tab"+
+					" WHERE ener_stat_tab.equip_num='"+equip_num+"' AND ener_type='"+ener_type+"' AND"+ 
+			        " DATEDIFF(SS,'"+start_time+"',ener_collect_time)>=0"+ 
+			        " AND DATEDIFF(SS,'"+end_time+"',ener_collect_time)<=0"+
+					" GROUP BY equip_num ,DATENAME(month,ener_collect_time)"+
+					" ,DATENAME(year,ener_collect_time))"+
+					" SELECT nian , yue, val, equip_name"+
+					" FROM ener_static  JOIN equip_tab ON ener_static .equip_num = equip_tab.equip_num ORDER BY nian,yue asc";
+		}
+		if(timechoice.equals("2")){
+			
+			sql="WITH ener_static (nian, val,equip_num) AS"+
+			" (SELECT DATENAME(year,ener_collect_time), SUM(ener_val),equip_num"+
+			" FROM ener_stat_tab"+
+			" WHERE ener_stat_tab.equip_num='"+equip_num+"' AND ener_type='"+ener_type+"' AND"+ 
+	        " DATEDIFF(SS,'"+start_time+"',ener_collect_time)>=0"+ 
+	        " AND DATEDIFF(SS,'"+end_time+"',ener_collect_time)<=0"+
+			" GROUP BY equip_num,"+
+			" DATENAME(year,ener_collect_time))"+
+			" SELECT nian, val, equip_name"+
+			" FROM ener_static  JOIN equip_tab ON ener_static .equip_num = equip_tab.equip_num ORDER BY nian asc";
+	
+		}
+		//System.out.println("3333");
+		listEner_stat_tab = jdbcTemplate.query(sql, new RowMapper<Ener_stat_tab>() {
 
 			@Override
 			public Ener_stat_tab mapRow(ResultSet rs, int rowNum) throws SQLException {
 				Ener_stat_tab aEner_stat_tab = new Ener_stat_tab();
-	
-				aEner_stat_tab.setEquip_num(rs.getString("equip_num"));
-				
-				Format formatter = new SimpleDateFormat("yyyy-M-dd HH:mm:ss");
-				String str = formatter.format(rs.getDate("ener_collect_time"));
-				SimpleDateFormat simple= new SimpleDateFormat(str);
-				aEner_stat_tab.setEner_collect_time(simple);
-				
-				aEner_stat_tab.setEner_val(rs.getFloat("ener_val"));
-				aEner_stat_tab.setEner_type(rs.getString("ener_type"));
-				aEner_stat_tab.setEner_stat_num(rs.getString("ener_stat_num"));
-				
-				return aEner_stat_tab;
-			}
+
+				aEner_stat_tab.setEquip_num(rs.getString("equip_name"));			
+				//Format formatter = new SimpleDateFormat("yyyy-M-dd");
+				//String str = formatter.format(rs.getDate("ener_collect_time"));
+				//SimpleDateFormat simple= new SimpleDateFormat(str);
+				if(str.equals("0")){aEner_stat_tab.setEner_collect_time(rs.getString("nian")+"-"+rs.getString("yue")+"-"+rs.getString("ri"));}
+				if(str.equals("1")){aEner_stat_tab.setEner_collect_time(rs.getString("nian")+"-"+rs.getString("yue"));		}
+				if(str.equals("2")){aEner_stat_tab.setEner_collect_time(rs.getString("nian"));}
 			
+				aEner_stat_tab.setEner_val(Float.valueOf(rs.getString("val")));
+				
+				//aEner_stat_tab.setEner_type(rs.getString("ener_type"));
+				//aEner_stat_tab.setEner_stat_num(rs.getString("ener_stat_num"));
+	
+				return aEner_stat_tab; 
+		}
 		});
 		
 		return listEner_stat_tab;

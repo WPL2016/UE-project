@@ -10,10 +10,15 @@ import net.codejava.spring.dao.daoimpl.Atype_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.Atype_use_inf_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.ContactDAOImpl;
 
+
+import net.codejava.spring.dao.daoimpl.Ener_stat_tabDAOImpl;
+
 import net.codejava.spring.dao.daoimpl.Equip_dyn_para_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.Equip_oper_stat_tabDAOImpl;
 
+
 import net.codejava.spring.dao.daoimpl.Ener_stat_tabDAOImpl;
+
 
 import net.codejava.spring.dao.daoimpl.Equip_para_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.Equip_pres_para_tabDAOImpl;
@@ -35,10 +40,17 @@ import net.codejava.spring.dao.daointerface.Atype_tabDAO;
 import net.codejava.spring.dao.daointerface.Atype_use_inf_tabDAO;
 import net.codejava.spring.dao.daointerface.ContactDAO;
 
+
+import net.codejava.spring.dao.daointerface.Ener_stat_tabDAO;
+
+
 import net.codejava.spring.dao.daointerface.Equip_dyn_para_tabDAO;
 import net.codejava.spring.dao.daointerface.Equip_oper_stat_tabDAO;
 
+
 import net.codejava.spring.dao.daointerface.Ener_stat_tabDAO;
+
+
 
 import net.codejava.spring.dao.daointerface.Equip_para_tabDAO;
 import net.codejava.spring.dao.daointerface.Equip_pres_para_tabDAO;
@@ -139,16 +151,17 @@ public class DataSourceConfig {
 	}
 	@Bean
 
+
+	public Ener_stat_tabDAO getEner_stat_tabDAO() {
+		return new Ener_stat_tabDAOImpl(getDataSource());}
+@Bean
+
 	public Equip_oper_stat_tabDAO getEquip_oper_stat_tabDAO() {
 		return new Equip_oper_stat_tabDAOImpl(getDataSource());
 	}
 	@Bean
 	public Equip_dyn_para_tabDAO getEquip_dyn_para_tabDAO() {
 		return new Equip_dyn_para_tabDAOImpl(getDataSource());
-	}
-    @Bean
-	public Ener_stat_tabDAO getEner_stat_tabDAO() {
-		return new Ener_stat_tabDAOImpl(getDataSource());
 
 	}
     @Bean

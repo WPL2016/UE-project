@@ -1,6 +1,7 @@
 package net.codejava.spring.controller;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import net.codejava.spring.dao.daointerface.ContactDAO;
+import net.codejava.spring.dao.daointerface.Equip_tabDAO;
+import net.codejava.spring.model.Equip_tab;
 
 
 @Controller
@@ -15,6 +18,8 @@ public class StartController {
 	
 	@Autowired
 	private ContactDAO contactDAO;
+	@Autowired
+	private Equip_tabDAO equip_tabDAO;
 	
 	@RequestMapping(value="/")
 	public ModelAndView listContact(ModelAndView model) throws IOException{
@@ -77,6 +82,8 @@ public class StartController {
 	public ModelAndView viewinput2(){
 		ModelAndView model=new ModelAndView();
 		model.setViewName("energy");
+		List<Equip_tab> mainequip=equip_tabDAO.getSomeEquip("main");
+		model.addObject("mainequip",mainequip);
 		int recordnum=contactDAO.countRecord();
 		model.addObject("recordnum",recordnum+"");
 		return model;
