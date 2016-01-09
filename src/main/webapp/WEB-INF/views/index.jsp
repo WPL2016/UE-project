@@ -33,6 +33,7 @@
 <a href="tomou_tab">模具基础信息维护</a><br/>
 <a href="toauthority">权限管理</a><br/>
 <a href="toregister">注册</a><br/>
+<a href="toedituserinfo">修改用户信息</a><br/>
 <!--  <a href="tohello">3号输入</a><br/>-->
 </body>
 </html>

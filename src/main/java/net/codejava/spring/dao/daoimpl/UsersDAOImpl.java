@@ -6,11 +6,13 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.jdbc.core.RowMapper;
 
 import net.codejava.spring.dao.daointerface.UsersDAO;
-
+import net.codejava.spring.model.Contact;
 import net.codejava.spring.model.Users;
 
 public class UsersDAOImpl implements UsersDAO{
@@ -56,4 +58,46 @@ private JdbcTemplate jdbcTemplate;
 				+ " VALUES (?, ?, ?, ?, ?,?,?,?,?)";
 	jdbcTemplate.update(sql, users.getUsername(),users.getPassword(),users.getEnabled(),users.getPerson_name(),users.getUser_dep(),users.getUser_tel(),users.getBirth_day(),users.getUser_duty(),users.getEmail());
 	}
+	
+	@Override
+	 public Users getUser(String username){
+		String sql="select * from users where username='"+username+"'";
+		return jdbcTemplate.query(sql, new ResultSetExtractor<Users>() {
+
+			@Override
+			public Users extractData(ResultSet rs) throws SQLException,
+					DataAccessException {
+				if (rs.next()) {
+					Users users= new Users();
+					users.setUsername(rs.getString("username"));
+					users.setPerson_name(rs.getString("person_name"));
+					users.setBirth_day(rs.getDate("birth_day"));
+					users.setEmail(rs.getString("email"));
+					users.setEnabled(rs.getInt("enabled"));
+					users.setUser_dep(rs.getString("user_dep"));
+					users.setUser_duty(rs.getString("user_duty"));
+					users.setUser_tel(rs.getString("user_tel"));
+					return users;
+				}
+				
+				return null;
+			}
+			
+		});
+		
+	}
+	@Override
+	public int update(Users users){
+		String sql="UPDATE users SET  email=?, person_name=?,birth_day=?, "
+				+ "user_tel=?,enabled=?,user_dep=?,user_duty=?  WHERE  username=?";
+	int i;
+	try{
+		jdbcTemplate.update(sql,users.getEmail(),users.getPerson_name(),users.getBirth_day(),users.getUser_tel(),users.getEnabled(),users.getUser_dep(),users.getUser_duty(),users.getUsername());
+		i=1;
+	}catch(Exception e){i=0;}
+	
+	return i;
+	}
+	
+	
 }

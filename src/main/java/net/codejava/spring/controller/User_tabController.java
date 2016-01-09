@@ -64,6 +64,36 @@ public class User_tabController {
 		
 	}
 	
+	@RequestMapping(value="/toedituserinfo")
+	public ModelAndView toEditUserInfo(ModelAndView model,HttpServletRequest request) throws IOException{		
+		Users users=usersDAO.getUser(request.getUserPrincipal().getName());
+		model.addObject("users",users);
+		model.setViewName("edituserinfo");	
+		return model;
+	}
+	
+
+	@RequestMapping(value="/edituserinfo")
+	public ModelAndView editUserInfo(@ModelAttribute Users users,HttpServletRequest request,HttpServletResponse response) throws IOException{		
+	ModelAndView model=new ModelAndView();
+	users.setUsername(request.getUserPrincipal().getName());
+	
+	if(usersDAO.update(users)==1){	
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out=response.getWriter();
+		out.println("<script language='javascript'>alert('修改成功！');window.location.href=''</script>");
+		return  null;
+	  }
+	else {
+		
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out=response.getWriter();
+		out.println("<script language='javascript'>alert('修改失败，请重新尝试！');window.location.href='toedituserinfo'</script>");
+		return  null;
+	}
+	}
+	
+	
 	
 	
 	@RequestMapping(value="/user_tab")
