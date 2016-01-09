@@ -9,7 +9,7 @@
 <script type="text/javascript" src="resources/jquery-2.1.3.min.js"></script>  
 <link rel="stylesheet" type="text/css" href="resources/table.css" />
 <link rel="stylesheet" type="text/css" href="resources/div.css" />
-
+<link rel="stylesheet" type="text/css" href="resources/button.css" />
 
 <link rel="stylesheet" type="text/css" media="screen" href="resources/jqGrid/themes/cupertino/jquery-ui.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="resources/jqGrid/themes/cupertino/theme.css" />
@@ -159,7 +159,7 @@ $(function () {
           </td> 
           </tr>
           <tr>
-           <td></td><td><input type="submit" value="修改"></td>
+           <td></td><td><input type="submit" class="button blue" value="修改"></td>
           </tr>
            <tr><td class="blank"></td><td class="blank"></td></tr>
         </table>

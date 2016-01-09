@@ -8,6 +8,7 @@
 <script type="text/javascript" src="resources/jquery-2.1.3.min.js"></script>  
 <link rel="stylesheet" type="text/css" href="resources/table.css" />
 <link rel="stylesheet" type="text/css" href="resources/div.css" />
+<link rel="stylesheet" type="text/css" href="resources/button.css" />
 <!-- 添加csrf标记，防止crsf安全过滤器无法识别ajax访问的crsf_token-->
 <meta http-equiv="Content-Type" content="text/html; charset=utf8">  
 <meta name="_csrf" content="${_csrf.token}"/>
@@ -82,9 +83,9 @@ $(function () {
 					<td align="center">${roles.role_name}</td>
 					
 					<td align="center">
-						<input type=button onclick="window.location.href('toeditroleauthors?role_id=${roles.role_id}')" value="修改权限">
+						<input type=button class="button blue" onclick="window.location.href('toeditroleauthors?role_id=${roles.role_id}')" value="修改权限">
 						&nbsp;&nbsp;&nbsp;&nbsp;
-					   <input type=button onclick="window.location.href('deleterole?role_id=${roles.role_id}')" value="删除">
+					   <input type=button class="button blue" onclick="window.location.href('deleterole?role_id=${roles.role_id}')" value="删除">
 					</td>
 							
 	        	</tr>
@@ -95,7 +96,7 @@ $(function () {
 			<form id="addrole" method="post"  action="addrole" onsubmit="return validate_info(this);" >
 			<table id="customers">
 			<tr><td class="blank"></td><td class="blank"></td></tr>
-			<tr><td align="center">输入角色名称: <input name="role_name" id="role_name" type="text"><span style="color:red;">*</span></td><td><input type="submit" value="新建"></td></tr>
+			<tr><td align="center">输入角色名称: <input name="role_name" id="role_name" type="text"><span style="color:red;">*</span></td><td><input class="button blue" type="submit" value="新建"></td></tr>
 			<tr><td class="blank"></td><td class="blank"></td></tr>
 			</table>
 			 <input type="hidden"                        

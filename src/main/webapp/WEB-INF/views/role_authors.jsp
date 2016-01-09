@@ -8,6 +8,7 @@
 <script type="text/javascript" src="resources/jquery-2.1.3.min.js"></script>  
 <link rel="stylesheet" type="text/css" href="resources/table.css" />
 <link rel="stylesheet" type="text/css" href="resources/div.css" />
+<link rel="stylesheet" type="text/css" href="resources/button.css" />
 <!-- 添加csrf标记，防止crsf安全过滤器无法识别ajax访问的crsf_token-->
 <meta http-equiv="Content-Type" content="text/html; charset=utf8">  
 <meta name="_csrf" content="${_csrf.token}"/>
@@ -88,7 +89,7 @@ function authorModify(){
 				  </td>
 				  <tr><td class="blank"></td></tr>
 				  <tr><td align="center">       	
-			      <input type="button" id="modify" onclick="authorModify()" value="修改"/>
+			      <input type="button" class="button blue" id="modify" onclick="authorModify()" value="修改"/>
 			      </td></tr>
 			        <tr><td class="blank"></td></tr>
 			  </table>

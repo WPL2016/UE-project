@@ -89,15 +89,38 @@ private JdbcTemplate jdbcTemplate;
 	@Override
 	public int update(Users users){
 		String sql="UPDATE users SET  email=?, person_name=?,birth_day=?, "
-				+ "user_tel=?,enabled=?,user_dep=?,user_duty=?  WHERE  username=?";
+				+ "user_tel=?,user_dep=?,user_duty=?  WHERE  username=?";
 	int i;
 	try{
-		jdbcTemplate.update(sql,users.getEmail(),users.getPerson_name(),users.getBirth_day(),users.getUser_tel(),users.getEnabled(),users.getUser_dep(),users.getUser_duty(),users.getUsername());
+		jdbcTemplate.update(sql,users.getEmail(),users.getPerson_name(),users.getBirth_day(),users.getUser_tel(),users.getUser_dep(),users.getUser_duty(),users.getUsername());
 		i=1;
 	}catch(Exception e){i=0;}
 	
 	return i;
 	}
 	
+	@Override
+	public int frozen(String  username){
+		String sql="UPDATE users SET  enabled=0 WHERE  username=?";
+	int i;
+	try{
+		jdbcTemplate.update(sql,username);
+		i=1;
+	}catch(Exception e){i=0;}
+	
+	return i;
+	}
+	
+	@Override
+	public int unfrozen(String  username){
+		String sql="UPDATE users SET  enabled=1 WHERE  username=?";
+	int i;
+	try{
+		jdbcTemplate.update(sql,username);
+		i=1;
+	}catch(Exception e){i=0;}
+	
+	return i;
+	}
 	
 }

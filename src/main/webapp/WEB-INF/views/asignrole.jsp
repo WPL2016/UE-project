@@ -8,6 +8,7 @@
 <script type="text/javascript" src="resources/jquery-2.1.3.min.js"></script>  
 <link rel="stylesheet" type="text/css" href="resources/table.css" />
 <link rel="stylesheet" type="text/css" href="resources/div.css" />
+<link rel="stylesheet" type="text/css" href="resources/button.css" />
 <!-- 添加csrf标记，防止crsf安全过滤器无法识别ajax访问的crsf_token-->
 <meta http-equiv="Content-Type" content="text/html; charset=utf8">  
 <meta name="_csrf" content="${_csrf.token}"/>
@@ -65,9 +66,10 @@ $(function () {
 					<td align="center">${users.enabled}</td>
 					
 					<td align="center">
-						<input type=button onclick="window.location.href('toedituserrole?username=${users.username}')" value="修改用户角色">
-						&nbsp;&nbsp;&nbsp;&nbsp;
-					
+						<input type=button class="button blue" onclick="window.location.href('toedituserrole?username=${users.username}')" value="修改用户角色">
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					    <input type=button class="button blue" onclick="window.location.href('frozenuser?username=${users.username}')" value="冻结用户">
+					      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" class="button blue" onclick="window.location.href('unfrozenuser?username=${users.username}')" value="解冻">
 					</td>
 							
 	        	</tr>

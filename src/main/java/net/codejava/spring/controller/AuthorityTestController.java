@@ -132,7 +132,42 @@ public class AuthorityTestController {
 		return model;
 	}
 	
-
+	@RequestMapping(value="/frozenuser")
+	public  ModelAndView  frozenUser(HttpServletRequest request,HttpServletResponse response) throws IOException{		
+		String username=request.getParameter("username");
+	
+		if(usersDAO.frozen(username)==1){
+			response.setContentType("text/html;charset=utf-8");
+			PrintWriter out=response.getWriter();
+			out.println("<script language='javascript'>alert('冻结成功，该用户已无法登陆！');window.location.href='toasignrole'</script>");
+		   return null;
+		}
+		else {
+			response.setContentType("text/html;charset=utf-8");
+			PrintWriter out=response.getWriter();
+			out.println("<script language='javascript'>alert('冻结失败，请重新尝试！');window.location.href='toasignrole'</script>");
+			return  null;
+		}
+	}
+	
+	@RequestMapping(value="/unfrozenuser")
+	public  ModelAndView  unFrozenUser(HttpServletRequest request,HttpServletResponse response) throws IOException{		
+		String username=request.getParameter("username");
+	
+		if(usersDAO.unfrozen(username)==1){
+			response.setContentType("text/html;charset=utf-8");
+			PrintWriter out=response.getWriter();
+			out.println("<script language='javascript'>alert('解冻成功，该用户可以登陆！');window.location.href='toasignrole'</script>");
+		   return null;
+		}
+		else {
+			response.setContentType("text/html;charset=utf-8");
+			PrintWriter out=response.getWriter();
+			out.println("<script language='javascript'>alert('解冻失败，请重新尝试！');window.location.href='toasignrole'</script>");
+			return  null;
+		}
+	}
+	
 	@RequestMapping(value="/edituserrole")
 	public @ResponseBody String editUserroles(HttpServletRequest request) throws IOException{		
 		String roles=request.getParameter("roles");
