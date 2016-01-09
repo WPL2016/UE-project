@@ -32,7 +32,7 @@ private JdbcTemplate jdbcTemplate;
 "break_time as (select SUM(DATEDIFF(ss,stat_time,next_stat_time))as breaktime ,year(stat_time) as year ,month(stat_time) as month , day(stat_time) as day  from oper_time_caculate where stat_name='停机' and equip_num='"+equip_num+"' GROUP BY equip_num,day(stat_time),MONTH(stat_time),YEAR(stat_time)),"+
 "wait_time as (select SUM(DATEDIFF(ss,stat_time,next_stat_time))as waittime ,year(stat_time) as year ,month(stat_time) as month , day(stat_time) as day  from oper_time_caculate where stat_name='待机' and equip_num='"+equip_num+"' GROUP BY equip_num,day(stat_time),MONTH(stat_time),YEAR(stat_time)),"+
 "product_quantity  as"+
-"(select SUM (mou_hole_num) as quantity,year(a.bat_produce_start_time) as year,month(a.bat_produce_start_time) as month,DAY(a.bat_produce_start_time) as day from produce_module_time_mapping as a,mou_use_inf_tab as b,mou_tab as c where a.equip_num='"+equip_num+"' and b.equip_num='"+equip_num+"'and a.mou_chan_time=b.mou_chan_time"+
+"(select SUM (mou_hole_num) as quantity,year(a.bat_produce_start_time) as year,month(a.bat_produce_start_time) as month,DAY(a.bat_produce_start_time) as day from produce_module_time_mapping as a,mou_use_inf_tab as b,mou_tab as c where a.equip_num='"+equip_num+"' and b.equip_num='"+equip_num+"'and a.mou_chan_time=b.mou_chan_time and b.mou_num=c.mou_num"+
 " group by year(a.bat_produce_start_time),month(a.bat_produce_start_time),DAY(a.bat_produce_start_time)),"+
 "infe_quantity as "+
 "(select COUNT(infe_time) as infe_quantity,YEAR(infe_time) as year,month(infe_time) as month,day(infe_time)as day from product_qual_stat_tab as a ,equip_product_relat_tab as b,equip_tab as c where a.equip_product_relat_num=b.equip_product_relat_num "+
@@ -44,7 +44,7 @@ private JdbcTemplate jdbcTemplate;
 				"break_time as (select SUM(DATEDIFF(ss,stat_time,next_stat_time))as breaktime ,year(stat_time) as year ,month(stat_time) as month , day(stat_time) as day  from oper_time_caculate where stat_name='停机' and equip_num='"+equip_num+"' GROUP BY equip_num,day(stat_time),MONTH(stat_time),YEAR(stat_time)),"+
 				"wait_time as (select SUM(DATEDIFF(ss,stat_time,next_stat_time))as waittime ,year(stat_time) as year ,month(stat_time) as month , day(stat_time) as day  from oper_time_caculate where stat_name='待机' and equip_num='"+equip_num+"' GROUP BY equip_num,day(stat_time),MONTH(stat_time),YEAR(stat_time)),"+
 				"product_quantity  as"+
-				"(select SUM (mou_hole_num) as quantity,year(a.bat_produce_start_time) as year,month(a.bat_produce_start_time) as month,DAY(a.bat_produce_start_time) as day from produce_module_time_mapping as a,mou_use_inf_tab as b,mou_tab as c where a.equip_num='"+equip_num+"' and b.equip_num='"+equip_num+"'and a.mou_chan_time=b.mou_chan_time"+
+				"(select SUM (mou_hole_num) as quantity,year(a.bat_produce_start_time) as year,month(a.bat_produce_start_time) as month,DAY(a.bat_produce_start_time) as day from produce_module_time_mapping as a,mou_use_inf_tab as b,mou_tab as c where a.equip_num='"+equip_num+"' and b.equip_num='"+equip_num+"'and a.mou_chan_time=b.mou_chan_time and b.mou_num=c.mou_num"+
 				" group by year(a.bat_produce_start_time),month(a.bat_produce_start_time),DAY(a.bat_produce_start_time)),"+
 				"infe_quantity as "+
 				"(select COUNT(infe_time) as infe_quantity,YEAR(infe_time) as year,month(infe_time) as month,day(infe_time)as day from product_qual_stat_tab as a ,equip_product_relat_tab as b,equip_tab as c where a.equip_product_relat_num=b.equip_product_relat_num "+
@@ -56,7 +56,7 @@ private JdbcTemplate jdbcTemplate;
 						"break_time as (select SUM(DATEDIFF(ss,stat_time,next_stat_time))as breaktime ,year(stat_time) as year ,month(stat_time) as month , day(stat_time) as day  from oper_time_caculate where stat_name='停机' and equip_num='"+equip_num+"' GROUP BY equip_num,day(stat_time),MONTH(stat_time),YEAR(stat_time)),"+
 						"wait_time as (select SUM(DATEDIFF(ss,stat_time,next_stat_time))as waittime ,year(stat_time) as year ,month(stat_time) as month , day(stat_time) as day  from oper_time_caculate where stat_name='待机' and equip_num='"+equip_num+"' GROUP BY equip_num,day(stat_time),MONTH(stat_time),YEAR(stat_time)),"+
 						"product_quantity  as"+
-						"(select SUM (mou_hole_num) as quantity,year(a.bat_produce_start_time) as year,month(a.bat_produce_start_time) as month,DAY(a.bat_produce_start_time) as day from produce_module_time_mapping as a,mou_use_inf_tab as b,mou_tab as c where a.equip_num='"+equip_num+"' and b.equip_num='"+equip_num+"'and a.mou_chan_time=b.mou_chan_time"+
+						"(select SUM (mou_hole_num) as quantity,year(a.bat_produce_start_time) as year,month(a.bat_produce_start_time) as month,DAY(a.bat_produce_start_time) as day from produce_module_time_mapping as a,mou_use_inf_tab as b,mou_tab as c where a.equip_num='"+equip_num+"' and b.equip_num='"+equip_num+"'and a.mou_chan_time=b.mou_chan_time and b.mou_num=c.mou_num"+
 						" group by year(a.bat_produce_start_time),month(a.bat_produce_start_time),DAY(a.bat_produce_start_time)),"+
 						"infe_quantity as "+
 						"(select COUNT(infe_time) as infe_quantity,YEAR(infe_time) as year,month(infe_time) as month,day(infe_time)as day from product_qual_stat_tab as a ,equip_product_relat_tab as b,equip_tab as c where a.equip_product_relat_num=b.equip_product_relat_num "+
@@ -68,7 +68,7 @@ private JdbcTemplate jdbcTemplate;
 							"break_time as (select SUM(DATEDIFF(ss,stat_time,next_stat_time))as breaktime ,year(stat_time) as year ,month(stat_time) as month , day(stat_time) as day  from oper_time_caculate where stat_name='停机' and equip_num='"+equip_num+"' GROUP BY equip_num,day(stat_time),MONTH(stat_time),YEAR(stat_time)),"+
 							"wait_time as (select SUM(DATEDIFF(ss,stat_time,next_stat_time))as waittime ,year(stat_time) as year ,month(stat_time) as month , day(stat_time) as day  from oper_time_caculate where stat_name='待机' and equip_num='"+equip_num+"' GROUP BY equip_num,day(stat_time),MONTH(stat_time),YEAR(stat_time)),"+
 							"product_quantity  as"+
-							"(select SUM (mou_hole_num) as quantity,year(a.bat_produce_start_time) as year,month(a.bat_produce_start_time) as month,DAY(a.bat_produce_start_time) as day from produce_module_time_mapping as a,mou_use_inf_tab as b,mou_tab as c where a.equip_num='"+equip_num+"' and b.equip_num='"+equip_num+"'and a.mou_chan_time=b.mou_chan_time"+
+							"(select SUM (mou_hole_num) as quantity,year(a.bat_produce_start_time) as year,month(a.bat_produce_start_time) as month,DAY(a.bat_produce_start_time) as day from produce_module_time_mapping as a,mou_use_inf_tab as b,mou_tab as c where a.equip_num='"+equip_num+"' and b.equip_num='"+equip_num+"'and a.mou_chan_time=b.mou_chan_time and b.mou_num=c.mou_num"+
 							" group by year(a.bat_produce_start_time),month(a.bat_produce_start_time),DAY(a.bat_produce_start_time)),"+
 							"infe_quantity as "+
 							"(select COUNT(infe_time) as infe_quantity,YEAR(infe_time) as year,month(infe_time) as month,day(infe_time)as day from product_qual_stat_tab as a ,equip_product_relat_tab as b,equip_tab as c where a.equip_product_relat_num=b.equip_product_relat_num "+

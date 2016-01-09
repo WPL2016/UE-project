@@ -1,3 +1,4 @@
+<%@page import="java.util.Calendar"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -13,7 +14,14 @@
        
           <div class="blank_btw_time_menu"></div>   
          <div class="time_container">
-            <div class="time">2015年11月27日</div>
+         <% 
+            Calendar calendar= Calendar.getInstance(); 
+            calendar.setTime(new java.util.Date());  
+            int year = calendar.get(Calendar.YEAR);  
+            int month = calendar.get(Calendar.MONTH)+1;  
+            int day = calendar.get(Calendar.DAY_OF_MONTH);  
+        %>
+            <div class="time"><%=year %>年<%=month %>月<%=day %>日</div>
          </div>   
         <div class="blank_btw_time_menu"></div>       
         

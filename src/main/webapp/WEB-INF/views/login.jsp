@@ -56,7 +56,7 @@
     <td width="245">
       <input type="text"  id="username" name="username" style="width:240px; height:45px;">
     </td>
-    <td width="169"><span class="style6"> в╒╡Аук╨е</span></td>
+    <td width="169"><span class="style6"><a href="toregister"> в╒╡Аук╨е</a></span></td>
   </tr>
   <tr bordercolor="#E1EBF5" bgcolor="#E1EBF5">
     <th height="45" scope="row">&nbsp;</th>

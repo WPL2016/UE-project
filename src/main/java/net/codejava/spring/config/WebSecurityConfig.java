@@ -52,8 +52,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		                       //使用.antMatchers().hasRole()方法需要注意数据库里面的角色名要加ROLE_,如ROLE_USER,但是在
 		                       //hasRole()里面不能加ROLE_,因为框架会自动加上这个前缀，如必须写成hasRole("USER")而不是hasRole("ROLE_USER")
 		                       //注意如有重复的规则则会自动取或，而不是取与
-		                       .antMatchers("resources/**","resources/UE_chair.jpg","resources/div.css","/login","/","/toauthority").permitAll()		                       
-                               .antMatchers("*.js").permitAll()
+		                       .antMatchers("/login","/","/toauthority").permitAll()		                                                    
+                               .antMatchers("/resources/**" ).permitAll()
+                               .antMatchers("/toregister").permitAll()
                                //重复的规则取或，ADMIN和USER都可以请求“/toadmin”
 			                   .antMatchers("/toadmin").hasRole("ADMIN")
 			                   .antMatchers("/toadmin").hasRole("USER")

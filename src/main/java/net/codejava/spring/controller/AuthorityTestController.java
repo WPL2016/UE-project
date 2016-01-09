@@ -2,19 +2,28 @@ package net.codejava.spring.controller;
 
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import net.codejava.spring.dao.daointerface.AuthorsDAO;
 import net.codejava.spring.dao.daointerface.ContactDAO;
+import net.codejava.spring.dao.daointerface.Role_AuthorsDAO;
 import net.codejava.spring.dao.daointerface.RolesDAO;
+import net.codejava.spring.dao.daointerface.User_RolesDAO;
 import net.codejava.spring.dao.daointerface.UsersDAO;
+import net.codejava.spring.model.Authors;
+import net.codejava.spring.model.Role_Authors;
 import net.codejava.spring.model.Roles;
+import net.codejava.spring.model.User_Roles;
 import net.codejava.spring.model.Users;
 
 
@@ -27,6 +36,14 @@ public class AuthorityTestController {
 	private UsersDAO usersDAO;
 	@Autowired
 	private RolesDAO rolesDAO;
+	@Autowired
+	private User_RolesDAO user_rolesDAO;
+	@Autowired
+	private AuthorsDAO authorsDAO;
+	@Autowired
+	private Role_AuthorsDAO role_authorsDAO;
+	
+	
 	@RequestMapping(value="/toauthority")
 	public ModelAndView toAuthority() {		
 		ModelAndView model=new ModelAndView();		
@@ -93,8 +110,8 @@ public class AuthorityTestController {
 		return model;
 	}
 
-	@RequestMapping(value="/edituserrole")
-	public ModelAndView editUserroles(HttpServletRequest request) {		
+	@RequestMapping(value="/toedituserrole")
+	public ModelAndView toEditUserroles(HttpServletRequest request) {		
 		ModelAndView model=new ModelAndView();	
 		String username=request.getParameter("username");
 		List<Roles> roles=rolesDAO.list(username);
@@ -102,8 +119,119 @@ public class AuthorityTestController {
 		model.setViewName("user_roles");	
 		model.addObject("roles",roles);
 		model.addObject("noroles",noroles);
+		model.addObject("username",username);
 		return model;
 	}
+	
+	@RequestMapping(value="/toassignauthors")
+	public ModelAndView toAuthorRole(HttpServletRequest request) {		
+		ModelAndView model=new ModelAndView();			
+		List<Roles> roles=rolesDAO.list();	
+		model.setViewName("assignauthors");	
+		model.addObject("roles",roles);
+		return model;
+	}
+	
+
+	@RequestMapping(value="/edituserrole")
+	public @ResponseBody String editUserroles(HttpServletRequest request) throws IOException{		
+		String roles=request.getParameter("roles");
+		String username=request.getParameter("username");
+		System.out.println(roles+""+username);
+		String[] role=roles.split(",");
+		user_rolesDAO.delete(username);
+		User_Roles user_roles=new User_Roles();
+		user_roles.setUsername(username);
+		for(int i=0;i<role.length;i++){
+		    user_roles.setRole_id(Integer.parseInt(role[i]));
+			user_rolesDAO.save(user_roles);	
+	}
+		return "done";
+	}
+	
+	@RequestMapping(value="/toeditroleauthors")
+	public ModelAndView toEditRoleAuthors(HttpServletRequest request) {		
+		ModelAndView model=new ModelAndView();	
+		String role_ids=request.getParameter("role_id");
+		int role_id;
+		if(role_ids!=null) {
+	    role_id=Integer.parseInt(role_ids);		
+		List<Authors> authors=authorsDAO.list(role_id);
+		List<Authors> noauthors=authorsDAO.listWithout(role_id);		
+		model.addObject("authors",authors);
+		model.addObject("noauthors",noauthors);
+		model.addObject("role_id",role_ids);
+		}		
+		model.setViewName("role_authors");	
+		return model;
+	}
+	
+	@RequestMapping(value="/editroleauthor")
+	public @ResponseBody String editRoleAuthors(HttpServletRequest request) throws IOException{		
+		String role_id=request.getParameter("role_id");
+		String authors =request.getParameter("authors");
+		System.out.println(role_id+"===="+authors);
+		String[] author=authors.split(",");
+		role_authorsDAO.delete(role_id);
+		System.out.println(role_id+"1111"+authors);
+		Role_Authors role_authors=new Role_Authors();
+		role_authors.setRole_id(Integer.parseInt(role_id));
+		for(int i=0;i<author.length;i++){
+			System.out.println(role_id+""+i+authors);
+		    role_authors.setAuthor_id((Integer.parseInt(author[i])));
+			role_authorsDAO.save(role_authors);	
+	}
+		return "done";
+	}
+	
+	@RequestMapping(value="/addrole")
+	public ModelAndView  addRole(HttpServletRequest request,HttpServletResponse response) throws IOException{		
+		String role_name=request.getParameter("role_name");
+		System.out.println(role_name);
+		Roles roles=new Roles();
+		roles.setRole_name(role_name);
+		if(rolesDAO.role_nameExist(roles)==0){
+			rolesDAO.save(roles);
+			response.setContentType("text/html;charset=utf-8");
+			PrintWriter out=response.getWriter();
+			out.println("<script language='javascript'>alert('创建角色成功！');window.location.href='toassignauthors'</script>");
+		   return null;
+		}
+		else {
+			response.setContentType("text/html;charset=utf-8");
+			PrintWriter out=response.getWriter();
+			out.println("<script language='javascript'>alert('该角色名已存在,请重新填写！');window.location.href='toassignauthors'</script>");
+			return  null;
+		}
+	
+	
+
+	}
+	
+	@RequestMapping(value="/deleterole")
+	public ModelAndView  deleteRole(HttpServletRequest request,HttpServletResponse response) throws IOException{		
+		String role_id=request.getParameter("role_id");
+		System.out.println(role_id);
+	
+		
+	
+			if(rolesDAO.delete(role_id)!=0){
+				response.setContentType("text/html;charset=utf-8");
+				PrintWriter out=response.getWriter();
+				out.println("<script language='javascript'>alert('删除成功！');window.location.href='toassignauthors'</script>");
+				return  null;
+			}
+			else{
+				response.setContentType("text/html;charset=utf-8");
+				PrintWriter out=response.getWriter();
+				out.println("<script language='javascript'>alert('删除失败，该角色被用户和权限表依赖，请先删除该角色的依赖！');window.location.href='toassignauthors'</script>");
+				return  null;	
+			}
+            
+
+	}
+	
+	
 }
 	
 

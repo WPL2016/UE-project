@@ -32,6 +32,7 @@
 <a href="tomou_use_inf_tab">模具使用信息记录</a><br/>
 <a href="tomou_tab">模具基础信息维护</a><br/>
 <a href="toauthority">权限管理</a><br/>
+<a href="toregister">注册</a><br/>
 <!--  <a href="tohello">3号输入</a><br/>-->
 </body>
 </html>

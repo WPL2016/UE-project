@@ -10,7 +10,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
 import net.codejava.spring.dao.daointerface.UsersDAO;
-import net.codejava.spring.model.Contact;
+
 import net.codejava.spring.model.Users;
 
 public class UsersDAOImpl implements UsersDAO{
@@ -42,5 +42,18 @@ private JdbcTemplate jdbcTemplate;
 		return listContact;
 	}
 	
-
+	@Override
+	public int exist(Users users){
+		String sql="SELECT Count(*) FROM users where username=?";
+		@SuppressWarnings("deprecation")
+		int i=jdbcTemplate.queryForInt(sql, users.getUsername());
+		return i;
+	}
+	
+	@Override
+    public void save(Users users){
+       String sql="INSERT INTO users (username,password,enabled,person_name,user_dep,user_tel,birth_day,user_duty,email)"
+				+ " VALUES (?, ?, ?, ?, ?,?,?,?,?)";
+	jdbcTemplate.update(sql, users.getUsername(),users.getPassword(),users.getEnabled(),users.getPerson_name(),users.getUser_dep(),users.getUser_tel(),users.getBirth_day(),users.getUser_duty(),users.getEmail());
+	}
 }

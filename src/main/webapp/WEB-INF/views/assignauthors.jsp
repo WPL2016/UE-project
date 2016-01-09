@@ -25,12 +25,28 @@ $(function () {
 	});	
    });
 </script>  
-  <script type="text/javascript">
+ <script type="text/javascript">
         <!--自动隔行换色-->
         $(document).ready(function(){ 
         	$("#customers tr:odd").addClass("gap_change"); 
         })
         	</script>
+ <script type="text/javascript">  
+                    function validate_info(addrole)  
+                   {  
+                       if(addrole.role_name.value=="")  
+                        {  
+                            alert("角色名不能为空！");  
+                            return false;  
+                        }                     
+                       return true;  
+                   }   
+                     
+                 
+                     
+</script>  
+        	
+        	
 
 </head>
 <body>
@@ -51,28 +67,42 @@ $(function () {
         <!--插入菜单与主体内容之间的空白  -->
         <div class="blank_btw_menu_content"></div>
         <!--内容主体的div,请根据具体内容决定div的样式，table_container0最小，1次之，2最大，也可自行在div.css定义你自己想要的样式，要设置成左浮动以保证div水平排列-->     
-        <div class="table_container2"> <table id="customers">
+        <div class="table_container2">
+        <table id="customers">
 	        	<th>No</th>
-	        	<th>用户名</th>
-	        	<th>启用状态</th>
+	        	<th>角色编号</th>
+	        	<th>角色名</th>
 	        	
 	        	<th>操作</th>
 	        	
-				<c:forEach var="users" items="${users}" varStatus="status">
+				<c:forEach var="roles" items="${roles}" varStatus="status">
 	        	<tr>
 	        		<td align="center">${status.index + 1}</td>
-					<td align="center">${users.username}</td>
-					<td align="center">${users.enabled}</td>
+					<td align="center">${roles.role_id}</td>
+					<td align="center">${roles.role_name}</td>
 					
 					<td align="center">
-						<input type=button onclick="window.location.href('toedituserrole?username=${users.username}')" value="修改用户角色">
+						<input type=button onclick="window.location.href('toeditroleauthors?role_id=${roles.role_id}')" value="修改权限">
 						&nbsp;&nbsp;&nbsp;&nbsp;
-					
+					   <input type=button onclick="window.location.href('deleterole?role_id=${roles.role_id}')" value="删除">
 					</td>
 							
 	        	</tr>
 				</c:forEach>	        	
 			</table>
+			<div class="horiz_blank" style="height:50px"></div>
+			<div class="table_head">新建角色</div>
+			<form id="addrole" method="post"  action="addrole" onsubmit="return validate_info(this);" >
+			<table id="customers">
+			<tr><td class="blank"></td><td class="blank"></td></tr>
+			<tr><td align="center">输入角色名称: <input name="role_name" id="role_name" type="text"><span style="color:red;">*</span></td><td><input type="submit" value="新建"></td></tr>
+			<tr><td class="blank"></td><td class="blank"></td></tr>
+			</table>
+			 <input type="hidden"                        
+		name="${_csrf.parameterName}"
+		value="${_csrf.token}"/>
+  
+			</form>
         </div>
  
   

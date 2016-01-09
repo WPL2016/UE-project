@@ -26,17 +26,20 @@ $(function () {
    });
 </script>  
 <script type="text/javascript">
-function roleModify(){  
+function authorModify(){  
 	var chk_value =[];   
-	$('input[name=role_select]:checked').each(function(){   
+	$('input[name=author_select]:checked').each(function(){   
 	 chk_value.push($(this).val());
-	});	
+	});
+	
+	
+	
 	$.ajax({  
-    	 data:"roles="+chk_value+"&username="+$("#username").val(),  
+    	 data:"authors="+chk_value+"&role_id="+$("#role_id").val(),  
 	       //用GET方法当请求参数不变时会因部分浏览器缓存而无法更新
 	       type:"POST",  
 	       dataType:'text',  
-	       url:"edituserrole", 
+	       url:"editroleauthor", 
 	       async:true,
 	       error:function(data){  
 	            alert("出错了！请重新尝试！");  
@@ -70,32 +73,28 @@ function roleModify(){
         <!--插入菜单与主体内容之间的空白  -->
         <div class="blank_btw_menu_content"></div>
         <!--内容主体的div,请根据具体内容决定div的样式，table_container0最小，1次之，2最大，也可自行在div.css定义你自己想要的样式，要设置成左浮动以保证div水平排列-->     
-        <div class="table_container2"> 
-             <div class="table_head">请选择要赋予用户${username}的角色</div>   
-                  <input type="hidden" name="username" id="username" value="${username} "   />
-                  <table id="customers">
-                 <tr><td class="blank"></td></tr>
-                  <tr><td align="center">              
-				   <c:forEach var="roles" items="${roles}" varStatus="status">
-	        	   
-	        	   <span class="check_box"><input type="checkbox" id="role_select" name="role_select" value="${roles.role_id}" checked="checked"/>${roles.role_name}</span>
-				  
+        <div class="table_container2">   
+               <div class="table_head">请选择要赋予该角色的权限</div>
+               <input type="hidden" name="role_id" id="role_id" value="${role_id}"/>
+               <table id="customers">
+                  <tr><td class="blank"></td></tr>
+                  <tr><td align="center">                    
+				   <c:forEach var="authors" items="${authors}" varStatus="status">
+	        	    <span class="check_box"><input type="checkbox" id="author_select" name="author_select" value="${authors.author_id}" checked="checked"/>${authors.author_describe}</span>
 				   </c:forEach>	
-				
-				   <c:forEach var="noroles" items="${noroles}" varStatus="status">
-	        	  
-	        	  <span class="check_box"><input type="checkbox" id="role_select"  name="role_select" value="${noroles.role_id}" />${noroles.role_name}</span>
-				  
-				  </c:forEach>	       	
-			      </td>
-			      </tr>
-			      <tr><td class="blank"></td></tr>
-			      <tr><td align="center">
-			      <input type="button" id="modify" onclick="roleModify()" value="修改"/>
+				   <c:forEach var="noauthors" items="${noauthors}" varStatus="status">
+	        	   <span class="check_box"><input type="checkbox" id="author_select"  name="author_select" value="${noauthors.author_id}" />${noauthors.author_describe}</span>
+				  </c:forEach>	
+				  </td>
+				  <tr><td class="blank"></td></tr>
+				  <tr><td align="center">       	
+			      <input type="button" id="modify" onclick="authorModify()" value="修改"/>
 			      </td></tr>
-			      <tr><td class="blank"></td></tr>
-			      </table>
+			        <tr><td class="blank"></td></tr>
+			  </table>
         </div>
+ 
+  
   </div>
   <!-- 插入底部 -->     
   <div>
@@ -105,50 +104,6 @@ function roleModify(){
   
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

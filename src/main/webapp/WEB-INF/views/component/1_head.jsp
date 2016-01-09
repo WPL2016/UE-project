@@ -17,17 +17,30 @@
   <table width="100%" height="111" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <th width="343" ><img src="resources/UE_chair.jpg" width="343" height="111px"></th>
-    <th  bgcolor="#2285CE" heigh="111px">&nbsp;</th>
+    <th  style="background-color:#2285CE;heigh:111px; text-align:right; color:#FFFFFF;font-family: '黑体';font-weight: bold; ">
+    <% 
+    String user="";
+    String logout="";
+    try{
+       user=request.getUserPrincipal().getName();
+       logout="注销";
+  
+        %>
+        <%=user%><a href="logout" style="color:#ffffff;font-family: '黑体';font-weight: bold; "><%=logout %> &nbsp&nbsp&nbsp&nbsp</a>
+    <% 
+      } catch(Exception e){}
+    %>
+    </th>
   </tr>
 </table>
+<!--  
 <div  id="fixed_equip" >
- <div class="equip_container"  >
-               <% int ii;
-            String ss=(String)request.getAttribute("recordnum");
-            ii=Integer.parseInt(ss);
-            for(int jj=1;jj<=ii;jj++){ %>
-              <div class="equip">压铸机<%=jj %>号</div>
-        <%}%>
+
+ <div class="equip_container"  >  
+            
+             
+              <div class="equip">压铸机号</div>
+        
         </div>
         </div>   
  <script type="text/javascript" >
@@ -54,6 +67,7 @@ window.onload = function(){
 equipFixed('fixed_equip');
 }
 </script>
+                     -->
 </body>
 
 </html>
