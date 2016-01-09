@@ -16,24 +16,15 @@
 <link rel="stylesheet" type="text/css" media="screen" href="resources/jqGrid/themes/cupertino/theme.css" />
 <script src="resources/jqGrid/js/i18n/grid.locale-cn.js" type="text/ecmascript"></script>
 <script src="resources/jqGrid/js/jquery.jqGrid.min.js" type="text/ecmascript"></script>
-
 <script src="resources/jquery-ui.js"></script>
+
 <!-- 添加csrf标记，防止crsf安全过滤器无法识别ajax访问的crsf_token-->
 <meta http-equiv="Content-Type" content="text/html; charset=utf8">  
 <meta name="_csrf" content="${_csrf.token}"/>
 <!-- default header name is X-CSRF-TOKEN -->
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
-<title>模具使用信息</title>  
-<script>
- $(function() {
+<title>设备表</title>  
 
-            $.datepicker.regional["zh-CN"] = { closeText: "关闭", prevText: "&#x3c;上月", nextText: "下月&#x3e;", currentText: "今天", monthNames: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"], monthNamesShort: ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二"], dayNames: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"], dayNamesShort: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"], dayNamesMin: ["日", "一", "二", "三", "四", "五", "六"], weekHeader: "周", dateFormat: "yy-m-d", firstDay: 1, isRTL: !1, showMonthAfterYear: !0, yearSuffix: "年" }
-
-                         
-
-            $.datepicker.setDefaults($.datepicker.regional["zh-CN"]);
- })
-</script>
 <script type="text/javascript">  
 <!--ajax访问时发送csrf token，以防止ajax访问被crsf过滤器拦截   -->
 $(function () {
@@ -66,20 +57,24 @@ $(function () {
        
         <!--内容主体的div,请根据具体内容决定div的样式，table_container0最小，1次之，2最大，也可自行在div.css定义你自己想要的样式，要设置成左浮动以保证div水平排列-->     
        <div class="table_container2">
-             <div class="table_head">模具使用记录</div>
+             <div class="table_head">设备参数表</div>
              <div>
                   <table id="jqGrid"></table>
                   <div id="jqGridPager"></div>
-                   <div class="horiz_blank" style="height:30px"></div>
-             <div class="table_head">请选择模具</div>
+                  <button id="deldata">批量修改（如审核等）</button>
+                  <button id="deldata1">批量修改1（如审核等）</button>
                     <table id="jqGrid1"></table>
                   <div id="jqGridPager1"></div>
                   
-                 
+                  <div id="datepicker"></div>
 
  
 
+<script>
 
+$( "#datepicker" ).datepicker();
+
+</script>
             </div>
        </div>
     </div>
@@ -91,28 +86,25 @@ $(function () {
   <script type="text/javascript"> 
         $(document).ready(function () {
         		  pageInit();
-        		  pageInit1();
-        		
+        		 
         		});
-        var mou_num_sel;
         		function pageInit(){
         		  var lastsel;
         		  jQuery("#jqGrid").jqGrid(
         		      {
-        		        url : "showmou_use_inf_tab",
-        		        datatype : "json",
-        		        colNames : [  '使用记录编号', '模具编号', '设备编号', '更换时间','更换人员' ],
-        		        colModel : [ 
-        		                     
-        		                     {name : 'mou_use_inf_num',index :'mou_use_inf_num',width : 40,sortable :true,editable :true,key:true},
-        		                     {name : 'mou_num',index : 'mou_num',width : 40,sortable : true,editable : true,editoptions:{readonly:true}}, 
-        		                     {name : 'equip_num',index : 'equip_num',width : 40,sortable : true,editable : true},        		                 
-        		                     {name : 'mou_chan_time',index : 'mou_chan_time',width : 150,sortable : true,editable : true, searchoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}},
-        		                    	editoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}} , addoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}} ,
-        		                    	},        		  
-        		                     {name : 'mou_chan_per_num',index : 'mou_chan_per_num',width : 40,sortable : true,editable : true}, 
-        		                   
-        		                     
+        		    	  url : "showequip_para_tab",
+          		        datatype : "json",
+          		        colNames : [  '设备编号', '参数名称', '参数编号', '参数单位', '上限值' ,'下限值' ,'参数录入编号' ],
+          		        colModel : [ 
+
+           		                     {name : 'equip_num',index :'equip_num',width : 90,sortable :true,editable :true,key:true},
+           		                     {name : 'para_name',index : 'para_name',width : 80,align : "right",sortable : true,editable : true}, 
+           		                     {name : 'para_num',index : 'para_num',width : 90,sortable : true,editable : true},        		                 
+           		                     {name : 'para_unit',index : 'para_unit',width : 80,align : "right",sortable : true,editable : true},        		  
+           		                     {name : 'up_lim_val',index : 'up_lim_val',width : 150,sortable : true,editable : true}, 
+           		                     {name : 'down_lim_val',index : 'down_lim_val',width : 80,align : "right",sortable : true,editable : true},        		  
+         		                     {name : 'para_recorder_num',index : 'para_recorder_num',width : 150,sortable : true,editable : true},
+          		                            	                                          
         		                   ],
         		                   
         		        //下载数据到本地，可以实现在前端排序、搜索，这种方式好处是这里的排序和搜索都无需后台处理，无需额外代码，而且支持多条件复杂搜索
@@ -124,28 +116,29 @@ $(function () {
         		        loadError: function(xhr,status,error){  
         		        	 alert(status + " loading data of " + $(this).attr("id") + " : " + error );    },  
 
-        		        //caption:"原材料使用状况", //height : 80,align : "center",
+
+        		        caption:"", height : 80,align : "center",
+
         		       
-        		        prmNames: { id: "mou_use_inf_num" },
+
+        		        prmNames: { id: "equip_num" },
         		        rowNum : 20,
         		        height:300,
         		        rowList : [ 20, 40, 60 ],
         		        pager : '#jqGridPager',
-        		      //  multiselect:true,
+        		        multiselect:true,
         		        sortname :'name',
-        		      //   viewrecords : true,
+        		        viewrecords : true,
         		        sortorder : "desc",
         		        autowidth:true,
-        		        autoShrink:true,
         		        onSelectRow : function(id) {
         		          if (id && id !== lastsel) {
         		            jQuery('#jqGrid').jqGrid('restoreRow', lastsel);
         		            jQuery('#jqGrid').jqGrid('editRow', id, true);
         		            lastsel = id;
         		          }
-        		       
         		        },
-        		        editurl : "editmou_use_inf_tab",
+        		        editurl : "editequip_para_tab",
         		       
         		      });
         		  
@@ -163,11 +156,11 @@ $(function () {
         	                    errorTextFormat: function (data) {
         	                    	var message="服务器异常，请稍后尝试！";
         	                    	var result=data.statusText;
-        	                    	alert(result);
         	                    	if(result=="Not Found") message="无法找到资源，请联系系统管理员！";
         	                    	else if(result=="Forbidden") message="您没有权限执行此操作，请联系上级或申请相应权限！";
         	                        alert(message);
         	                    },
+
         	                //执行完毕进行提示和更新数据  
         	                afterComplete:function(xhr){      
         	                	         //提示操作结果
@@ -178,12 +171,12 @@ $(function () {
         	                             $("#jqGrid").setGridParam({datatype:'json', page:1}).trigger('reloadGrid');
 
         	                              },
+
         	                },
         	                // options for the Add Dialog
         	                {
-        	                	afterShowForm :function(){
-        	                	$("#mou_num").val(mou_num_sel) ;
-        	                	                            },
+        	                	
+        	                	
         	                   // recreateForm: true,
         	                   //出错时返回信息
         	                    errorTextFormat: function (data) {
@@ -209,27 +202,27 @@ $(function () {
         	                },
         	                // options for the Delete Dailog
         	                {
-                             //发送一个随便的日期，以防止spring 报错
-        	                	//beforeSubmit:$("#jqGrid").setGridParam({editurl:"editatype_use_inf_tab?chan_date=2015-12-25"}),
+       
         	                	
         	                	errorTextFormat: function (data) {
-        	                    	
-        	                		var message="服务器异常，请稍后尝试！";
+        	                    	var message="服务器异常，请稍后尝试！";
         	                    	var result=data.statusText;
         	                    	if(result=="Not Found") message="无法找到资源，请联系系统管理员！";
         	                    	else if(result=="Forbidden") message="您没有权限执行此操作，请联系上级或申请相应权限！";
         	                        alert(message);
         	                    },
+
         	                //执行完毕进行提示和更新数据  
         	                afterComplete:function(xhr){      
         	                	         //提示操作结果
-        	                	             
+        	                	                  
         	                             alert("操作成功！");
         	                             //更新表格数据，因为之前设置了loadonce，所以datatype自动转换成了local，所以一般的reload都无效，
         	                             //必须先改回原先的数据数据类型
         	                             $("#jqGrid").setGridParam({datatype:'json', page:1}).trigger('reloadGrid');
 
         	                              },
+
         	                },
         	                // options for the Search Dailog
         	                {
@@ -241,80 +234,105 @@ $(function () {
         	                        return '搜索失败，请重新尝试!'+ data.responseText
         	                    }
         	                 }
-        	                );			    	
+        	                );
+        		 
+        		   //批量修改
+        		   $("#deldata").click(function() {
+        			   //alert("Please Select Row to delete!1")
+        			   var gr = $("#jqGrid").jqGrid('getGridParam', 'selarrrow');
+        			   
+        			    if ((gr != null)&&(gr !="")){
+        			    
+        			   // alert("Please Select Row to delete!2"+gr)
+        			  
+        			    //自定义ajax访问实现批量操作
+        	            $.ajax({  
+	                             data:{"equip_num":""+gr,"column_value":99,"oper":"batch_edit","column_name":"para_recorder_num"},  
+	                             //用GET方法当请求参数不变时会因部分浏览器缓存而无法更新
+	                             type:"POST",  
+	                             dataType:'json',  
+	                             url:"editequip_para_tab",  
+	                             error:function(data){  
+	                             //alert("出错了！！:"+data[0].name);  
+	                                                 },  
+	                             success:function(data){  
+	                            	
+	                            	 // alert("成功！！:"+data[0].name);
+	                             }
+	                                                   
+	                             })   
+        			    //var selected=gr.split(',');
+        			    	//   $.each(selected,function(i,n){
+      						//	 if(selected[i]!="")  $("#jqGrid").jqGrid('delGridRow',n,{}); 
+      					//$.each(gr,function(key,val){
+      					//    $("#jqGrid").jqGrid('setRowData',gr[0],{equip_sup:"79800"}).trigger('reloadGrid');   
+      					//    $("#jqGrid").jqGrid('saveRow', gr[0], {equip_sup:"79800"} );  
+      					//	 $("#jqGrid").jqGrid('saveRow', gr[0],{equip_sup:"79800"});
+        		           
+        			    //	            })
+        			       alert("操作成功！"); 
+        			      $("#jqGrid").setGridParam({datatype:'json', page:1}).trigger('reloadGrid');
+        			    	            }
+        			
+        			    	
+        			    else {alert("请选择要删除的行")}
+        			    
+        			    
+        			   
+        			  });
+        		 
+        		   //批量修改
+        		   $("#deldata1").click(function() {
+        			   //alert("Please Select Row to delete!1")
+        			   var gr = $("#jqGrid").jqGrid('getGridParam', 'selarrrow');
+        			   
+        			    if ((gr != null)&&(gr !="")){
+        			    	
+        			   // alert("Please Select Row to delete!2"+gr)
+        			  
+        			    //自定义ajax访问实现批量操作
+        	            $.ajax({  
+	                             data:{"equip_num":""+gr,"column_value":1,"oper":"batch_edit","column_name":"para_recorder_num"},  
+	                             //用GET方法当请求参数不变时会因部分浏览器缓存而无法更新
+	                             type:"POST",  
+	                             dataType:'json',  
+	                             url:"editequip_para_tab",  
+	                             error:function(data){  
+	                             //alert("出错了！！:"+data[0].name);  
+	                                                 },  
+	                             success:function(data){  
+	                            	 
+	                            
+	                            	 //alert("成功！！:"+data[0].name);
+	                            	
+	                             }
+	                                                   
+	                             })   
+        			    //var selected=gr.split(',');
+        			    	//   $.each(selected,function(i,n){
+      						//	 if(selected[i]!="")  $("#jqGrid").jqGrid('delGridRow',n,{}); 
+      					//$.each(gr,function(key,val){
+      					//    $("#jqGrid").jqGrid('setRowData',gr[0],{equip_sup:"79800"}).trigger('reloadGrid');   
+      					//    $("#jqGrid").jqGrid('saveRow', gr[0], {equip_sup:"79800"} );  
+      					//	 $("#jqGrid").jqGrid('saveRow', gr[0],{equip_sup:"79800"});
+        		           
+        			    //	            })
+        			      alert("操作成功！"); 
+        			      $("#jqGrid").setGridParam({datatype:'json', page:1}).trigger('reloadGrid');
+        			 
+        			    	            }
+        			    else {alert("请选择要编辑的行")}
+        			   
+        			    
+        			   
+        			    
+        			  });
+        		 
+        		          		          		 
+        			    	
         		}
         		
-        		function pageInit1(){
-          		  var lastsel;
-          		  jQuery("#jqGrid1").jqGrid(
-          		      {
-          		        url : "showemou_tab",
-          		        datatype : "json",
-          		        colNames : [  '模具编号', '产品编号', '模具名称', '模具穴数','模具供应商','模具录入人' ],
-          		        colModel : [ 
-          		                     
-          		                     {name : 'mou_num',index :'mou_num',width : 90,sortable :false,editable :false,key:true},
-          		                     {name : 'product_num',index : 'product_num',width : 80,sortable : true,editable : false}, 
-          		                     {name : 'mou_name',index : 'mou_name',width : 90,sortable : true,editable : false},        		                 
-          		                     {name : 'mou_hole_num',index : 'mou_hole_num',width : 80,sortable : true,editable :false},   
-          		                     {name : 'mou_sup',index : 'mou_sup',width : 80,sortable : true,editable :false},  
-          		                     {name : 'mou_recorder_num',index : 'mou_recorder_num',width : 80,sortable : true,editable :false},  
-          		              
-          		                 
-          		                     
-          		                   ],
-          		                   
-          		        //下载数据到本地，可以实现在前端排序、搜索，这种方式好处是这里的排序和搜索都无需后台处理，无需额外代码，而且支持多条件复杂搜索
-          	        	//缺点是一次导入所有数据，数据量大时会存在一些问题，此时需要在后台实现搜索，只载入符合条件的数据,此外表格不自动刷新，需要reload
-          	        	//请根据需要选择养已经完成好的前台查询和排序还是自行实现后台排序和搜索  
-          	        
-          		        loadonce:true,
-          		        //当加载出错时提供错误信息
-          		        loadError: function(xhr,status,error){  
-          		        	 alert(status + " loading data of " + $(this).attr("id") + " : " + error );    },  
-
-          		       // caption:"原材料使用状况", //height : 80,align : "center",
-          		       
-          		        prmNames: { id: "mou_num" },
-          		        rowNum : 20,
-          		        height:300,
-          		        rowList : [ 20, 40, 60 ],
-          		        pager : '#jqGridPager1',
-          		       // multiselect:true,
-          		        sortname :'atype_num',
-          		        viewrecords : true,
-          		        sortorder : "desc",
-          		        autowidth:true,
-          		        onSelectRow : function(id) {
-          		        
-          		        //生成从表
-          		          mou_num_sel=id; 	
-          		        $("#jqGrid").setGridParam({datatype:'json', page:1,url:"showsomemou_use_inf_tab?mou_num="+id}).trigger('reloadGrid');
-          		          
-        		              
-          		        },
-          		       
-          		       
-          		      });
-          		  
-          		   $('#jqGrid1').navGrid('#jqGridPager1',
-          	                // the buttons to appear on the toolbar of the grid
-          	                { edit: false, add: false, del: false, search: true, refresh: true, view: true, position: "left", cloneToTop: false },
-          	             
-          	                // options for the Search Dailog
-          	                {
-          	                	multipleSearch:true,
-          	                	multipleGroup:true,
-          	                	recreateForm: true,
-          	                	closeAfterSearch: true,       	            
-          	                	errorTextFormat: function (data) {
-          	                        return '搜索失败，请重新尝试!'+ data.responseText
-          	                    }
-          	                 }
-          	                );
-          		          		 
-          			    	
-          		}
+        		
         		
    </script>
     

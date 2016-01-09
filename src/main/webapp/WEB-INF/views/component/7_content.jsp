@@ -20,13 +20,12 @@
             <div class="menu_head">系统功能菜单</div>
             
 <div  id="main0"  class="menu" > 
->首页</div> 
+<a href="tohome">首页</a></div> 
 
 <div id="main1" class="menu"  onclick="document.all.child1.style.display=(document.all.child1.style.display =='none')?'':'none'" > 
 >设备状态管理</div> 
 <div id="child1"  class="menu"  style="display:none"> 
 <a href="toequip">-压铸机设备状态</a> <br>     
-<a href="toequip_smelter">-熔炉设备状态</a> <br> 
 <a href="toequip_mould">-模具状态</a> <br> 
 <a href="toequip_A">-A类易耗品状态</a> <br> 
 <a href="tomaintenance">-维护保养记录</a> <br> 
@@ -42,24 +41,24 @@
 </div>
 
 <div id="main3" class="menu" onclick="document.all.child3.style.display=(document.all.child3.style.display =='none')?'':'none'" > 
->物料状态管理 </div> 
+>物流状态管理 </div> 
 <div id="child3" class="menu" style="display:none;"> 
-<a href="toinput1">-原材料使用状态</a> <br> 
-<a href="toschedule">-生产进度管理</a> <br> 
+<a href="tomater_use_stock_tab">-原材料使用状态</a> <br> 
+<a href="toproduce_prog_tab">-生产状态</a> <br> 
 </div>
 
 
 <div id="main4" class="menu" onclick="document.all.child4.style.display=(document.all.child4.style.display =='none')?'':'none'" > 
 >能耗状态管理 </div> 
 <div id="child4" class="menu" style="display:none"> 
-<a href="toinput2">-电能消耗</a> <br> 
+<a href="toenergy">-电能消耗</a> <br> 
 <a href="togas">-天然气消耗</a> <br> 
 </div>
 
 <div id="main5" class="menu" onclick="document.all.child5.style.display=(document.all.child5.style.display =='none')?'':'none'" > 
 >计划信息维护 </div> 
 <div id="child5" class="menu" style="display:none;"> 
-<a href="#">-生产计划</a> <br> 
+<a href="toproduce_plan_tab">-生产计划</a> <br> 
 <a href="tomaintenance">-维护保养计划</a> <br> 
 </div>
 
@@ -68,9 +67,9 @@
 <div id="child6" class="menu" style="display:none;"> 
 <a href="toequip_info">-设备信息</a> <br> 
 <a href="toequip_para">-设备参数信息</a> <br> 
-<a href="#">-产品信息</a> <br> 
-<a href="#">-原材料信息</a> <br> 
-<a href="#">-原材料采购信息</a> <br>
+<a href="toproduct_tab">-产品信息</a> <br> 
+<a href="tomater_tab">-原材料信息</a> <br> 
+<a href="tomater_pur_tab">-原材料采购信息</a> <br>
 <a href="#">-模具信息</a> <br> 
 <a href="#">-A类易耗品信息</a> <br> 
 </div>
@@ -79,7 +78,7 @@
 >系统设置 </div> 
 <div id="child7" class="menu" style="display:none;"> 
 <a href="toauthority">-权限管理</a> <br> 
-<a href="#">-用户管理</a> <br> 
+<a href="to">-用户管理</a> <br> 
 </div>
 
 <div id="main8" class="menu" onclick="document.all.child8.style.display=(document.all.child8.style.display =='none')?'':'none'" > 

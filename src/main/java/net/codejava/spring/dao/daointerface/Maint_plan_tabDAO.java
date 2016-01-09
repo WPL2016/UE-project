@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.codejava.spring.model.Maint_plan_tab;
 
+
 /**
  * Defines DAO operations for the contact model.
  * 
@@ -18,4 +19,5 @@ public interface Maint_plan_tabDAO {
 	public Maint_plan_tab get(String maint_plan_num);
 	
 	public List<Maint_plan_tab> list();
+	public List<Maint_plan_tab> list(String maint_plan_obj_num);
 }

@@ -28,7 +28,7 @@ public class EquipController {
 	@RequestMapping(value="/toequip")
 	public ModelAndView listContact(ModelAndView model) throws IOException{
 		int recordnum=contactDAO.countRecord();
-		List<Equip_tab> mainequip=equip_tabDAO.getSomeEquip("main");
+		List<Equip_tab> mainequip=equip_tabDAO.getSomeEquip("yz");
 		model.addObject("recordnum",recordnum+"");
 		model.addObject("mainequip",mainequip);
 		model.setViewName("equip_status");

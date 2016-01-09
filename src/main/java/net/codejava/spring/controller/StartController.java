@@ -10,7 +10,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import net.codejava.spring.dao.daointerface.ContactDAO;
 import net.codejava.spring.dao.daointerface.Equip_tabDAO;
+import net.codejava.spring.dao.daointerface.Product_tabDAO;
 import net.codejava.spring.model.Equip_tab;
+import net.codejava.spring.model.Product_tab;
 
 
 @Controller
@@ -20,6 +22,9 @@ public class StartController {
 	private ContactDAO contactDAO;
 	@Autowired
 	private Equip_tabDAO equip_tabDAO;
+	
+	@Autowired
+	private Product_tabDAO product_tabDAO;
 	
 	@RequestMapping(value="/")
 	public ModelAndView listContact(ModelAndView model) throws IOException{
@@ -82,17 +87,21 @@ public class StartController {
 	public ModelAndView viewinput2(){
 		ModelAndView model=new ModelAndView();
 		model.setViewName("energy");
-		List<Equip_tab> mainequip=equip_tabDAO.getSomeEquip("main");
-		model.addObject("mainequip",mainequip);
+		List<Equip_tab> mainequip=equip_tabDAO.getSomeEquip("yz");
+		model.addObject("yzequip",mainequip);
 		int recordnum=contactDAO.countRecord();
 		model.addObject("recordnum",recordnum+"");
 		return model;
 	}
 	
-	@RequestMapping(value="/toinput3")
+	@RequestMapping(value="/toquality")
 	public ModelAndView viewinput3(){
 		ModelAndView model=new ModelAndView();
 		model.setViewName("quality");
+		
+		List<Product_tab> product_tab=product_tabDAO.list();
+		model.addObject("product_tab",product_tab);
+		
 		int recordnum=contactDAO.countRecord();
 		model.addObject("recordnum",recordnum+"");
 		return model;

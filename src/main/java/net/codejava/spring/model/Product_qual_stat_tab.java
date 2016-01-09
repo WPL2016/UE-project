@@ -1,4 +1,3 @@
-
 	package net.codejava.spring.model;
 
 	import java.util.Date;

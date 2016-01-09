@@ -2,8 +2,7 @@ package net.codejava.spring.dao.daoimpl;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.Format;
-import java.text.SimpleDateFormat;
+
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -72,13 +71,11 @@ public class Product_qual_asse_tabDAOImpl implements Product_qual_asse_tabDAO {
 				aProduct_qual_asse_tab.setProduct_qual_asse_per_num(rs.getString("product_qual_asse_per_num"));
 				aProduct_qual_asse_tab.setProduct_num(rs.getString("product_num"));
 				
-				Format formatter = new SimpleDateFormat("yyyy-M-dd");
-				String str = formatter.format(rs.getDate("product_qual_asse_date"));
-				SimpleDateFormat simple= new SimpleDateFormat(str);
-				aProduct_qual_asse_tab.setProduct_qual_asse_date(simple);
 							
-				
+				aProduct_qual_asse_tab.setProduct_qual_asse_date(rs.getDate("product_qual_asse_date"));
 				return aProduct_qual_asse_tab;
+				
+				
 			}
 			
 		});
@@ -103,19 +100,27 @@ public class Product_qual_asse_tabDAOImpl implements Product_qual_asse_tabDAO {
 					aProduct_qual_asse_tab.setProduct_qual_asse_per_num(rs.getString("product_qual_asse_per_num"));
 					aProduct_qual_asse_tab.setProduct_num(rs.getString("product_num"));
 					
-					Format formatter = new SimpleDateFormat("yyyy-M-dd");
-					String str = formatter.format(rs.getDate("product_qual_asse_date"));
-					SimpleDateFormat simple= new SimpleDateFormat(str);
-					aProduct_qual_asse_tab.setProduct_qual_asse_date(simple);
-								
-					
+					aProduct_qual_asse_tab.setProduct_qual_asse_date(rs.getTimestamp("product_qual_asse_date"));
 					return aProduct_qual_asse_tab;
+				
 				}
 				
 				return null;
 			}
 			
 		});
+	}
+
+	@Override
+	public int updateSingleColumn(Product_qual_asse_tab product_qual_asse_tab, String column, String value) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public List<Product_qual_asse_tab> getSomeProduct(String type) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

@@ -25,7 +25,7 @@ public class Equip_dyn_para_tabDAOImpl implements  Equip_dyn_para_tabDAO{
 	@Override
 	public List<Equip_dyn_record> getLastDynPara(String equip_num) {
 		String sql = " with lastunique  as (SELECT MAX(dyn_time) as dyn_time,a.para_num FROM equip_dyn_para_tab as a,equip_para_tab as b WHERE a.para_num=b.para_num group by a.para_num),"+
- "total as (Select a.para_num,a.dyn_num,a.product_num,a.dyn_para_val,a.dyn_time,b.down_lim_vall,b.equip_num,b.para_name,b.para_recorder_num,b.para_unit,b.up_lim_val from equip_dyn_para_tab as a,equip_para_tab as b "+
+ "total as (Select a.para_num,a.dyn_num,a.product_num,a.dyn_para_val,a.dyn_time,b.down_lim_val,b.equip_num,b.para_name,b.para_recorder_num,b.para_unit,b.up_lim_val from equip_dyn_para_tab as a,equip_para_tab as b "+
  "WHERE a.para_num=b.para_num) SELECT * FROM total,lastunique where total.dyn_time=lastunique.dyn_time and total.para_num=lastunique.para_num and total.equip_num='"+equip_num+"'";
 		
 		
@@ -42,7 +42,7 @@ public class Equip_dyn_para_tabDAOImpl implements  Equip_dyn_para_tabDAO{
 	            equip_dyn_para_tab.setProduct_num(rs.getString("product_num"));
 	            equip_dyn_para_tab.setPara_num(rs.getString("para_num"));
 	            
-	            equip_para_tab.setDown_lim_val(rs.getFloat("down_lim_vall"));
+	            equip_para_tab.setDown_lim_val(rs.getFloat("down_lim_val"));
 	            equip_para_tab.setEquip_num(rs.getString("equip_num"));
 	            equip_para_tab.setPara_name(rs.getString("para_name"));
 	            equip_para_tab.setPara_num(rs.getString("para_num"));

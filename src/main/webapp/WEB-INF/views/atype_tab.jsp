@@ -108,7 +108,7 @@ $(function () {
           		        loadError: function(xhr,status,error){  
           		        	 alert(status + " loading data of " + $(this).attr("id") + " : " + error );    },  
 
-          		        caption:"原材料使用状况", //height : 80,align : "center",
+          		       // caption:"原材料使用状况", //height : 80,align : "center",
           		       
           		        prmNames: { id: "atype_num" },
           		        rowNum : 20,

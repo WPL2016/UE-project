@@ -23,7 +23,7 @@
 <meta name="_csrf" content="${_csrf.token}"/>
 <!-- default header name is X-CSRF-TOKEN -->
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
-<title>模具使用信息</title>  
+<title>设备维护记录</title>  
 <script>
  $(function() {
 
@@ -66,12 +66,12 @@ $(function () {
        
         <!--内容主体的div,请根据具体内容决定div的样式，table_container0最小，1次之，2最大，也可自行在div.css定义你自己想要的样式，要设置成左浮动以保证div水平排列-->     
        <div class="table_container2">
-             <div class="table_head">模具使用记录</div>
+             <div class="table_head">设备维护记录</div>
              <div>
                   <table id="jqGrid"></table>
                   <div id="jqGridPager"></div>
                    <div class="horiz_blank" style="height:30px"></div>
-             <div class="table_head">请选择模具</div>
+             <div class="table_head">请选择设备维护计划</div>
                     <table id="jqGrid1"></table>
                   <div id="jqGridPager1"></div>
                   
@@ -99,19 +99,21 @@ $(function () {
         		  var lastsel;
         		  jQuery("#jqGrid").jqGrid(
         		      {
-        		        url : "showmou_use_inf_tab",
+        		        url : "showmaint_reg_tab",
         		        datatype : "json",
-        		        colNames : [  '使用记录编号', '模具编号', '设备编号', '更换时间','更换人员' ],
+        		        colNames : [  '维护记录编号', '执行维护计划编号', '维护内容', '维护日期','维护人员编号' ],
         		        colModel : [ 
         		                     
-        		                     {name : 'mou_use_inf_num',index :'mou_use_inf_num',width : 40,sortable :true,editable :true,key:true},
-        		                     {name : 'mou_num',index : 'mou_num',width : 40,sortable : true,editable : true,editoptions:{readonly:true}}, 
-        		                     {name : 'equip_num',index : 'equip_num',width : 40,sortable : true,editable : true},        		                 
-        		                     {name : 'mou_chan_time',index : 'mou_chan_time',width : 150,sortable : true,editable : true, searchoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}},
+        		                     {name : 'maint_reg_num',index :'maint_reg_num',width : 40,sortable :true,editable :true,key:true,editoptions:{readonly:true}},
+        		                     {name : 'maint_plan_num',index : 'maint_plan_num',width : 40,sortable : true,editable : true}, 
+        		                     {name : 'maint_reg_cont',index : 'maint_reg_cont',width : 40,sortable : true,editable : true},        		                 
+        		                  
+        		                     {name : 'maint_reg_date',index : 'maint_reg_date',width : 150,sortable : true,editable : true, searchoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}},
         		                    	editoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}} , addoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}} ,
-        		                    	},        		  
-        		                     {name : 'mou_chan_per_num',index : 'mou_chan_per_num',width : 40,sortable : true,editable : true}, 
-        		                   
+        		                    	},   
+        		                    	
+        		                     {name : 'maint_reg_per_num',index : 'maint_reg_per_num',width : 40,sortable : true,editable : true}, 
+              		                   
         		                     
         		                   ],
         		                   
@@ -126,7 +128,7 @@ $(function () {
 
         		        //caption:"原材料使用状况", //height : 80,align : "center",
         		       
-        		        prmNames: { id: "mou_use_inf_num" },
+        		        prmNames: { id: "maint_reg_num" },
         		        rowNum : 20,
         		        height:300,
         		        rowList : [ 20, 40, 60 ],
@@ -145,7 +147,7 @@ $(function () {
         		          }
         		       
         		        },
-        		        editurl : "editmou_use_inf_tab",
+        		        editurl : "editmaint_reg_tab",
         		       
         		      });
         		  
@@ -182,7 +184,7 @@ $(function () {
         	                // options for the Add Dialog
         	                {
         	                	afterShowForm :function(){
-        	                	$("#mou_num").val(mou_num_sel) ;
+        	                	$("#maint_reg_num").val(maint_reg_num_sel) ;
         	                	                            },
         	                   // recreateForm: true,
         	                   //出错时返回信息
@@ -248,17 +250,16 @@ $(function () {
           		  var lastsel;
           		  jQuery("#jqGrid1").jqGrid(
           		      {
-          		        url : "showemou_tab",
+          		        url : "showmaint_plan_tab",
           		        datatype : "json",
-          		        colNames : [  '模具编号', '产品编号', '模具名称', '模具穴数','模具供应商','模具录入人' ],
+          		        colNames : [  '维护计划编号', '维护对象编号', '维护计划日期', '维护计划内容','维护计划录入人' ],
           		        colModel : [ 
           		                     
-          		                     {name : 'mou_num',index :'mou_num',width : 90,sortable :false,editable :false,key:true},
-          		                     {name : 'product_num',index : 'product_num',width : 80,sortable : true,editable : false}, 
-          		                     {name : 'mou_name',index : 'mou_name',width : 90,sortable : true,editable : false},        		                 
-          		                     {name : 'mou_hole_num',index : 'mou_hole_num',width : 80,sortable : true,editable :false},   
-          		                     {name : 'mou_sup',index : 'mou_sup',width : 80,sortable : true,editable :false},  
-          		                     {name : 'mou_recorder_num',index : 'mou_recorder_num',width : 80,sortable : true,editable :false},  
+          		                     {name : 'maint_plan_num',index :'maint_plan_num',width : 90,sortable :false,editable :false,key:true},
+          		                     {name : 'maint_plan_obj_num',index : 'maint_plan_obj_num',width : 80,sortable : true,editable : false}, 
+          		                     {name : 'maint_plan_date',index : 'maint_plan_date',width : 90,sortable : true,editable : false},        		                 
+           		                     {name : 'maint_plan_cont',index : 'maint_plan_cont',width : 80,sortable : true,editable :false},  
+          		                     {name : 'maint_plan_per_num',index : 'maint_plan_per_num',width : 80,sortable : true,editable :false},  
           		              
           		                 
           		                     
@@ -275,13 +276,13 @@ $(function () {
 
           		       // caption:"原材料使用状况", //height : 80,align : "center",
           		       
-          		        prmNames: { id: "mou_num" },
+          		        prmNames: { id: "maint_plan_num" },
           		        rowNum : 20,
           		        height:300,
           		        rowList : [ 20, 40, 60 ],
           		        pager : '#jqGridPager1',
           		       // multiselect:true,
-          		        sortname :'atype_num',
+          		        sortname :'maint_plan_num',
           		        viewrecords : true,
           		        sortorder : "desc",
           		        autowidth:true,
@@ -289,7 +290,7 @@ $(function () {
           		        
           		        //生成从表
           		          mou_num_sel=id; 	
-          		        $("#jqGrid").setGridParam({datatype:'json', page:1,url:"showsomemou_use_inf_tab?mou_num="+id}).trigger('reloadGrid');
+          		        $("#jqGrid").setGridParam({datatype:'json', page:1,url:"showsomemaint_plan_tab?maint_plan_num="+id}).trigger('reloadGrid');
           		          
         		              
           		        },

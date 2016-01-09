@@ -22,4 +22,6 @@ public interface Equip_tabDAO {
 	public int updateSingleColumn(Equip_tab equip_tab,String column,String value);
 	
 	public List<Equip_tab> getSomeEquip(String type);
+	
+	public List<Equip_tab> getSomeEquipWithState(String type);
 }

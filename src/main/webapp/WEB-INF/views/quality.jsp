@@ -1,5 +1,6 @@
 <%@ page language="java" import="java.util.*" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>   
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -11,19 +12,19 @@
 <link rel="stylesheet" type="text/css" media="screen"   href="resources/jqGrid/css/ui.jqgrid-bootstrap.css" />
 <link rel="stylesheet" type="text/css" media="screen"  href="resources/jqGrid/css/ui.jqgrid-bootstrap-ui.css" />
 <link rel="stylesheet" type="text/css" media="screen"  href="resources/jqGrid/css/ui.jqgrid-bootstrap-ui.theme.css" />
-
 <link rel="stylesheet" type="text/css" media="screen" href="resources/jqGrid/themes/cupertino/jquery-ui.css" />
 <link rel="stylesheet" type="text/css" media="screen" href="resources/jqGrid/themes/cupertino/theme.css" />
 <script src="resources/jqGrid/js/i18n/grid.locale-cn.js" type="text/ecmascript"></script>
 <script src="resources/jqGrid/js/jquery.jqGrid.min.js" type="text/ecmascript"></script>
-<script src="resources/jqGrid/plugins/grid.addons.js" type="text/ecmascript"></script>
+
+<script src="resources/jquery-ui.js"></script>
 
 <!-- 添加csrf标记，防止crsf安全过滤器无法识别ajax访问的crsf_token-->
 <meta http-equiv="Content-Type" content="text/html; charset=utf8">  
 <meta name="_csrf" content="${_csrf.token}"/>
 <!-- default header name is X-CSRF-TOKEN -->
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
-<title>质量状态</title>  
+<title>产品FPY查询</title>  
 
 <script type="text/javascript">  
 <!--ajax访问时发送csrf token，以防止ajax访问被crsf过滤器拦截   -->
@@ -35,12 +36,46 @@ $(function () {
 	});	
    });
 </script>  
+
+
+<script>
+ $(function() {
+
+            $.datepicker.regional["zh-CN"] = { closeText: "关闭", prevText: "&#x3c;上月", nextText: "下月&#x3e;", currentText: "今天", monthNames: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"], monthNamesShort: ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二"], dayNames: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"], dayNamesShort: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"], dayNamesMin: ["日", "一", "二", "三", "四", "五", "六"], weekHeader: "周", dateFormat: "yy-m-d", firstDay: 1, isRTL: !1, showMonthAfterYear: !0, yearSuffix: "年" }
+
+                         
+
+            $.datepicker.setDefaults($.datepicker.regional["zh-CN"]);
+ })
+</script>
+
+<script type="text/javascript">  
+<!--ajax访问时发送csrf token，以防止ajax访问被crsf过滤器拦截   -->
+$(function () {
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+	$(document).ajaxSend(function(e, xhr, options) {
+		xhr.setRequestHeader(header, token);
+	});	
+   });
+</script>  
+
+<script>
+$(document).ready(function(){
+    $("#starttime").datepicker({showWeek:true, firstDay:1});
+    $("#endtime").datepicker({showWeek:true, firstDay:1});
+})
+</script> 
+
+
 </head>
 <body>
   <!-- 插入头部 -->
   
-  <%@ include file="./component/1_head.jsp"%> 
- 
+    
+     <%@ include file="./component/1_head.jsp"%> 
+   
+  
   <!-- 中间层的总体容器，宽度是100% -->
   <div class="horiz_container">
         <!-- 插入左侧菜单空白 --> 
@@ -49,126 +84,160 @@ $(function () {
         <div class="menu_container">
         <%@ include file="./component/7_content.jsp"%> 
         </div>
+        <!--插入菜单与主体内容之间的空白  -->
         <div class="blank_btw_menu_content"></div>
         <!--内容主体的div,请根据具体内容决定div的样式，table_container0最小，1次之，2最大，也可自行在div.css定义你自己想要的样式，要设置成左浮动以保证div水平排列-->     
-        <div class="table_container2">
-             <div class="table_head">压铸设备产品FPY查询</div>
-        <form>
-        <table width="100%" height="988" border="0" cellpadding="0" cellspacing="0" bordercolor="#CCCCCC">
-  <tr bgcolor="#E1EBF5">
-    <th width="90" height="34" scope="row"><div align="left"></div>      
-    <div align="center"><strong>选择时间段</strong></div></th>
-    <th width="104" bgcolor="#FFFFFF" scope="row"><strong>2015-10-10</strong></th>
-    <th width="28" scope="row"><strong>至</strong></th>
-    <th width="99" bgcolor="#FFFFFF" scope="row"><strong>2015-12-23</strong></th>
-    <th width="98" scope="row"><div align="center"><strong>选择设备</strong></div></th>
-    <th width="131" bgcolor="#FFFFFF" scope="row">
-      
-      <div align="center">
-        <select name="select" style="font-size:20px;width:100%; height:28px;">
-        </select>
-      </div>
-    
-    </th>
-    <th width="96" scope="row"><div align="center"><strong>选择产品</strong></div></th>
-    <th width="119" bgcolor="#FFFFFF" scope="row">
-      <strong>      <select name="select2" style="font-size:20px; width:100%; height:28px;">
-	    
-    </select>
-      </strong>
-    </th>
-    <td width="75"><div align="center"><strong>频率设定</strong></div></td>
-    <td width="82">
-      
-        <div align="center">
-          <select name="select3" style="font-size:20px; width:100%; height:28px;">
-          </select>
-        </div>
-    </td>
-  </tr>
-  <tr bgcolor="#E1EBF5">
-    <th height="54" colspan="4" scope="row">
         
-        <div align="center">
-          <input type="submit" name="Submit" value="查询产品FPY统计表" style="font-size:20px; width:200px; height:30px;">      
-          </div>
-    </th>
-    <th height="54" colspan="3" scope="row">
-      
-        <div align="center">
-          <input type="submit" name="Submit2" value="查询产品FPY统计折线图" style="font-size:20px; width:220px; height:30px;">
-          </div>
-    </th>
-    <th height="54" colspan="3" scope="row">
-      
-        <div align="center">
-          <input type="submit" name="Submit3" value="查询产品FPY统计扇形图" style="font-size:20px; width:220px; height:30px;">
-        </div>
-    </th>
-  </tr>
+        <div class="table_container2">
+                                                                                                         
+          <div class="table_head">产品FPY查询表</div>
+          <table width="100%" height="798" border="0" cellpadding="0" cellspacing="0">        
+          <tr><td>
+          
+          <label>选择起始时间：</label>
+ <input type="text" id="starttime" style="width:140px;height:15px;font-size-3" ></input>
+            <label>选择结束时间：</label>
+ <input type='text' id='endtime' style='width:140px;height:15px;font-size-3'></input>
+
+      <select style='width:140px;height:25px;font-size-3' id="timechoice">
+         	          <option value="0">按日汇总</option><option value="1">按周汇总</option><option value="2">按月汇总</option><option value="3">按年汇总</option></select>
+        <c:forEach var="product_tab" items="${product_tab}">
+	      <input type="checkbox" id="product_selected" name="product_selected" value="${product_tab.product_num}">${product_tab.product_name}</input> </c:forEach>
+             <input type="button" id="search" onClick="drawBar(),drawPie()">查询</input>
+           </td></tr>
+          
+               <tr bgcolor="#E1EBF5">
+                   <th height="35" colspan="10" scope="row"><div align="left"><strong><span class="style1"> 产品FPY查询</span></strong></div></th>
+                   <td colspan="2">&nbsp;</td>
+                   <td width="50">&nbsp;</td>
+               </tr>
+
+<tr><td>
+
+ <table id="jqGrid"></table>
+ <div id="jqGridPager"></div>
+</td></tr>
+
+ 
   <tr bgcolor="#E1EBF5">
-    <th height="26" colspan="10" scope="row"><span class="style3">产品FPY统计表</span></th>
-  </tr>
-  <tr bgcolor="#E1EBF5">
-    <th height="176" colspan="10" scope="row">
-           <div>
-                <table id="jqGrid"></table>
-                <div id="jqGridPager"></div>
-                <button id="deldata">批量修改（如审核等）</button>
-                <button id="deldata1">批量修改1（如审核等）</button>
-           </div></th>
-    </tr>
-      <tr bgcolor="#E1EBF5">
-    <th height="25" colspan="8" scope="row"><div align="right">&lt;&lt;点击查看全部 </div></th>
-    <td colspan="2">
-      <div align="center">
-        <input type="submit" name="Submit4" value="导出统计表">
-      </div>
+    <td height="257" colspan="13" align="center">
+        <div id="linechart" style="width:80%; height:500px"></div>
+        <div id="piechart" style="width:80%; height:500px"></div>
     </td>
-  </tr>
-  <tr bgcolor="#E1EBF5">
-    <th height="25" colspan="10" class="style3" scope="row">产品FPY折线统计图</th>
-  </tr>
-  <tr bgcolor="#E1EBF5">
-    <th height="257" colspan="10" scope="row"><div id="linechart" style="width:100%; height:500px"></div></th>
-  </tr>
-  <tr bgcolor="#E1EBF5">
-    <th height="28" colspan="8" scope="row"><div align="right">&lt;&lt;点击查看全部</div></th>
-    <td colspan="2"><div align="center">
-      <input type="submit" name="Submit42" value="导出折线图">
-    </div></td>
-  </tr>
-   <tr bgcolor="#E1EBF5">
-    <th height="25" colspan="10" class="style3" scope="row">产品FPY扇形统计图</th>
-  </tr>
-  <tr bgcolor="#E1EBF5">
-    <th height="257" colspan="10" scope="row"><div id="piechart" style="width:100%; height:500px"></div></th>
-  </tr>
-  <tr bgcolor="#E1EBF5">
-    <th height="28" colspan="8" scope="row"><div align="right">&lt;&lt;点击查看全部</div></th>
-    <td colspan="2"><div align="center">
-      <input type="submit" name="Submit42" value="导出饼状图">
-    </div></td>
-  </tr>
-  <tr bgcolor="#E1EBF5">
-    <th height="32" colspan="10" scope="row"><div align="center"></div></th>
-  </tr>
-</table>
-</form>>
+  </tr> 
+  
+  
+</table>                                                                                                    
         </div>
-  
-  
-    
-  
-  </div>
-  <!-- 插入底部 -->     
+    </div>
+ 
+  <!-- 插入底部 -->  
   <div>
   <%@ include file="./component/2_foot.jsp"%>
   </div>  
+
+<script type="text/javascript">        
+
+$(document).ready(function () {
+     		  
+	pageInit();
+        	
+        		});
+
+
+        		function pageInit(){
+        		  var lastsel;
+        		  var chk_value =[];  
+        		  jQuery("#jqGrid").jqGrid(
+        		      {
+        		        url : "showproduct_qual_stat_tab?starttime="+$("#starttime").val()+"&endtime="+$("#endtime").val()+"&timechoice="+$("#timechoice").val()+"&product_selected="+chk_value,
+        		        datatype : "json",
+        		        colNames : [  '产品编号','次品产生时刻','产品FPY值' ],
+        		        colModel : [ 
+        		                     
+        		                 {name : 'product_num',index :'product_num',width : 90,align : "center",sortable :false,editable : false,key:true},
+       		                     {name : 'infe_time',index : 'infe_time',width : 150,align : "center",sortable :false,editable : false}, 
+       		                     {name : 'fpy_val',index : 'fpy_val',width : 90,align : "center",sortable :false,editable : false},        		                 
+       		              
+        		                            		                     
+        		                   ],
+        		                   
+        		        //下载数据到本地，可以实现在前端排序、搜索，这种方式好处是这里的排序和搜索都无需后台处理，无需额外代码，而且支持多条件复杂搜索
+        	        	//缺点是一次导入所有数据，数据量大时会存在一些问题，此时需要在后台实现搜索，只载入符合条件的数据,此外表格不自动刷新，需要reload
+        	        	//请根据需要选择养已经完成好的前台查询和排序还是自行实现后台排序和搜索  
+        	        
+        		        loadonce:true,
+        		        //当加载出错时提供错误信息
+        		        loadError: function(xhr,status,error){  
+        		        	 alert(status + " loading data of " + $(this).attr("id") + " : " + error );    },  
+
+
+        		        caption:"", height : 80,align : "center",
+
+        		       
+
+        		        prmNames: { id: "product_num" },
+        		        rowNum : 20,
+        		        height:300,
+        		        rowList : [ 20, 40, 60 ],
+        		        pager : '#jqGridPager',
+        		        multiselect:true,
+        		        sortname :'name',
+        		        viewrecords : true,
+        		        sortorder : "desc",
+        		        autowidth:true,
+        		        onSelectRow : function(id) {
+        		          if (id && id !== lastsel) {
+        		            jQuery('#jqGrid').jqGrid('restoreRow', lastsel);
+        		            jQuery('#jqGrid').jqGrid('editRow', id, true);
+        		            lastsel = id;
+        		          }
+        		        },
+        		      //  editurl : "editequip_tab",
+        		       
+        		      });
+        		  
+        		   $('#jqGrid').navGrid('#jqGridPager',
+        	                // the buttons to appear on the toolbar of the grid
+        	                { edit: false, add: false, del: false, search: true, refresh: true, view: true, position: "left", cloneToTop: false },
+        	              
+        	                // options for the Search Dailog
+        	                {
+        	                	multipleSearch:true,
+        	                	multipleGroup:true,
+        	                	recreateForm: true,
+        	                	closeAfterSearch: true,       	            
+        	                	errorTextFormat: function (data) {
+        	                        return '搜索失败，请重新尝试!'+ data.responseText
+        	                    }
+        	                 }
+        	                );
+        		   $("#search").click(function(){
+        			   var chk_value =[];  
+        			   $('input[name=product_selected]:checked').each(function(){   
+        			      chk_value.push($(this).val());
+        			              });
+        			   $("#jqGrid").setGridParam({url : "showproduct_qual_stat_tab?starttime="+$("#starttime").val()+"&endtime="+$("#endtime").val()+"&timechoice="+$("#timechoice").val()+"&product_selected="+chk_value,datatype:'json', page:1}).trigger('reloadGrid')});
+        		  
+        		          		          		 
+        			    	
+        		}
+        		
+        	
+          		          		          		 
+          		
+        		
+   </script>
   
+ 
+   <!-- ECharts文件引入 -->
   
-<script src="resources/echarts/build/dist/echarts.js"></script>
-<script type="text/javascript">
+    <script src="resources/echarts/build/dist/echarts.js"></script>
+    
+   
+    
+    <script type="text/javascript">
+
         // 路径配置
         require.config({
             paths: {
@@ -188,28 +257,40 @@ $(function () {
             DrawCharts
             );
             function DrawCharts(ec) {
-            drawBar(ec);
-            drawPie(ec);
+            	
+            drawBar();
+            drawPie();
              }
+            
+           
 
-            function drawBar(ec) {
+            function drawBar() {
                 // 基于准备好的dom，初始化echarts图表
-                var myChart = ec.init(document.getElementById('linechart')); 
-                
+                //var myChart = ec.init(document.getElementById('linechart')); 
+                var dom=document.getElementById('linechart');
+                var myChart=require('echarts').init(dom);
+
+
+                var value=[];
+                var label=[];
+               //设置图的选项
+
                 var option = {                		                  		
                 title : {
-                  	        text: '上月FPY统计值(%)',
+                  	        text: '产品FPY值',
                   	        subtext: '折线图（Line Chart）',
                   	        x:'center'
                   	      },	
                     tooltip: {
                         show: true
                     },
+                    //数据注释（对应数据分组的小按钮）
                     legend: {
                     	orient : 'vertical',
                         x : 'left',
-                        data:['第一周','第二周','第三周','第四周']
+                        data:[],
                     },
+                    //图标右上方的工具箱设置
                     toolbox: {
                         show : true,
                         feature : {
@@ -221,53 +302,76 @@ $(function () {
                         }
                     },
                     calculable:true,
+                    //x轴
+
                     xAxis : [
                         {
                             type : 'category',
-                            data : ["星期一","星期二","星期三","星期四","星期五","星期六"]
+                            data : [],
                         }
                     ],
+                    //y轴
                     yAxis : [
                         {
                             type : 'value'
                         }
                     ],
-                    series : [
-                        {
-                            "name":"第一周",
-                            "type":"bar",
-                            "data":[95, 20, 40, 10, 10, 20]
-                        },
-                        {
-                            "name":"第二周",
-                            "type":"bar",
-                            "data":[56, 76, 34, 65, 76, 75]
-                        },
-                        {
-                            "name":"第三周",
-                            "type":"bar",
-                            "data":[24, 78, 90, 89, 76,78]
-                        },
-                        {
-                            "name":"第四周",
-                            "type":"bar",
-                            "data":[67, 98, 87, 32, 12, 43]
-                        }
-                        
-                    ]
-                };
-        
-                // 为echarts对象加载数据 
-                myChart.setOption(option); 
+
+
+                    //数据系列，要显示几个系列酒填几个大括号，不然不会显示多出的系列
+                    series : [{},{}],}
+                
+               
+                //通过ajax从后台获取图表所需数据
+                
+                 var chk_value =[];   
+           $('input[name=product_selected]:checked').each(function(){   
+              chk_value.push($(this).val());
+                      });
+                
+                
+               $.ajax({  
+            	   data:"starttime="+$("#starttime").val()+"&endtime="+$("#endtime").val()+"&timechoice="+$("#timechoice").val()+"&product_selected="+chk_value,
+        	       
+    	       //data:"name="+$("#name").val(),  
+    	       //用GET方法当请求参数不变时会因部分浏览器缓存而无法更新，所以有POST
+    	       type:"POST", 
+    	       async : false,
+    	       dataType: "json",  
+    	       url:"qualitylinedata",  
+    	       error:function(data){  
+    	            //alert("出错了！！:"+data[0].name);  
+    	        },  
+    	        success:function(data){     	          
+    	        	   option.legend.data = data.legend;  
+    	        	   option.xAxis[0].data = data.category;  
+    	        	   $.each(data.series,function(idx,obj){
+    	        	   //赋值操作
+    	        	   option.series[idx].data = data.series[idx].data; 
+    	        	   option.series[idx].name = data.series[idx].name; 
+    	        	   option.series[idx].type = data.series[idx].type; 
+    	        	  //alert(data.series[idx].data[0]);
+    	        	   })
+    	          
+    	          
+    	        }
+          }) 
+               //加载选项
+                 myChart.setOption(option); 
+
+
             }
             
-            function drawPie(ec) {
+            function drawPie() {
                 // 基于准备好的dom，初始化echarts图表
-            	  myChart = ec.init(document.getElementById('piechart')); 
-            	  
+            	 // myChart = ec.init(document.getElementById('piechart'));            	
+            	  var dom=document.getElementById('piechart');
+             var myChart=require('echarts').init(dom);
             	  var option = {
             	      title : {
-            	        text: 'FPY不合格原因统计',
+
+            	        text: '不良品原因分布',
+
             	        subtext: '饼图（Pie Chart）',
             	        x:'center'
             	      },
@@ -278,7 +382,7 @@ $(function () {
             	      legend: {
             	        orient : 'vertical',
             	        x : 'left',
-            	        data:['工人操作失误','机器故障','原材料不合格','运输损坏']
+            	        data:[],
             	      },
             	      toolbox: {
             	        show : true,
@@ -293,266 +397,74 @@ $(function () {
             	      series : [
             	        {
             	          name:'饼图实例',
-            	          type:'pie',
+            	          //type:'pie',
             	          radius : '55%',
             	          center: ['50%', '60%'],
-            	          data:[
-            	                {value:100, name:'工人操作失误'},
-            	                {value:200, name:'机器故障'},
-            	                {value:300, name:'原材料不合格'},
-            	                {value:400, name:'运输损坏'}]
+            	          data:[]
             	        }
             	      ]
             	    };
-            	  
+
+            	  var chk_value =[];   
+                  $('input[name=product_selected]:checked').each(function(){   
+                     chk_value.push($(this).val());
+                             });
+
+            	  //myChart.setOption(option);
+                  $.ajax({  
+                	 data:"starttime="+$("#starttime").val()+"&endtime="+$("#endtime").val()+"&timechoice="+$("#timechoice").val()+"&product_selected="+chk_value,
+            	         
+           	       //用GET方法当请求参数不变时会因部分浏览器缓存而无法更新
+           	       type:"POST", 
+           	       async : false,
+           	       dataType: "json",  
+           	       url:"qualitypiedata",  
+           	       error:function(data){  
+           	            alert("出错了！！:"+data[0].name);  
+           	        },  
+           	        success:function(data){     	          
+           	            var label=[];
+               	        var value=[];
+               	        var values=[];
+           	             //alert(option.series[0].data);
+           	        	 // alert(data);
+           	        	 //  option.legend.data = data.legend;  
+                            	        
+                   	 label=data.series[0].label;
+                   	 value=data.series[0].data;
+                   	 $.each(label,function(idx,obj){
+                   	values[idx]={'name':label[idx],'value':value[idx]}; 
+                   	 })
+                	
+                	 //alert(values);	                   
+           	        	
+                   	 	
+                   	 option.legend.data = data.legend;	
+           	         option.series[0].data = values;
+           	      option.series[0].type = data.series[0].type;
+                   // alert(option.series[0].data); 
+           	        }
+                 }) 
+
             	  // 为echarts对象加载数据 
-            	  myChart.setOption(option); 
+            	 myChart.setOption(option); 
 
             }
-          
+
+           
+       
+       
+        
+        
+
     </script>
    
    
    
-    <script type="text/javascript"> 
-    $(document).ready(function () {
-		  pageInit();
-		  pageInit1();
-		  
-		});
-		function pageInit(){
-		  var lastsel;
-		  jQuery("#jqGrid").jqGrid(
-		      {
-		        url : "showproduct_qual_stat_tab",
-		        datatype : "json",
-		         
-              colNames : [  '质量测试编号', '产品编号', '产品质量测试日期', '产品质量测试结果','产品质量测试内容','产品质量测试人员编号' ],
-		        colModel : [ 
-		                     
-		                     {name : 'product_qual_stat_num',index :'product_qual_asse_num',width : 100,align : "left",sortable :true,editable :true,key:true},
-		                     {name : 'product_num',index : 'product_num',width : 100,align : "left",sortable : true,editable : true}, 
-		                     {name : 'product_qual_asse_date',index : 'product_qual_asse_date',width : 100,align : "left",sortable : true,editable : true}, 
-		                     {name : 'product_qual_asse_res',index : 'product_qual_asse_res',width : 100,align : "left",sortable : true,editable : true}, 
-		                     {name : 'product_qual_asse_cont',index : 'product_qual_asse_cont',width : 100,sortable : true,editable : true},        		                     		  
-		                     {name : 'product_qual_asse_per_num',index : 'product_qual_asse_per_num',width : 150,sortable : true,editable : true}, 
+  
+    
 
-		                   ],
-		                   
-		        //下载数据到本地，可以实现在前端排序、搜索，这种方式好处是这里的排序和搜索都无需后台处理，无需额外代码，而且支持多条件复杂搜索
-	        	//缺点是一次导入所有数据，数据量大时会存在一些问题，此时需要在后台实现搜索，只载入符合条件的数据,此外表格不自动刷新，需要reload
-	        	//请根据需要选择养已经完成好的前台查询和排序还是自行实现后台排序和搜索  
-	        
-		        loadonce:true,
-		        //当加载出错时提供错误信息
-		        loadError: function(xhr,status,error){  
-		        	 alert(status + " loading data of " + $(this).attr("id") + " : " + error );    },  
-
-		        caption:"产品测试统计记录表", //height : 80,align : "center",
-		       
-		        prmNames: { id: "product_qual_stat_num" },
-		        rowNum : 20,
-		        height:300,
-		        rowList : [ 20, 40, 60 ],
-		        pager : '#jqGridPager',
-		        multiselect:true,
-		        sortname :'name',
-		        viewrecords : true,
-		        sortorder : "desc",
-		        autowidth:true,
-		        onSelectRow : function(id) {
-		          if (id && id !== lastsel) {
-		            jQuery('#jqGrid').jqGrid('restoreRow', lastsel);
-		            jQuery('#jqGrid').jqGrid('editRow', id, true);
-		            lastsel = id;
-		          }
-		        },
-		        editurl : "editproduct_qual_stat_tab",
-		       
-		      });
-		  
-		   $('#jqGrid').navGrid('#jqGridPager',
-	                // the buttons to appear on the toolbar of the grid
-	                { edit: true, add: true, del: true, search: true, refresh: true, view: false, position: "left", cloneToTop: false },
-	                // options for the Edit Dialog
-	                {
-	                    editCaption: "The Edit Dialog",
-	                    recreateForm: true,
-						checkOnUpdate : true,
-						checkOnSubmit : true,
-	                    closeAfterEdit: true,
-	                    //出错时返回提示
-	                    errorTextFormat: function (data) {
-	                    	var message="服务器异常，请稍后尝试！";
-	                    	var result=data.statusText;
-	                    	if(result=="Not Found") message="无法找到资源，请联系系统管理员！";
-	                    	else if(result=="Forbidden") message="您没有权限执行此操作，请联系上级或申请相应权限！";
-	                        alert(message);
-	                    },
-	                //执行完毕进行提示和更新数据  
-	                afterComplete:function(xhr){      
-	                	         //提示操作结果
-	                	                  
-	                             alert("操作成功！");
-	                             //更新表格数据，因为之前设置了loadonce，所以datatype自动转换成了local，所以一般的reload都无效，
-	                             //必须先改回原先的数据数据类型
-	                             $("#jqGrid").setGridParam({datatype:'json', page:1}).trigger('reloadGrid');
-
-	                              },
-	                },
-	                // options for the Add Dialog
-	                {
-	                	
-	                	
-	                   // recreateForm: true,
-	                   //出错时返回信息
-	                    errorTextFormat: function (data) {
-	                    	var message="服务器异常，请稍后尝试！";
-	                    	var result=data.statusText;
-	                    	if(result=="Not Found") message="无法找到资源，请联系系统管理员！";
-	                    	else if(result=="Forbidden") message="您没有权限执行此操作，请联系上级或申请相应权限！";
-	                        alert(message);
-	                   },
-	                   
-	                 //执行完毕进行提示和更新数据  
-	                afterComplete:function(xhr){      
-	                	         //提示操作结果
-	                	                  
-	                             alert("操作成功！");
-	                             //更新表格数据，因为之前设置了loadonce，所以datatype自动转换成了local，所以一般的reload都无效，
-	                             //必须先改回原先的数据数据类型
-	                             $("#jqGrid").setGridParam({datatype:'json', page:1}).trigger('reloadGrid');
-
-	                              },
-	                 closeAfterAdd: true,            
-	                                   	               
-	                },
-	                // options for the Delete Dailog
-	                {
-
-	                	
-	                	errorTextFormat: function (data) {
-	                    	var message="服务器异常，请稍后尝试！";
-	                    	var result=data.statusText;
-	                    	if(result=="Not Found") message="无法找到资源，请联系系统管理员！";
-	                    	else if(result=="Forbidden") message="您没有权限执行此操作，请联系上级或申请相应权限！";
-	                        alert(message);
-	                    },
-	                //执行完毕进行提示和更新数据  
-	                afterComplete:function(xhr){      
-	                	         //提示操作结果
-	                	                  
-	                             alert("操作成功！");
-	                             //更新表格数据，因为之前设置了loadonce，所以datatype自动转换成了local，所以一般的reload都无效，
-	                             //必须先改回原先的数据数据类型
-	                             $("#jqGrid").setGridParam({datatype:'json', page:1}).trigger('reloadGrid');
-
-	                              },
-	                },
-	                // options for the Search Dailog
-	                {
-	                	multipleSearch:true,
-	                	multipleGroup:true,
-	                	recreateForm: true,
-	                	closeAfterSearch: true,       	            
-	                	errorTextFormat: function (data) {
-	                        return '搜索失败，请重新尝试!'+ data.responseText
-	                    }
-	                 }
-	                );
-		 
-		   //批量修改
-		   $("#deldata").click(function() {
-			   //alert("Please Select Row to delete!1")
-			   var gr = $("#jqGrid").jqGrid('getGridParam', 'selarrrow');
-			   
-			    if ((gr != null)&&(gr !="")){
-			    
-			   // alert("Please Select Row to delete!2"+gr)
-			  
-			    //自定义ajax访问实现批量操作
-	            $.ajax({  
-                       data:{"equip_num":""+gr,"column_value":99,"oper":"batch_edit","column_name":"product_num"},  
-                       //用GET方法当请求参数不变时会因部分浏览器缓存而无法更新
-                       type:"POST",  
-                       dataType:'json',  
-                       url:"editproduct_qual_stat_tab",  
-                       error:function(data){  
-                       //alert("出错了！！:"+data[0].name);  
-                                           },  
-                       success:function(data){  
-                      	
-                      	 // alert("成功！！:"+data[0].name);
-                       }
-                                             
-                       })   
-			    //var selected=gr.split(',');
-			    	//   $.each(selected,function(i,n){
-					//	 if(selected[i]!="")  $("#jqGrid").jqGrid('delGridRow',n,{}); 
-				//$.each(gr,function(key,val){
-				//    $("#jqGrid").jqGrid('setRowData',gr[0],{equip_sup:"79800"}).trigger('reloadGrid');   
-				//    $("#jqGrid").jqGrid('saveRow', gr[0], {equip_sup:"79800"} );  
-				//	 $("#jqGrid").jqGrid('saveRow', gr[0],{equip_sup:"79800"});
-		           
-			    //	            })
-			       alert("操作成功！"); 
-			      $("#jqGrid").setGridParam({datatype:'json', page:1}).trigger('reloadGrid');
-			    	            }
-			
-			    else {alert("请选择要删除的行")}
-			    
-			  });
-		 
-		   //批量修改
-		   $("#deldata1").click(function() {
-			   //alert("Please Select Row to delete!1")
-			   var gr = $("#jqGrid").jqGrid('getGridParam', 'selarrrow');
-			   
-			    if ((gr != null)&&(gr !="")){
-			    	
-			   // alert("Please Select Row to delete!2"+gr)
-			  
-			    //自定义ajax访问实现批量操作
-	            $.ajax({  
-                       data:{"equip_num":""+gr,"column_value":1,"oper":"batch_edit","column_name":"product_num"},  
-                       //用GET方法当请求参数不变时会因部分浏览器缓存而无法更新
-                       type:"POST",  
-                       dataType:'json',  
-                       url:"editproduct_qual_stat_tab",  
-                       error:function(data){  
-                       //alert("出错了！！:"+data[0].name);  
-                                           },  
-                       success:function(data){  
-                      	 
-                      
-                      	 //alert("成功！！:"+data[0].name);
-                      	
-                       }
-                                             
-                       })   
-			    //var selected=gr.split(',');
-			    	//   $.each(selected,function(i,n){
-					//	 if(selected[i]!="")  $("#jqGrid").jqGrid('delGridRow',n,{}); 
-				//$.each(gr,function(key,val){
-				//    $("#jqGrid").jqGrid('setRowData',gr[0],{equip_sup:"79800"}).trigger('reloadGrid');   
-				//    $("#jqGrid").jqGrid('saveRow', gr[0], {equip_sup:"79800"} );  
-				//	 $("#jqGrid").jqGrid('saveRow', gr[0],{equip_sup:"79800"});
-		           
-			    //	            })
-			      alert("操作成功！"); 
-			      $("#jqGrid").setGridParam({datatype:'json', page:1}).trigger('reloadGrid');
-			 
-			    	            }
-			    else {alert("请选择要编辑的行")}
-			   
-			  });
-		 	    	
-		}
-		
-        		
-        		
-   </script>
-   
+      
 </body>
 </html>
 

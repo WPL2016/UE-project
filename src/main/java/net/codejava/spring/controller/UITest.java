@@ -23,14 +23,6 @@ public class UITest {
 
 
 
-@RequestMapping(value="/toquality_product")
-public ModelAndView qualitypro(){
-	ModelAndView model=new ModelAndView();
-	model.setViewName("quality_product");
-	int recordnum=contactDAO.countRecord();
-	model.addObject("recordnum",recordnum+"");
-	return model;
-}
 
 
 @RequestMapping(value="/toschedule")
@@ -83,6 +75,18 @@ public ModelAndView equip_mould(){
 	return model;
 }
 
+@RequestMapping(value="/tohome")
+public ModelAndView home(){
+	ModelAndView model=new ModelAndView();
+	model.setViewName("home");
+	int recordnum=contactDAO.countRecord();
+	model.addObject("recordnum",recordnum+"");
+	List<Equip_tab> YZequip=equip_tabDAO.getSomeEquipWithState("yz");
+	List<Equip_tab> ZSequip=equip_tabDAO.getSomeEquipWithState("zs");
+	model.addObject("YZequip", YZequip);
+	model.addObject("ZSequip", ZSequip);
+	return model;
+}
 
 
 }

@@ -114,10 +114,9 @@ public class Equip_tabDAOImpl implements Equip_tabDAO {
 	}
 	@Override
 	public List<Equip_tab> getSomeEquip(String type){
-		String sql="";
-		if(type=="main") { sql = "SELECT * FROM equip_tab where equip_num not in(select equ_equip_num from equip_tab where equ_equip_num is NOT NULL)";}
-		  else if(type=="sup"){ sql = "SELECT * FROM equip_tab where equip_num in(select equ_equip_num from equip_tab where equ_equip_num is NOT NULL)";}
-		      else  sql = "SELECT * FROM equip_tab";
+		String sql= "SELECT * FROM equip_tab WHERE equip_type='"+type+"'";
+		
+		     
 		List<Equip_tab> listEquip_tab = jdbcTemplate.query(sql, new RowMapper<Equip_tab>() {
 
 			@Override
@@ -130,6 +129,37 @@ public class Equip_tabDAOImpl implements Equip_tabDAO {
 				aEquip_tab.setEquip_name(rs.getString("equip_name"));
 				aEquip_tab.setEquip_recorder_num(rs.getString("equip_recorder_num"));
 				
+				return aEquip_tab;
+			}
+			
+		});
+		
+		return listEquip_tab;
+	}
+	
+	@Override
+	public List<Equip_tab> getSomeEquipWithState(String type){
+		String sql= "WITH laststate as (select equip_num, MAX(stat_time) as stat_time from equip_oper_stat_tab"+  
+		" group by equip_num)"+
+		" select a.equ_equip_num,a.equip_name,a.equip_num,a.equip_recorder_num,a.equip_sup,c.stat_name as current_state from equip_tab as a left outer join laststate as b on a.equip_num=b.equip_num left outer join  equip_oper_stat_tab as c"+
+		" on a.equip_num=c.equip_num and b.stat_time=c.stat_time and c.stat_name<>'±¨¾¯' where a.equip_type='"+type+"'";
+
+		
+				
+		
+		     
+		List<Equip_tab> listEquip_tab = jdbcTemplate.query(sql, new RowMapper<Equip_tab>() {
+
+			@Override
+			public Equip_tab mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Equip_tab aEquip_tab = new Equip_tab();
+	
+				aEquip_tab.setEquip_num(rs.getString("equip_num"));
+				aEquip_tab.setEqu_equip_num(rs.getString("equ_equip_num"));
+				aEquip_tab.setEquip_sup(rs.getString("equip_sup"));
+				aEquip_tab.setEquip_name(rs.getString("equip_name"));
+				aEquip_tab.setEquip_recorder_num(rs.getString("equip_recorder_num"));
+				aEquip_tab.setCurrent_state(rs.getString("current_state"));
 				return aEquip_tab;
 			}
 			

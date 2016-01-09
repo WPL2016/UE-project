@@ -11,16 +11,18 @@ public class Equip_tab {
 	private String equip_num;
 	
 	private String equ_equip_num;
-
+    
+	private String current_state;
 	public Equip_tab() {
 	}
 
-	public Equip_tab(String equip_sup, String equip_name, String equip_recorder_num, String equip_num, String equ_equip_num) {
+	public Equip_tab(String equip_sup, String equip_name, String equip_recorder_num, String equip_num, String equ_equip_num,String current_state) {
 		this.equip_sup = equip_sup;
 		this.equip_name = equip_name;
 		this.equip_recorder_num = equip_recorder_num;
 		this.equip_num = equip_num;
 		this.equ_equip_num = equ_equip_num;
+		this.current_state=current_state;
 	}
 
 	public String getEquip_sup() {
@@ -61,5 +63,13 @@ public class Equip_tab {
 
 	public void setEqu_equip_num(String equ_equip_num) {
 		this.equ_equip_num = equ_equip_num;
+	}
+	
+	public String getCurrent_state() {
+		return current_state;
+	}
+
+	public void setCurrent_state(String current_state) {
+		this.current_state = current_state;
 	}
 }

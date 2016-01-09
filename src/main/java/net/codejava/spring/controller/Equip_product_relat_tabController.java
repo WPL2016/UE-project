@@ -23,16 +23,16 @@ public class Equip_product_relat_tabController {
 	@Autowired
 	private ContactDAO contactDAO;
 	
-	@RequestMapping(value="/toequip_product_relat_tab")
-	public ModelAndView toequip_product_relattab(){
+	@RequestMapping(value="/toequip_info")
+	public ModelAndView equip_info(){
 		ModelAndView model=new ModelAndView();
-		model.setViewName("equip_product_relat");
+		model.setViewName("equip_info");
 		int recordnum=contactDAO.countRecord();
 		model.addObject("recordnum",recordnum+"");
 		return model;
 	}
 	
-	@RequestMapping(value="/showequip_product_relat")  	
+	@RequestMapping(value="/showequip_product_relat_tab")  	
 	public @ResponseBody List<Equip_product_relat_tab> allContact() throws IOException{
 		List<Equip_product_relat_tab> allEquip_product_relat_tab= equip_product_relat_tabDAO.list();		
 		return allEquip_product_relat_tab;
