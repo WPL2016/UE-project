@@ -361,19 +361,19 @@ setInterval(preSetStateAjax,1333000);
         		  var lastsel;
         		  jQuery("#jqGrid").jqGrid(
         		      {
-        		        url : "showemaint_reg_tab?equip_num="+$("#equip_in_stat").val(),
+        		        url : "showmaint_reg_tab ? equip_num="+$("#equip_in_stat").val(),
         		        
         		        datatype : "json",
         		        colNames : [  '维修编号', '维修日期', '维修人员', '维修内容' ],
         		        colModel : [ 
         		                     
-        		                     {name : 'maint_reg_num',index :'maint_reg_num',width:80,sortable :true,editable :false,key:true},
-        		                     {name : 'maint_reg_date',index : 'maint_reg_date',width:100,sortable : true,editable : false,formatter: 'date', editable: false, 
+        		                     {name : 'maint_reg_num',index :'maint_reg_num',width:120,sortable :true,editable :false,key:true},
+        		                     {name : 'maint_reg_date',index : 'maint_reg_date',width:120,sortable : true,editable : false,formatter: 'date', editable: false, 
         		                  searchoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}} }, 
         		                          		                 
-        		                     {name : 'maint_reg_per_num',index : 'maint_reg_per_num',width:80,sortable : true,editable : false},        		  
+        		                     {name : 'maint_reg_per_num',index : 'maint_reg_per_num',width:120,sortable : true,editable : false},        		  
         		                 //    {name : 'maint_reg_obj_num',index : 'maint_reg_obj_num',width:80,sortable : true,editable :false}, 
-        		                     {name : 'maint_reg_cont',index : 'maint_reg_cont',width:320,sortable : true,editable : false}, 
+        		                     {name : 'maint_reg_cont',index : 'maint_reg_cont',width:220,sortable : true,editable : false}, 
         		                   ],
         		                   
         		        //下载数据到本地，可以实现在前端排序、搜索，这种方式好处是这里的排序和搜索都无需后台处理，无需额外代码，而且支持多条件复杂搜索
