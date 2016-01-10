@@ -23,7 +23,7 @@
 <meta name="_csrf" content="${_csrf.token}"/>
 <!-- default header name is X-CSRF-TOKEN -->
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
-<title>质量测试</title>  
+<title>产品测试信息</title>  
 
 <script type="text/javascript">  
 <!--ajax访问时发送csrf token，以防止ajax访问被crsf过滤器拦截   -->
@@ -62,7 +62,7 @@ $(function () {
         <div class="blank_btw_menu_content"></div>
         <!--内容主体的div,请根据具体内容决定div的样式，table_container0最小，1次之，2最大，也可自行在div.css定义你自己想要的样式，要设置成左浮动以保证div水平排列-->     
         <div class="table_container2">
-             <div class="table_head">压铸设备产品测试结果统计</div>
+             <div class="table_head">产品测试信息</div>
         <form>
         <table width="100%" height="330" border="0" cellpadding="0" cellspacing="0" bordercolor="#CCCCCC">
   
@@ -72,22 +72,17 @@ $(function () {
            <div>
                 <table id="jqGrid"></table>
                 <div id="jqGridPager"></div>
-                <div align="left"></div>
-                <button id="deldata">批量修改（如审核等）</button>
-                <button id="deldata1">批量修改1（如审核等）</button>
+               
            </div></th>
     </tr>
       <tr bgcolor="#E1EBF5">
-    <th height="30" colspan="8" scope="row"><div align="right">&lt;&lt;点击查看全部 </div></th>
     <td colspan="2">
-      <div align="right">
-        <input type="submit" name="Submit4" value="导出统计表">
-      </div>
+   
     </td>
   </tr>
   
 </table>
-</form>>
+</form>
 </div>
   
  
@@ -112,16 +107,16 @@ $(function () {
         		        url : "showproduct_qual_asse_tab",
         		        datatype : "json",
         		         
-                        colNames : [  '产品质量测试编号', '产品编号', '产品质量测试日期', '产品质量测试结果','产品质量测试内容','产品质量测试人员编号' ],
+                        colNames : [  '产品质量测试编号', '产品编号', '产品质量测试日期', '产品质量测试结果','产品质量测试内容','产品质量测试人员' ],
         		        colModel : [ 
 
-        		                     {name : 'product_qual_asse_num',index :'product_qual_asse_num',width : 100,align : "left",sortable :true,editable :true,key:true},
-        		                     {name : 'product_num',index : 'product_num',width : 100,align : "left",sortable : true,editable : true}, 
-        		                     {name : 'product_qual_asse_date',index : 'product_qual_asse_date',width : 150,sortable : true,editable : true, searchoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}},
+        		                     {name : 'product_qual_asse_num',index :'product_qual_asse_num',width : 80,align : "center",sortable :true,editable :true,key:true},
+        		                     {name : 'product_num',index : 'product_num',width : 80,align : "center",sortable : true,editable : true}, 
+        		                     {name : 'product_qual_asse_date',index : 'product_qual_asse_date',width : 100,align : "center",sortable : true,editable : true, searchoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}},
          		                    	editoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}} , addoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}} ,}, 
-         		                     {name : 'product_qual_asse_res',index : 'product_qual_asse_res',width : 100,align : "left",sortable : true,editable : true}, 
-        		                     {name : 'product_qual_asse_cont',index : 'product_qual_asse_cont',width : 100,sortable : true,editable : true},        		                     		  
-        		                     {name : 'product_qual_asse_per_num',index : 'product_qual_asse_per_num',width : 150,sortable : true,editable : true}, 
+         		                     {name : 'product_qual_asse_res',index : 'product_qual_asse_res',width : 130,align : "left",sortable : true,editable : true}, 
+        		                     {name : 'product_qual_asse_cont',index : 'product_qual_asse_cont',width : 130,align : "left",sortable : true,editable : true},        		                     		  
+        		                     {name : 'product_qual_asse_per_num',index : 'product_qual_asse_per_num',width : 80,align : "center",sortable : true,editable : false}, 
   
         		                   ],
         		                   
@@ -134,7 +129,7 @@ $(function () {
         		        loadError: function(xhr,status,error){  
         		        	 alert(status + " loading data of " + $(this).attr("id") + " : " + error );    },  
 
-        		        caption:"产品测试统计记录表", //height : 80,align : "center",
+        		       // caption:"产品测试统计记录表", //height : 80,align : "center",
         		       
         		        prmNames: { id: "product_qual_asse_num" },
         		        rowNum : 20,

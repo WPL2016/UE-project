@@ -134,8 +134,8 @@ public class Product_qual_stat_tabDAOImpl implements Product_qual_stat_tabDAO {
                          " infe_quantity as (select  b.product_num,COUNT(infe_time) as infe_quantity,YEAR(infe_time) as year,month(infe_time) as month,day(infe_time)as day from product_qual_stat_tab as a ,"+
                          " equip_product_relat_tab as b,equip_tab as c where a.equip_product_relat_num=b.equip_product_relat_num"+
                          " and b.equip_num=c.equip_num group by YEAR(infe_time),MONTH(infe_time),DAY(infe_time),b.product_num)"+
-                         " select a.product_num,a.quantity,a.year,a.month,a.day,b.infe_quantity from quantity as a left outer join infe_quantity as b on a.product_num=b.product_num and a.year=b.year and a.month=b.month and a.day=b.day and a.product_num='"+product_num+"'"+
-                         " where DATEDIFF(DD,(cast(a.year as varchar(10))+'-'+CAST(a.month as varchar(2))+'-'+CAST(a.day as varchar(2))),'"+start_time+"')<=0 and DATEDIFF(DD,(cast(a.year as varchar(10))+'-'+CAST(a.month as varchar(2))+'-'+CAST(a.day as varchar(2))),'"+end_time+"')>=0";
+                         " select a.product_num,a.quantity,a.year,a.month,a.day,b.infe_quantity from quantity as a left outer join infe_quantity as b on a.product_num=b.product_num and a.year=b.year and a.month=b.month and a.day=b.day WHERE a.product_num='"+product_num+"'"+
+                         " AND DATEDIFF(DD,(cast(a.year as varchar(10))+'-'+CAST(a.month as varchar(2))+'-'+CAST(a.day as varchar(2))),'"+start_time+"')<=0 and DATEDIFF(DD,(cast(a.year as varchar(10))+'-'+CAST(a.month as varchar(2))+'-'+CAST(a.day as varchar(2))),'"+end_time+"')>=0";
 					
 				}
 				if(timechoice.equals("1")){
@@ -149,8 +149,10 @@ public class Product_qual_stat_tabDAOImpl implements Product_qual_stat_tabDAO {
 							" and b.equip_num=c.equip_num and DATEDIFF(DD,infe_time,'"+start_time+"')<=0 and DATEDIFF(DD,infe_time,'"+end_time+"')>=0"+
 							" group by YEAR(infe_time),MONTH(infe_time),DAY(infe_time),b.product_num)select a.product_num,SUM(a.quantity) AS quantity,"+
 							" datename(week,(cast(a.year as varchar(10))+'-'+CAST(a.month as varchar(2))+'-'+CAST(a.day as varchar(2)))) as week,SUM(b.infe_quantity)"+ 
-							" AS infe_quantity from quantity as a left outer join infe_quantity as b on a.product_num=b.product_num and a.year=b.year and a.month=b.month and a.day=b.day and a.product_num='"+product_num+"'"+
+							" AS infe_quantity from quantity as a left outer join infe_quantity as b on a.product_num=b.product_num and a.year=b.year and a.month=b.month and a.day=b.day "+
+							 "WHERE a.product_num='"+product_num+"'"+
 							" group by a.product_num,datename(week,(cast(a.year as varchar(10))+'-'+CAST(a.month as varchar(2))+'-'+CAST(a.day as varchar(2))))";
+							
 				}
 				
 				if(timechoice.equals("2")){
@@ -161,7 +163,7 @@ public class Product_qual_stat_tabDAOImpl implements Product_qual_stat_tabDAO {
 						 " infe_quantity as (select  b.product_num,COUNT(infe_time) as infe_quantity,YEAR(infe_time) as year,month(infe_time) as month from product_qual_stat_tab as a ,equip_product_relat_tab as b,equip_tab as c where a.equip_product_relat_num=b.equip_product_relat_num"+
 						 " and b.equip_num=c.equip_num  and  DATEDIFF(DD,infe_time,'"+start_time+"')<=0 and DATEDIFF(DD,infe_time,'"+end_time+"')>=0"+
 						 " group by YEAR(infe_time),MONTH(infe_time),b.product_num)"+
-						 " select a.product_num,a.quantity,a.year,a.month,b.infe_quantity from quantity as a left outer join infe_quantity as b on a.product_num=b.product_num and a.year=b.year and a.month=b.month  and a.product_num='"+product_num+"'";
+						 " select a.product_num,a.quantity,a.year,a.month,b.infe_quantity from quantity as a left outer join infe_quantity as b on a.product_num=b.product_num and a.year=b.year and a.month=b.month  WHERE a.product_num='"+product_num+"'";
 				}
 				if(timechoice.equals("3")){
 					
@@ -171,7 +173,7 @@ public class Product_qual_stat_tabDAOImpl implements Product_qual_stat_tabDAO {
 						 " group by a.product_num,year(a.bat_produce_start_time)),"+
 						 " infe_quantity as (select  b.product_num,COUNT(infe_time) as infe_quantity,YEAR(infe_time) as year from product_qual_stat_tab as a ,equip_product_relat_tab as b,equip_tab as c where a.equip_product_relat_num=b.equip_product_relat_num"+
 						 " and b.equip_num=c.equip_num and DATEDIFF(DD,infe_time,'"+start_time+"')<=0 and DATEDIFF(DD,infe_time,'"+end_time+"')>=0"+
-						 " group by YEAR(infe_time),b.product_num) select a.product_num,a.quantity,a.year,b.infe_quantity from quantity as a left outer join infe_quantity as b on a.product_num=b.product_num and a.year=b.year and   a.product_num='"+product_num+"'";
+						 " group by YEAR(infe_time),b.product_num) select a.product_num,a.quantity,a.year,b.infe_quantity from quantity as a left outer join infe_quantity as b on a.product_num=b.product_num and a.year=b.year WHERE a.product_num='"+product_num+"' ";
 			
 				}
 				//System.out.println("3333");

@@ -23,7 +23,7 @@
 <meta name="_csrf" content="${_csrf.token}"/>
 <!-- default header name is X-CSRF-TOKEN -->
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
-<title>设备表</title>  
+<title>A类易耗品信息</title>  
 
 <script type="text/javascript">  
 <!--ajax访问时发送csrf token，以防止ajax访问被crsf过滤器拦截   -->
@@ -58,7 +58,7 @@ $(function () {
         <!--内容主体的div,请根据具体内容决定div的样式，table_container0最小，1次之，2最大，也可自行在div.css定义你自己想要的样式，要设置成左浮动以保证div水平排列-->     
        <div class="table_container2">
           
-             <div class="table_head">A类易耗品</div>
+             <div class="table_head">A类易耗品信息</div>
                     <table id="jqGrid1"></table>
                   <div id="jqGridPager1"></div>
                   
@@ -88,13 +88,13 @@ $(function () {
           		      {
           		        url : "showeatype_tab",
           		        datatype : "json",
-          		        colNames : [  'A类易耗品编号', 'A类易耗品名称', 'A类易耗品供应商', '录入人' ],
+          		        colNames : [  'A类易耗品编号', 'A类易耗品名称', 'A类易耗品供应商', '录入人员' ],
           		        colModel : [ 
           		                     
-          		                     {name : 'atype_num',index :'atype_num',width : 90,sortable :true,editable :true,key:true},
-          		                     {name : 'atype_name',index : 'atype_name',width : 80,sortable : true,editable : true}, 
-          		                     {name : 'atype_sup',index : 'atype_sup',width : 90,sortable : true,editable : true},        		                 
-          		                     {name : 'atype_recorder_num',index : 'atype_recorder_num',width : 80,sortable : true,editable : true},        		  
+          		                     {name : 'atype_num',index :'atype_num',width : 90,align : "center",sortable :true,editable :true,key:true},
+          		                     {name : 'atype_name',index : 'atype_name',width : 80,align : "center",sortable : true,editable : true}, 
+          		                     {name : 'atype_sup',index : 'atype_sup',width : 90,align : "center",sortable : true,editable : true},        		                 
+          		                     {name : 'atype_recorder_num',index : 'atype_recorder_num',width : 80,align : "center",sortable : true,editable : true},        		  
           		                 
           		                     
           		                   ],

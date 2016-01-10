@@ -37,8 +37,8 @@ public class Equip_para_tabDAOImpl implements Equip_para_tabDAO {
 		System.out.println(i);
 		if (i!=0) {
 			// update
-			String sql = "UPDATE equip_tab SET equip_num=?,para_unit=?, para_name=?,"
-						+ "para_recorder_num=?, up_lim_val=?, down_lim_val=?WHERE para_num=?";
+			String sql = "UPDATE equip_para_tab SET equip_num=?,para_unit=?, para_name=?,"
+						+ "para_recorder_num=?, up_lim_val=?, down_lim_val=? WHERE para_num=?";
 			jdbcTemplate.update(sql, equip_para_tab.getEquip_num(),equip_para_tab.getPara_unit(), equip_para_tab.getPara_name(),
 					equip_para_tab.getPara_recorder_num(),equip_para_tab.getUp_lim_val(),equip_para_tab.getDown_lim_val(),equip_para_tab.getPara_num());
 		} else {

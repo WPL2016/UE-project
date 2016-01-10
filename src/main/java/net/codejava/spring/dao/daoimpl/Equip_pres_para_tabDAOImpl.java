@@ -119,7 +119,7 @@ public class Equip_pres_para_tabDAOImpl implements Equip_pres_para_tabDAO {
 	public List<Equip_pres_record> getLastPresStat(String equip_num){
 		String sql = "with lastunique  as (SELECT MAX(pres_date) as pres_date,a.para_num FROM "
 		+ "equip_pres_para_tab as a,equip_para_tab as b WHERE a.para_num=b.para_num group by a.para_num),"
-		+ "total as (Select a.para_num,a.pres_num,a.product_num,a.pres_para_val,a.pres_date,b.down_lim_vall,b.equip_num,b.para_name,"
+		+ "total as (Select a.para_num,a.pres_num,a.product_num,a.pres_para_val,a.pres_date,b.down_lim_val,b.equip_num,b.para_name,"
 		+ "b.para_recorder_num,b.para_unit,b.up_lim_val from equip_pres_para_tab as a,equip_para_tab as b WHERE a.para_num=b.para_num) "
 		+ "SELECT * FROM total,lastunique where total.pres_date=lastunique.pres_date and total.para_num=lastunique.para_num and equip_num='"+equip_num+"'";
 						List<Equip_pres_record> listEquip_pres_record = jdbcTemplate.query(sql, new RowMapper<Equip_pres_record>() {
@@ -136,7 +136,7 @@ public class Equip_pres_para_tabDAOImpl implements Equip_pres_para_tabDAO {
 					            equip_pres_para_tab.setProduct_num(rs.getString("product_num"));
 					            equip_pres_para_tab.setPara_num(rs.getString("para_num"));
 					            
-					            equip_para_tab.setDown_lim_val(rs.getFloat("down_lim_vall"));
+					            equip_para_tab.setDown_lim_val(rs.getFloat("down_lim_val"));
 					            equip_para_tab.setEquip_num(rs.getString("equip_num"));
 					            equip_para_tab.setPara_name(rs.getString("para_name"));
 					            equip_para_tab.setPara_num(rs.getString("para_num"));

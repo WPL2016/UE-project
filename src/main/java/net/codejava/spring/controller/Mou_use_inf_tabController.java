@@ -75,7 +75,7 @@ public class Mou_use_inf_tabController {
 		mou_use_inf_tab.setMou_use_inf_num(request.getParameter("mou_use_inf_num"));
 		mou_use_inf_tab.setMou_num(request.getParameter("mou_num"));
 		mou_use_inf_tab.setEquip_num(request.getParameter("equip_num"));
-		mou_use_inf_tab.setMou_chan_per_num(request.getParameter("mou_chan_per_num"));
+		mou_use_inf_tab.setMou_chan_per_num(request.getUserPrincipal().getName());
 		mou_use_inf_tab.setMou_chan_time(date);
 		
 		

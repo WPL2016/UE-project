@@ -35,9 +35,7 @@
 <script>
  $(function() {
 
-
             $.datepicker.regional["zh-CN"] = { closeText: "关闭", prevText: "&#x3c;上月", nextText: "下月&#x3e;", currentText: "今天", monthNames: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"], monthNamesShort: ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二"], dayNames: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"], dayNamesShort: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"], dayNamesMin: ["日", "一", "二", "三", "四", "五", "六"], weekHeader: "周", dateFormat: "yy-m-d", firstDay: 1, isRTL: !1, showMonthAfterYear: !0, yearSuffix: "年" }
-
 
                          
 
@@ -370,9 +368,8 @@ setInterval(preSetStateAjax,1333000);
         		        colModel : [ 
         		                     
         		                     {name : 'maint_reg_num',index :'maint_reg_num',width:80,sortable :true,editable :false,key:true},
-
-        		                     {name : 'maint_reg_date',index : 'maint_reg_date',width:100,sortable : true,editable : false,formatter: 'date', editable: false, searchoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker();}}}, 
-
+        		                     {name : 'maint_reg_date',index : 'maint_reg_date',width:100,sortable : true,editable : false,formatter: 'date', editable: false, 
+        		                  searchoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}} }, 
         		                          		                 
         		                     {name : 'maint_reg_per_num',index : 'maint_reg_per_num',width:80,sortable : true,editable : false},        		  
         		                 //    {name : 'maint_reg_obj_num',index : 'maint_reg_obj_num',width:80,sortable : true,editable :false}, 

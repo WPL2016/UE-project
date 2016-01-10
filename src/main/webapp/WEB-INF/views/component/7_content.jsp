@@ -1,3 +1,4 @@
+<%@page import="java.util.Calendar"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -13,7 +14,14 @@
        
           <div class="blank_btw_time_menu"></div>   
          <div class="time_container">
-            <div class="time">2015年11月27日</div>
+         <% 
+            Calendar calendar= Calendar.getInstance(); 
+            calendar.setTime(new java.util.Date());  
+            int year = calendar.get(Calendar.YEAR);  
+            int month = calendar.get(Calendar.MONTH)+1;  
+            int day = calendar.get(Calendar.DAY_OF_MONTH);  
+        %>
+            <div class="time"><%=year %>年<%=month %>月<%=day %>日</div>
          </div>   
         <div class="blank_btw_time_menu"></div>       
         
@@ -25,10 +33,10 @@
 <div id="main1" class="menu"  onclick="document.all.child1.style.display=(document.all.child1.style.display =='none')?'':'none'" > 
 >设备状态管理</div> 
 <div id="child1"  class="menu"  style="display:none"> 
-<a href="toequip">-压铸机设备状态</a> <br>     
-<a href="toequip_mould">-模具状态</a> <br> 
-<a href="toequip_A">-A类易耗品状态</a> <br> 
-<a href="tomaintenance">-维护保养记录</a> <br> 
+<a href="toequip">-压铸设备状态</a> <br>     
+<a href="tomou_use_inf_tab">-模具状态</a> <br> 
+<a href="toatype_use_inf_tab">-A类易耗品状态</a> <br> 
+<a href="tomaint_reg">-维护保养记录</a> <br> 
 </div> 
 
 
@@ -70,19 +78,20 @@
 <a href="toproduct_tab">-产品信息</a> <br> 
 <a href="tomater_tab">-原材料信息</a> <br> 
 <a href="tomater_pur_tab">-原材料采购信息</a> <br>
-<a href="#">-模具信息</a> <br> 
-<a href="#">-A类易耗品信息</a> <br> 
+<a href="tomou_tab">-模具信息</a> <br> 
+<a href="toatype_tab">-A类易耗品信息</a> <br> 
 </div>
 
 <div id="main7" class="menu" onclick="document.all.child7.style.display=(document.all.child7.style.display =='none')?'':'none'" > 
 >系统设置 </div> 
 <div id="child7" class="menu" style="display:none;"> 
-<a href="toauthority">-权限管理</a> <br> 
-<a href="to">-用户管理</a> <br> 
+<a href="toasignrole">-角色授予</a> <br> 
+<a href="toassignauthors">-权限设置</a> <br> 
+<a href="toedituserinfo">-个人中心</a> <br> 
 </div>
 
 <div id="main8" class="menu" onclick="document.all.child8.style.display=(document.all.child8.style.display =='none')?'':'none'" > 
->帮助 </div> 
+</div> 
 
 
 

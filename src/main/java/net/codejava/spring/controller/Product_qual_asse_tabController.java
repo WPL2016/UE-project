@@ -58,7 +58,7 @@ public class Product_qual_asse_tabController {
 		product_qual_asse_tab.setProduct_qual_asse_num(request.getParameter("product_qual_asse_num"));
 		product_qual_asse_tab.setProduct_qual_asse_cont(request.getParameter("product_qual_asse_cont"));
 		product_qual_asse_tab.setProduct_qual_asse_res(request.getParameter("product_qual_asse_res"));
-		product_qual_asse_tab.setProduct_qual_asse_per_num(request.getParameter("product_qual_asse_per_num"));
+		product_qual_asse_tab.setProduct_qual_asse_per_num(request.getUserPrincipal().getName());
 		product_qual_asse_tab.setProduct_num(request.getParameter("product_num"));
 		product_qual_asse_tab.setProduct_qual_asse_date(date);
 	

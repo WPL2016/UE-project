@@ -26,7 +26,7 @@
   <div class="blank_btw_body_foot"></div>
 <table width="100%" height="35" border="1" cellpadding="0" cellspacing="0">
   <tr>
-    <th width="1580" bordercolor="#2285CE" bgcolor="#2285CE" class="style2 style3" scope="col">浙江永艺家具股份有限公司</th>
+    <th width="1580" bordercolor="#2285CE" bgcolor="#2285CE" class="style2 style3" scope="col">永艺家具股份有限公司</th>
   </tr>
 </table>
 

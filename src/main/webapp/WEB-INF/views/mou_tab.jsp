@@ -23,7 +23,7 @@
 <meta name="_csrf" content="${_csrf.token}"/>
 <!-- default header name is X-CSRF-TOKEN -->
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
-<title>设备表</title>  
+<title>模具信息</title>  
 
 <script type="text/javascript">  
 <!--ajax访问时发送csrf token，以防止ajax访问被crsf过滤器拦截   -->
@@ -88,15 +88,15 @@ $(function () {
           		      {
           		    	url : "showemou_tab",
           		        datatype : "json",
-          		        colNames : [  '模具编号', '产品编号', '模具名称', '模具穴数','模具供应商','模具录入人' ],
+          		        colNames : [  '模具编号', '产品编号', '模具名称', '模具穴数','模具供应商','模具录入人员' ],
           		        colModel : [ 
           		                     
-          		                     {name : 'mou_num',index :'mou_num',width : 90,sortable :false,editable :true,key:true},
-          		                     {name : 'product_num',index : 'product_num',width : 80,sortable : true,editable : true}, 
-          		                     {name : 'mou_name',index : 'mou_name',width : 90,sortable : true,editable : true},        		                 
-          		                     {name : 'mou_hole_num',index : 'mou_hole_num',width : 80,sortable : true,editable :true},   
-          		                     {name : 'mou_sup',index : 'mou_sup',width : 80,sortable : true,editable :true},  
-          		                     {name : 'mou_recorder_num',index : 'mou_recorder_num',width : 80,sortable : true,editable :false},  
+          		                     {name : 'mou_num',index :'mou_num',width : 90,align : "center",sortable :false,editable :true,key:true},
+          		                     {name : 'product_num',index : 'product_num',width : 80,align : "center",sortable : true,editable : true}, 
+          		                     {name : 'mou_name',index : 'mou_name',width : 90,align : "center",sortable : true,editable : true},        		                 
+          		                     {name : 'mou_hole_num',index : 'mou_hole_num',align : "center",width : 80,sortable : true,editable :true},   
+          		                     {name : 'mou_sup',index : 'mou_sup',width : 80,align : "center",sortable : true,editable :true},  
+          		                     {name : 'mou_recorder_num',index : 'mou_recorder_num',width : 80,align : "center",sortable : true,editable :false},  
           		              
           		                 
           		                     
@@ -110,7 +110,7 @@ $(function () {
           		        loadError: function(xhr,status,error){  
           		        	 alert(status + " loading data of " + $(this).attr("id") + " : " + error );    },  
 
-          		        caption:"原材料使用状况", //height : 80,align : "center",
+          		      //  caption:"原材料使用状况", //height : 80,align : "center",
           		       
           		        prmNames: { id: "mou_num" },
           		        rowNum : 20,

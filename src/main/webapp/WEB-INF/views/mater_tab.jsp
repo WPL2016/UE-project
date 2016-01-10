@@ -57,7 +57,7 @@ $(function () {
        
         <!--内容主体的div,请根据具体内容决定div的样式，table_container0最小，1次之，2最大，也可自行在div.css定义你自己想要的样式，要设置成左浮动以保证div水平排列-->     
       <div class="table_container2">
-           <div class="table_head">原材料信息表</div>  
+           <div class="table_head">原材料信息</div>  
                   <table id="customers">
         
           

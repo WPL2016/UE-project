@@ -20,7 +20,7 @@ public class Product_qual_asse_tab {
 	public Product_qual_asse_tab() {
 	}
 
-	public Product_qual_asse_tab(String product_qual_asse_num, String product_qual_asse_cont, String product_qual_asse_res, Date product_qual_asse_date, String product_qual_ass_per_num, String product_qual_asse_per_num,String product_num) {
+	public Product_qual_asse_tab(String product_qual_asse_num, String product_qual_asse_cont, String product_qual_asse_res,@DateTimeFormat(pattern="yyyy-MM-dd")Date product_qual_asse_date, String product_qual_ass_per_num, String product_qual_asse_per_num,String product_num) {
 		this.product_qual_asse_num = product_qual_asse_num;
 		this.product_qual_asse_cont = product_qual_asse_cont;
 		this.product_qual_asse_res = product_qual_asse_res;
@@ -55,7 +55,7 @@ public class Product_qual_asse_tab {
 
 
 	
-	public @DateTimeFormat( pattern = "yyyy-MM-dd" ) @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8") Date getProduct_qual_asse_date(){
+	public @DateTimeFormat( pattern = "yyyy-MM-dd" ) Date getProduct_qual_asse_date(){
 		return product_qual_asse_date;
 	}
 

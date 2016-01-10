@@ -45,7 +45,7 @@ public class Equip_para_tabController {
 	public @ResponseBody String editJqGrid(HttpServletRequest request) {
 		Equip_para_tab equip_para_tab=new Equip_para_tab();
 		String oper=request.getParameter("oper");
-		String equip_num=request.getParameter("equip_num");
+		String para_num=request.getParameter("para_num");
 		
 		
 				
@@ -53,37 +53,37 @@ public class Equip_para_tabController {
 		equip_para_tab.setPara_num(request.getParameter("para_num"));
 		equip_para_tab.setPara_unit(request.getParameter("para_unit"));
 		equip_para_tab.setPara_name(request.getParameter("para_name"));
-		equip_para_tab.setPara_recorder_num(request.getParameter("para_recorder_num"));
-		String str=request.getParameter("up_lim_val");
-		equip_para_tab.setUp_lim_val(Float.parseFloat(str));
-		String str1=request.getParameter("down_lim_val");
-		equip_para_tab.setDown_lim_val(Float.parseFloat(str1));
+		equip_para_tab.setPara_recorder_num(request.getUserPrincipal().getName());
 		
+		if(request.getParameter("up_lim_val")!=null)
+		{equip_para_tab.setUp_lim_val(Float.valueOf(request.getParameter("up_lim_val")));}
+		if(request.getParameter("down_lim_val")!=null)
+		{equip_para_tab.setDown_lim_val(Float.valueOf(request.getParameter("down_lim_val")));}
 		
-		System.out.println("oper:"+oper);
-		System.out.println("equip_num:"+equip_num);
-		System.out.println("para_num:"+request.getParameter("para_num"));
-		System.out.println("para_unit:"+request.getParameter("para_unit"));
-		System.out.println("para_name:"+request.getParameter("para_name"));
-		System.out.println("para_recorder_num:"+request.getParameter("para_recorder_num"));
-		System.out.println("up_lim_val:"+request.getParameter("up_lim_val"));
-		System.out.println("down_lim_val:"+request.getParameter("down_lim_val"));
 		
 		 
 	    //System.out.println("½øÈë0");
 		if(oper != null && oper.equals("edit")){
+		if(equip_para_tab.getPara_num()=="") equip_para_tab.setPara_num(null);
 		equip_para_tabDAO.saveOrUpdate(equip_para_tab);   
 		}
 		else if(oper != null && oper.equals("add")){
+			if(equip_para_tab.getPara_num()=="") equip_para_tab.setPara_num(null);
 			equip_para_tabDAO.saveOrUpdate(equip_para_tab);
 		}
 		else if(oper != null && oper.equals("del")){
-			String[] ids=equip_num.split(",");
+			
+	
+			
+			String[] ids=para_num.split(",");
 			for(int i=0;i<ids.length;i++)
 			      equip_para_tabDAO.delete(ids[i]);	
 		}
+		
+		
+		
 		else if(oper != null && oper.equals("batch_edit")){
-			String[] ids=equip_num.split(",");
+			String[] ids=para_num.split(",");
 			String column_name=request.getParameter("column_name");
 			System.out.println("column_name:"+column_name);
 			String column_value=request.getParameter("column_value");

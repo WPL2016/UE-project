@@ -23,7 +23,7 @@
 <meta name="_csrf" content="${_csrf.token}"/>
 <!-- default header name is X-CSRF-TOKEN -->
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
-<title>设备表</title>  
+<title>设备信息</title>  
 
 <script type="text/javascript">  
 <!--ajax访问时发送csrf token，以防止ajax访问被crsf过滤器拦截   -->
@@ -61,11 +61,10 @@ $(function () {
              <div>
                   <table id="jqGrid"></table>
                   <div id="jqGridPager"></div>
-                  <button id="deldata0">批量修改（如审核等）</button>
-                  <button id="deldata01">批量修改1（如审核等）</button>
+                 
                   <div id="datepicker"></div>
              
-             <div class="table_head">设备与产品关系表</div>  
+             <div class="table_head">设备与产品关系信息</div>  
              <div>                  
                   <table id="jqGrid2"></table>
                   <div id="jqGridPager2"></div>
@@ -99,14 +98,15 @@ $( "#datepicker" ).datepicker();
         		      {
         		        url : "showequip_tab",
         		        datatype : "json",
-        		        colNames : [  '设备编号', '辅助设备', '辅助设备编号', '设备记录编号', '设备名称' ],
+        		        colNames : [  '设备编号','设备名称' , '辅助设备', '辅助设备编号', '设备记录人员'],
         		        colModel : [ 
         		                     
-        		                     {name : 'equip_num',index :'equip_num',width : 90,sortable :true,editable :true,key:true},
-        		                     {name : 'equ_equip_num',index : 'equ_equip_num',width : 80,align : "right",sortable : true,editable : true}, 
-        		                     {name : 'equip_sup',index : 'equip_sup',width : 90,sortable : true,editable : true},        		                 
-        		                     {name : 'equip_recorder_num',index : 'equip_recorder_num',width : 80,align : "right",sortable : true,editable : true},        		  
-        		                     {name : 'equip_name',index : 'equip_name',width : 150,sortable : true,editable : true}, 
+        		                     {name : 'equip_num',index :'equip_num',width : 90,align : "center",sortable :true,editable :true,key:true},
+        		                     {name : 'equip_name',index : 'equip_name',width : 150,align : "center",sortable : true,editable : true}, 
+        		                     {name : 'equ_equip_num',index : 'equ_equip_num',width : 80,align : "center",sortable : true,editable : true}, 
+        		                     {name : 'equip_sup',index : 'equip_sup',width : 90,align : "center",sortable : true,editable : true},        		                 
+        		                     {name : 'equip_recorder_num',index : 'equip_recorder_num',width : 80,align : "center",sortable : true,editable : false},        		  
+        		                     
         		                     
         		                   ],
         		                   
@@ -119,7 +119,7 @@ $( "#datepicker" ).datepicker();
         		        loadError: function(xhr,status,error){  
         		        	 alert(status + " loading data of " + $(this).attr("id") + " : " + error );    },  
 
-        		        caption:"原材料使用状况", //height : 80,align : "center",
+        		        //caption:"原材料使用状况", //height : 80,align : "center",
         		       
         		        prmNames: { id: "equip_num" },
         		        rowNum : 20,

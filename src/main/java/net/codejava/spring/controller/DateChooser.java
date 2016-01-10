@@ -38,7 +38,7 @@ import javax.swing.event.AncestorListener;
 
 /**
  *
- * @author hadeslee
+ 
  */
 public class DateChooser extends JPanel{
     private Date initDate;

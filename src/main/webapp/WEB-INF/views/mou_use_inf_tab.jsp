@@ -23,7 +23,7 @@
 <meta name="_csrf" content="${_csrf.token}"/>
 <!-- default header name is X-CSRF-TOKEN -->
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
-<title>模具使用信息</title>  
+<title>模具状态</title>  
 <script>
  $(function() {
 
@@ -71,7 +71,7 @@ $(function () {
                   <table id="jqGrid"></table>
                   <div id="jqGridPager"></div>
                    <div class="horiz_blank" style="height:30px"></div>
-             <div class="table_head">请选择模具</div>
+             <div class="table_head">模具信息</div>
                     <table id="jqGrid1"></table>
                   <div id="jqGridPager1"></div>
                   
@@ -101,16 +101,16 @@ $(function () {
         		      {
         		        url : "showmou_use_inf_tab",
         		        datatype : "json",
-        		        colNames : [  '使用记录编号', '模具编号', '设备编号', '更换时间','更换人员' ],
+        		        colNames : [  '使用记录编号', '模具编号', '设备编号', '模具更换时间','模具更换人员' ],
         		        colModel : [ 
         		                     
-        		                     {name : 'mou_use_inf_num',index :'mou_use_inf_num',width : 40,sortable :true,editable :true,key:true},
-        		                     {name : 'mou_num',index : 'mou_num',width : 40,sortable : true,editable : true,editoptions:{readonly:true}}, 
-        		                     {name : 'equip_num',index : 'equip_num',width : 40,sortable : true,editable : true},        		                 
-        		                     {name : 'mou_chan_time',index : 'mou_chan_time',width : 150,sortable : true,editable : true, searchoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}},
+        		                     {name : 'mou_use_inf_num',index :'mou_use_inf_num',width : 40,align : "center",sortable :true,editable :true,key:true},
+        		                     {name : 'mou_num',index : 'mou_num',width : 40,align : "center",sortable : true,editable : true,editoptions:{readonly:true}}, 
+        		                     {name : 'equip_num',index : 'equip_num',width : 40,align : "center",sortable : true,editable : true},        		                 
+        		                     {name : 'mou_chan_time',index : 'mou_chan_time',width : 150,align : "center",sortable : true,editable : true, searchoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}},
         		                    	editoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}} , addoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}} ,
         		                    	},        		  
-        		                     {name : 'mou_chan_per_num',index : 'mou_chan_per_num',width : 40,sortable : true,editable : true}, 
+        		                     {name : 'mou_chan_per_num',index : 'mou_chan_per_num',width : 40,align : "center",sortable : true,editable :false}, 
         		                   
         		                     
         		                   ],
@@ -250,15 +250,15 @@ $(function () {
           		      {
           		        url : "showemou_tab",
           		        datatype : "json",
-          		        colNames : [  '模具编号', '产品编号', '模具名称', '模具穴数','模具供应商','模具录入人' ],
+          		        colNames : [  '模具编号', '产品编号', '模具名称', '模具穴数','模具供应商','模具录入人员' ],
           		        colModel : [ 
           		                     
-          		                     {name : 'mou_num',index :'mou_num',width : 90,sortable :false,editable :false,key:true},
-          		                     {name : 'product_num',index : 'product_num',width : 80,sortable : true,editable : false}, 
-          		                     {name : 'mou_name',index : 'mou_name',width : 90,sortable : true,editable : false},        		                 
-          		                     {name : 'mou_hole_num',index : 'mou_hole_num',width : 80,sortable : true,editable :false},   
-          		                     {name : 'mou_sup',index : 'mou_sup',width : 80,sortable : true,editable :false},  
-          		                     {name : 'mou_recorder_num',index : 'mou_recorder_num',width : 80,sortable : true,editable :false},  
+          		                     {name : 'mou_num',index :'mou_num',width : 90,align : "center",sortable :false,editable :false,key:true},
+          		                     {name : 'product_num',index : 'product_num',width : 80,align : "center",sortable : true,editable : false}, 
+          		                     {name : 'mou_name',index : 'mou_name',width : 90,align : "center",sortable : true,editable : false},        		                 
+          		                     {name : 'mou_hole_num',index : 'mou_hole_num',width : 80,align : "center",sortable : true,editable :false},   
+          		                     {name : 'mou_sup',index : 'mou_sup',width : 80,align : "center",sortable : true,editable :false},  
+          		                     {name : 'mou_recorder_num',index : 'mou_recorder_num',width : 80,align : "center",sortable : true,editable :false},  
           		              
           		                 
           		                     

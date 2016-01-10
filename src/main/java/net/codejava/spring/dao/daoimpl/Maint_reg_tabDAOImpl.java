@@ -45,7 +45,7 @@ public class Maint_reg_tabDAOImpl implements Maint_reg_tabDAO {
 			// insert
 			String sql = "INSERT INTO maint_reg_tab (maint_reg_cont, maint_plan_num, maint_reg_date, maint_reg_per_num, maint_reg_num)"
 						+ " VALUES (?, ?, ?, ?, ?)";
-			jdbcTemplate.update(sql, sql, maint_reg_tab.getMaint_reg_cont(), maint_reg_tab.getMaint_plan_num(),
+			jdbcTemplate.update(sql,  maint_reg_tab.getMaint_reg_cont(), maint_reg_tab.getMaint_plan_num(),
 					maint_reg_tab.getMaint_reg_date(), maint_reg_tab.getMaint_reg_per_num(), maint_reg_tab.getMaint_reg_num());
 		}
 		
@@ -89,7 +89,7 @@ public class Maint_reg_tabDAOImpl implements Maint_reg_tabDAO {
 
 	@Override
 	public List<Maint_reg_tab> list(String maint_plan_num) {
-		String sql = "SELECT * FROM Maint_reg_tab where maint_plan_num='"+maint_plan_num+"'";
+		String sql = "SELECT * FROM Maint_reg_tab where Maint_reg_tab.maint_plan_num='"+maint_plan_num+"'";
 		List<Maint_reg_tab> listMaint_reg_tab = jdbcTemplate.query(sql, new RowMapper<Maint_reg_tab>() {
 
 			@Override

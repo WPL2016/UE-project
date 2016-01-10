@@ -24,7 +24,7 @@
 <meta name="_csrf" content="${_csrf.token}"/>
 <!-- default header name is X-CSRF-TOKEN -->
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
-<title>产品FPY查询</title>  
+<title>产品质量信息</title>  
 
 <script type="text/javascript">  
 <!--ajax访问时发送csrf token，以防止ajax访问被crsf过滤器拦截   -->
@@ -90,16 +90,16 @@ $(document).ready(function(){
         
         <div class="table_container2">
                                                                                                          
-          <div class="table_head">产品FPY查询表</div>
+          <div class="table_head">产品FPY查询</div>
           <table width="100%" height="798" border="0" cellpadding="0" cellspacing="0">        
           <tr><td>
           
           <label>选择起始时间：</label>
- <input type="text" id="starttime" style="width:140px;height:15px;font-size-3" ></input>
+ <input type="text" id="starttime" style="width:70px;height:15px;font-size-3" ></input>
             <label>选择结束时间：</label>
- <input type='text' id='endtime' style='width:140px;height:15px;font-size-3'></input>
+ <input type='text' id='endtime' style='width:70px;height:15px;font-size-3'></input>
 
-      <select style='width:140px;height:25px;font-size-3' id="timechoice">
+      <select style='width:80px;height:25px;font-size-3' id="timechoice">
          	          <option value="0">按日汇总</option><option value="1">按周汇总</option><option value="2">按月汇总</option><option value="3">按年汇总</option></select>
         <c:forEach var="product_tab" items="${product_tab}">
 	      <input type="checkbox" id="product_selected" name="product_selected" value="${product_tab.product_num}">${product_tab.product_name}</input> </c:forEach>
@@ -107,7 +107,7 @@ $(document).ready(function(){
            </td></tr>
           
                <tr bgcolor="#E1EBF5">
-                   <th height="35" colspan="10" scope="row"><div align="left"><strong><span class="style1"> 产品FPY查询</span></strong></div></th>
+                   <th height="35" colspan="10" scope="row"><div align="center"><strong><span class="style1"> 产品FPY查询</span></strong></div></th>
                    <td colspan="2">&nbsp;</td>
                    <td width="50">&nbsp;</td>
                </tr>

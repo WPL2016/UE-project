@@ -29,7 +29,7 @@ public class StartController {
 	@RequestMapping(value="/")
 	public ModelAndView listContact(ModelAndView model) throws IOException{
 		
-		model.setViewName("index");
+		model.setViewName("home");
 		
 		return model;
 	}
@@ -83,7 +83,7 @@ public class StartController {
 		return model;
 	}
 	
-	@RequestMapping(value="/toinput2")
+	@RequestMapping(value="/toenergy")
 	public ModelAndView viewinput2(){
 		ModelAndView model=new ModelAndView();
 		model.setViewName("energy");

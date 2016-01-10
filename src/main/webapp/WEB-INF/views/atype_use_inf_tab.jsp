@@ -23,7 +23,7 @@
 <meta name="_csrf" content="${_csrf.token}"/>
 <!-- default header name is X-CSRF-TOKEN -->
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
-<title>设备表</title>  
+<title>A类易耗品状态</title>  
 <script>
  $(function() {
 
@@ -71,7 +71,7 @@ $(function () {
                   <table id="jqGrid"></table>
                   <div id="jqGridPager"></div>
                    <div class="horiz_blank" style="height:30px"></div>
-             <div class="table_head">A类易耗品</div>
+             <div class="table_head">A类易耗品信息</div>
                     <table id="jqGrid1"></table>
                   <div id="jqGridPager1"></div>
                   
@@ -104,13 +104,13 @@ $(function () {
         		        colNames : [  '记录编号', 'A类编号', '设备编号', '更换日期', '更换数量','更换人员' ],
         		        colModel : [ 
         		                     
-        		                     {name : 'atype_use_inf_num',index :'atype_use_inf_num',width : 40,sortable :true,editable :true,key:true},
-        		                     {name : 'atype_num',index : 'atype_num',width : 40,sortable : true,editable : true,editoptions:{readonly:true}}, 
-        		                     {name : 'equip_num',index : 'equip_num',width : 40,sortable : true,editable : true},        		                 
-        		                     {name : 'chan_date',index : 'chan_date',width : 150,sortable : true,editable : true, searchoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}},
+        		                     {name : 'atype_use_inf_num',index :'atype_use_inf_num',width : 40,align : "center",sortable :true,editable :true,key:true},
+        		                     {name : 'atype_num',index : 'atype_num',width : 40,align : "center",sortable : true,editable : true,editoptions:{readonly:true}}, 
+        		                     {name : 'equip_num',index : 'equip_num',width : 40,align : "center",sortable : true,editable : true},        		                 
+        		                     {name : 'chan_date',index : 'chan_date',width : 150,align : "center",sortable : true,editable : true, searchoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}},
         		                    	editoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}} , addoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}} ,},        		  
-        		                     {name : 'chan_quan',index : 'chan_quan',width : 40,sortable : true,editable : true}, 
-        		                     {name : 'chan_per_num',index : 'chan_per_num',width :40,sortable : true,editable : true},  
+        		                     {name : 'chan_quan',index : 'chan_quan',width : 40,align : "center",sortable : true,editable : true}, 
+        		                     {name : 'chan_per_num',index : 'chan_per_num',width :40,align : "center",sortable : true,editable : true},  
         		                     
         		                   ],
         		                   
@@ -252,10 +252,10 @@ $(function () {
           		        colNames : [  'A类易耗品编号', 'A类易耗品名称', 'A类易耗品供应商', '录入人' ],
           		        colModel : [ 
           		                     
-          		                     {name : 'atype_num',index :'atype_num',width : 90,sortable :false,editable :false,key:true},
-          		                     {name : 'atype_name',index : 'atype_name',width : 80,sortable : true,editable : false}, 
-          		                     {name : 'atype_sup',index : 'atype_sup',width : 90,sortable : true,editable : false},        		                 
-          		                     {name : 'atype_recorder_num',index : 'atype_recorder_num',width : 80,sortable : true,editable :false},        		  
+          		                     {name : 'atype_num',index :'atype_num',width : 90,align : "center",sortable :false,editable :false,key:true},
+          		                     {name : 'atype_name',index : 'atype_name',width : 80,align : "center",sortable : true,editable : false}, 
+          		                     {name : 'atype_sup',index : 'atype_sup',width : 90,align : "center",sortable : true,editable : false},        		                 
+          		                     {name : 'atype_recorder_num',index : 'atype_recorder_num',width : 80,align : "center",sortable : true,editable :false},        		  
           		                 
           		                     
           		                   ],

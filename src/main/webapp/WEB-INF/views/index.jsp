@@ -41,11 +41,15 @@
 <a href="tomou_tab">模具基础信息维护</a><br/>
 
 <a href="toauthority">权限管理</a><br/>
+
 <a href="tomater_tab">原材料信息</a><br/>
 <a href="tomater_pur_tab">原材料采购信息</a><br/>
 <a href="toproduct_tab">产品信息</a><br/>
 <a href="tomater_use_stock_tab">原材料状态</a><br/>
 <a href="toproduce_plan_tab">生产计划</a><br/>
+
+<a href="toregister">注册</a><br/>
+<a href="toedituserinfo">修改用户信息</a><br/>
 <!--  <a href="tohello">3号输入</a><br/>-->
 </body>
 </html>

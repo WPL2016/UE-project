@@ -243,6 +243,22 @@ div.menu
   
   }
   
+   div.blank_bf_table
+  {
+  width:15%;
+  height:40px;
+  background-color:#F8F8F8;
+  float:left;
+  padding-top:30px;
+  
+  }
+  
+  div.check_box{
+   float:left;
+   width:30%;
+   padding-top:15px;
+  }
+  
   a {
   padding-left:20px;
   text-decoration:none;
@@ -251,4 +267,7 @@ div.menu
 body{
   min-width:1366px;	
 }
- 
+span.check_box{
+	 padding-left:50px;
+	display:inline-block;
+ }

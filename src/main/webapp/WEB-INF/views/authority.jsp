@@ -15,7 +15,9 @@
 <a href="engineer/engineertest">egineer可以访问</a><br/>
 <a href="useroradmin/firsttest">必须同时是user和admin才可以访问</a><br/>
 <a href="userandadmin/firsttest">user或者admin都可以访问</a><br/>
+<a href="tomanagerole">角色维护</a><br/>
 <a href="toasignrole">角色授予</a><br/>
+<a href="toassignauthors">角色授权</a><br/>
 </body>
 </html>
 

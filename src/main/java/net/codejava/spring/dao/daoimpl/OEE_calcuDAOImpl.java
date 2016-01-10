@@ -99,6 +99,8 @@ private JdbcTemplate jdbcTemplate;
 								int totaltime=aOEEData.getRuntime()+aOEEData.getBreaktime()+aOEEData.getStoptime()+aOEEData.getWaittime();
 								float timeutility=(float)(aOEEData.getRuntime()+aOEEData.getStoptime()+aOEEData.getWaittime())/(float)totaltime;
 								float performance=(float)(aOEEData.getRuntime()+aOEEData.getStoptime())/(float)(aOEEData.getRuntime()+aOEEData.getStoptime()+aOEEData.getWaittime());
+								aOEEData.setTimeutilityrate(timeutility);
+								aOEEData.setPerformancerate(performance);
 								aOEEData.setOeerate(timeutility*performance*aOEEData.getPassrate());
 								//aOEEData.setOEERate(rs.getFloat("OEErate"));
 								//aOEEData.setStartdate(rs.getDate("startdate"));

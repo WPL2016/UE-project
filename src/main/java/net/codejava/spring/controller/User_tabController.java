@@ -1,12 +1,17 @@
 package net.codejava.spring.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import net.codejava.spring.dao.daointerface.User_tabDAO;
+import net.codejava.spring.dao.daointerface.UsersDAO;
+import net.codejava.spring.model.Contact;
 import net.codejava.spring.model.User_tab;
+import net.codejava.spring.model.Users;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +31,70 @@ public class User_tabController {
 
 	@Autowired
 	private User_tabDAO user_tabDAO;
+	@Autowired
+	private UsersDAO usersDAO;
+	
+	@RequestMapping(value="/toregister")
+	public ModelAndView toRegister(ModelAndView model) throws IOException{		
+		Users users=new Users();
+		model.addObject("users",users);
+		model.setViewName("register");	
+		return model;
+	}
+	
+	@RequestMapping(value="/register")
+	public ModelAndView register( @ModelAttribute Users users ,HttpServletResponse response) throws IOException{		
+		ModelAndView model=new ModelAndView();
+		System.out.println(users.getUsername());
+		if(usersDAO.exist(users)==0){
+			users.setEnabled(1);
+			usersDAO.save(users);
+			response.setContentType("text/html;charset=utf-8");
+			PrintWriter out=response.getWriter();
+			out.println("<script language='javascript'>alert('注册成功，请登陆');window.location.href='login'</script>");
+			return  null;
+		  }
+		else {
+			
+			response.setContentType("text/html;charset=utf-8");
+			PrintWriter out=response.getWriter();
+			out.println("<script language='javascript'>alert('该账号已注册，请重新填写');window.location.href='toregister'</script>");
+			return  null;
+		}
+		
+	}
+	
+	@RequestMapping(value="/toedituserinfo")
+	public ModelAndView toEditUserInfo(ModelAndView model,HttpServletRequest request) throws IOException{		
+		Users users=usersDAO.getUser(request.getUserPrincipal().getName());
+		model.addObject("users",users);
+		model.setViewName("edituserinfo");	
+		return model;
+	}
+	
+
+	@RequestMapping(value="/edituserinfo")
+	public ModelAndView editUserInfo(@ModelAttribute Users users,HttpServletRequest request,HttpServletResponse response) throws IOException{		
+	ModelAndView model=new ModelAndView();
+	users.setUsername(request.getUserPrincipal().getName());
+	
+	if(usersDAO.update(users)==1){	
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out=response.getWriter();
+		out.println("<script language='javascript'>alert('修改成功！');window.location.href=''</script>");
+		return  null;
+	  }
+	else {
+		
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out=response.getWriter();
+		out.println("<script language='javascript'>alert('修改失败，请重新尝试！');window.location.href='toedituserinfo'</script>");
+		return  null;
+	}
+	}
+	
+	
+	
 	
 	@RequestMapping(value="/user_tab")
 	public ModelAndView listUser_tab(ModelAndView model) throws IOException{

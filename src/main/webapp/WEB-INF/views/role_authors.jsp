@@ -8,12 +8,13 @@
 <script type="text/javascript" src="resources/jquery-2.1.3.min.js"></script>  
 <link rel="stylesheet" type="text/css" href="resources/table.css" />
 <link rel="stylesheet" type="text/css" href="resources/div.css" />
+<link rel="stylesheet" type="text/css" href="resources/button.css" />
 <!-- 添加csrf标记，防止crsf安全过滤器无法识别ajax访问的crsf_token-->
 <meta http-equiv="Content-Type" content="text/html; charset=utf8">  
 <meta name="_csrf" content="${_csrf.token}"/>
 <!-- default header name is X-CSRF-TOKEN -->
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
-<title>永艺家具智能制造系统</title>  
+<title>基础模板</title>  
 
 <script type="text/javascript">  
 <!--ajax访问时发送csrf token，以防止ajax访问被crsf过滤器拦截   -->
@@ -25,6 +26,35 @@ $(function () {
 	});	
    });
 </script>  
+<script type="text/javascript">
+function authorModify(){  
+	var chk_value =[];   
+	$('input[name=author_select]:checked').each(function(){   
+	 chk_value.push($(this).val());
+	});
+	
+	
+	
+	$.ajax({  
+    	 data:"authors="+chk_value+"&role_id="+$("#role_id").val(),  
+	       //用GET方法当请求参数不变时会因部分浏览器缓存而无法更新
+	       type:"POST",  
+	       dataType:'text',  
+	       url:"editroleauthor", 
+	       async:true,
+	       error:function(data){  
+	            alert("出错了！请重新尝试！");  
+	        },  
+	        success:function(data){  
+	        	alert("修改成功！");
+	         
+	                        
+	                               
+	    }  
+    })
+}
+
+</script>
 </head>
 <body>
   <!-- 插入头部 -->
@@ -44,37 +74,30 @@ $(function () {
         <!--插入菜单与主体内容之间的空白  -->
         <div class="blank_btw_menu_content"></div>
         <!--内容主体的div,请根据具体内容决定div的样式，table_container0最小，1次之，2最大，也可自行在div.css定义你自己想要的样式，要设置成左浮动以保证div水平排列-->     
-        <div class="table_container2">
-        <div class="table_head">首页</div>
-        <table width=100%  height="548" border="0" bgcolor="#E1EBF5" cellpadding="0" cellspacing="0">
-  <tr>
-    <th height="40" colspan="5" scope="row">&nbsp;</th>
-  </tr>
-  <tr>
-    <th width="4%" rowspan="2" scope="row">&nbsp;</th>
-       <td width="45%" height="295"><img src="resources/UE_yzj.png" width="445" height="329"></td>
-    <td width="4%" rowspan="2">&nbsp;</td>
-    <td width="45%"><img src="resources/UE_zsj.png" width="468" height="331"></td>
-    <td width="2%" rowspan="2">&nbsp;</td>
-  </tr>
-  <tr>
-    <td height="142">
-    <c:forEach var="YZequip" items="${YZequip}" varStatus="status">
-    <p><strong>${YZequip.equip_name}：${YZequip.current_state}</strong></p>
-    </c:forEach></td>
-    
-    <td>
-     <c:forEach var="ZSequip" items="${ZSequip}" varStatus="status">
-     <p><strong>${ZSequip.equip_name}：${ZSequip.current_state}</strong></p>
-    </c:forEach>
-    </td>
-  </tr>
-  <tr>
-    <th height="30" colspan="5" scope="row">&nbsp;</th>
-  </tr>
-</table>                            
-       
-       
+        <div class="table_container2">   
+               <div class="table_head">请选择要赋予该角色的权限</div>
+               <input type="hidden" name="role_id" id="role_id" value="${role_id}"/>
+               <table id="customers">
+                  <tr><td class="blank"></td></tr>
+                  <tr><td>             
+				   <c:forEach var="authors" items="${authors}" varStatus="status">
+	        	    <div class="check_box"><input type="checkbox" id="author_select" name="author_select" value="${authors.author_id}" checked="checked"/>${authors.author_describe}
+				    </div>
+				   </c:forEach>	
+				  
+				   <c:forEach var="noauthors" items="${noauthors}" varStatus="status">
+	        	   <div class="check_box"><input type="checkbox" id="author_select"  name="author_select" value="${noauthors.author_id}" />${noauthors.author_describe}
+				   </div>
+				   
+				  </c:forEach>
+				  </td>	
+				  </tr>
+				  <tr><td class="blank"></td></tr>
+				  <tr><td align="center">       	
+			      <input type="button" class="button blue" id="modify" onclick="authorModify()" value="修改"/>
+			      </td></tr>
+			        <tr><td class="blank"></td></tr>
+			  </table>
         </div>
  
   
@@ -87,7 +110,6 @@ $(function () {
   
 </body>
 </html>
-
 
 
 

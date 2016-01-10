@@ -73,7 +73,7 @@ $(function () {
              <div>
                   
                   
-                <div class="table_head">原材料采购情况表</div>  
+                <div class="table_head">原材料采购信息</div>  
                                    
                   <table id="jqGrid2"></table>
                   <div id="jqGridPager2"></div>

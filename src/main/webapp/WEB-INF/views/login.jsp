@@ -44,7 +44,7 @@
 	</c:if>
 
   <tr bgcolor="#2285CE">
-    <th height="147" colspan="4" class="style4" scope="row">浙江永艺家具股份有限公司生产管理系统V1.0<br>
+    <th height="147" colspan="4" class="style4" scope="row">永艺家具智能制造系统<br>
     用户登陆</th>
   </tr>
   <tr bordercolor="#E1EBF5" bgcolor="#E1EBF5">
@@ -56,7 +56,7 @@
     <td width="245">
       <input type="text"  id="username" name="username" style="width:240px; height:45px;">
     </td>
-    <td width="169"><span class="style6"> 注册账号</span></td>
+    <td width="169"><span class="style6"><a href="toregister"> 注册账号</a></span></td>
   </tr>
   <tr bordercolor="#E1EBF5" bgcolor="#E1EBF5">
     <th height="45" scope="row">&nbsp;</th>
@@ -80,7 +80,7 @@
   </tr>
   <tr bordercolor="#E1EBF5" bgcolor="#E1EBF5">
     <th height="37" scope="row">&nbsp;</th>
-    <td colspan="2"><div align="center" class="style2 style7"><strong>浙江永艺家具股份有限公司</strong></div></td>
+    <td colspan="2"><div align="center" class="style2 style7"><strong>永艺家具股份有限公司</strong></div></td>
     <td>&nbsp;</td>
   </tr>
   <input type="hidden"                        

@@ -75,7 +75,7 @@ public class Maint_plan_tabController {
 
 	
 		maint_plan_tab.setMaint_plan_date(date);
-		maint_plan_tab.setMaint_plan_per_num(request.getParameter("maint_plan_per_num"));
+		maint_plan_tab.setMaint_plan_per_num(request.getUserPrincipal().getName());
 		maint_plan_tab.setMaint_plan_cont(request.getParameter("maint_plan_cont"));
 		//if(request.getParameter("chan_quan")!=null){
 		//atype_use_inf_tab.setChan_quan(Integer.parseUnsignedInt(request.getParameter("chan_quan")));}

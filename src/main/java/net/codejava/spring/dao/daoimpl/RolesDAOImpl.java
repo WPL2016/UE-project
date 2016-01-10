@@ -22,6 +22,27 @@ private JdbcTemplate jdbcTemplate;
 	}
 
 	@Override
+	public List<Roles> list() {
+		String sql = "SELECT * FROM roles";
+		List<Roles> listContact = jdbcTemplate.query(sql, new RowMapper<Roles>() {
+
+			@Override
+			public Roles mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Roles aRoles = new Roles();
+	
+				aRoles.setRole_id(rs.getInt("role_id"));
+				aRoles.setRole_name(rs.getString("role_name"));
+				
+				return aRoles;
+			}
+			
+		});
+		
+		return listContact;
+	}
+	
+	
+	@Override
 	public List<Roles> list(String username) {
 		String sql = "SELECT * FROM roles,user_roles where user_roles.username='"+username+"' and roles.role_id=user_roles.role_id";
 		List<Roles> listContact = jdbcTemplate.query(sql, new RowMapper<Roles>() {
@@ -61,5 +82,28 @@ private JdbcTemplate jdbcTemplate;
 		return listContact;
 	}
 	
+	@Override
+	public int role_nameExist(Roles roles){
+	  String sql="select count(*) from roles where role_name=?";	
+	  @SuppressWarnings("deprecation")
+		int i=jdbcTemplate.queryForInt(sql,roles.getRole_name());
+	  return i;
+	}
+	
+	@Override
+	public void save(Roles roles){
+	  String sql="Insert into roles (role_name) values (?)";	
+	  jdbcTemplate.update(sql,roles.getRole_name());
+	}
+	@Override
+	public int delete(String role_id){
+	String sql="delete from roles where role_id=?";
+	int i;
+	try{		
+	jdbcTemplate.update(sql, role_id);
+	i=1;
+	}catch(Exception e){i=0;}
+	return i;
+	}
 	
 }

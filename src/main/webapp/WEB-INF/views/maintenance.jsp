@@ -24,7 +24,7 @@
 <meta name="_csrf" content="${_csrf.token}"/>
 <!-- default header name is X-CSRF-TOKEN -->
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
-<title>设备表</title>  
+<title>维护保养计划</title>  
 <script>
  $(function() {
 
@@ -67,12 +67,12 @@ $(function () {
        
         <!--内容主体的div,请根据具体内容决定div的样式，table_container0最小，1次之，2最大，也可自行在div.css定义你自己想要的样式，要设置成左浮动以保证div水平排列-->     
        <div class="table_container2">
-             <div class="table_head">压铸设备维护计划</div>
+             <div class="table_head">维护保养计划</div>
              <div>
                   <table id="jqGrid"></table>
                   <div id="jqGridPager"></div>
                    <div class="horiz_blank" style="height:30px"></div>
-             <div class="table_head">压铸设备表</div>
+             <div class="table_head">设备信息</div>
                     <table id="jqGrid1"></table>
                   <div id="jqGridPager1"></div>
                   
@@ -102,15 +102,15 @@ $(function () {
         		      {
         		    	  url : "showmaint_plan_tab",
           		        datatype : "json",
-          		        colNames : [  '维护保养计划编号', '维护保养计划日期', '设备编号', '维护保养计划记录内容', '维护保养计划负责人编号' ],
+          		        colNames : [  '维护保养计划编号', '维护保养计划日期', '设备编号', '维护保养计划记录内容', '维护保养计划负责人' ],
           		        colModel : [ 
           		                     
-          		                     {name : 'maint_plan_num',index :'maint_plan_num',width : 90,sortable :true,editable :true,key:true},
-          		                     {name : 'maint_plan_date',index : 'maint_plan_date',width : 80,sortable : true,editable : true, searchoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}},
+          		                     {name : 'maint_plan_num',index :'maint_plan_num',width : 90,align : "center",sortable :true,editable :true,key:true},
+          		                     {name : 'maint_plan_date',index : 'maint_plan_date',width : 80,align : "center",sortable : true,editable : true, searchoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}},
           		                     editoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}} , addoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}} ,},
-          		                     {name : 'maint_plan_obj_num',index : 'maint_plan_obj_num',width : 90,sortable : true,editable : true},        		                 
-          		                     {name : 'maint_plan_cont',index : 'maint_plan_cont',width : 80,align : "right",sortable : true,editable : true},        		  
-          		                     {name : 'maint_plan_per_num',index : 'maint_plan_per_num',width : 150,sortable : true,editable : true}, 
+          		                     {name : 'maint_plan_obj_num',index : 'maint_plan_obj_num',width : 90,align : "center",sortable : true,editable : true},        		                 
+          		                     {name : 'maint_plan_cont',index : 'maint_plan_cont',width : 200,align : "left",sortable : true,editable : true},        		  
+          		                     {name : 'maint_plan_per_num',index : 'maint_plan_per_num',width : 80,align : "center",sortable : true,editable : false}, 
           		                     
         		                     
         		                   ],

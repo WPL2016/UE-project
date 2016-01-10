@@ -94,12 +94,12 @@ $(document).ready(function(){
           <table width="100%" height="798" border="0" cellpadding="0" cellspacing="0">        
           <tr><td>
           
-          <label>选择起始时间：</label>
- <input type="text" id="starttime" style="width:140px;height:15px;font-size-3" ></input>
-            <label>选择结束时间：</label>
- <input type='text' id='endtime' style='width:140px;height:15px;font-size-3'></input>
+          <label>选择起始时间:</label>
+ <input type="text" id="starttime" style="width:70px;height:15px;font-size-3" ></input>
+            <label>选择结束时间:</label>
+ <input type='text' id='endtime' style='width:70px;height:15px;font-size-3'></input>
 
-      <select style='width:140px;height:25px;font-size-3' id="timechoice">
+      <select style='width:80px;height:25px;font-size-3' id="timechoice">
          	          <option value="0">按日汇总</option><option value="1">按月汇总</option><option value="2">按年汇总</option></select>
         <c:forEach var="equip_tab" items="${yzequip}">
 	      <input type="checkbox" id="equip_selected" name="equip_selected" value="${equip_tab.equip_num}">${equip_tab.equip_name}</input> </c:forEach>
@@ -107,13 +107,12 @@ $(document).ready(function(){
            </td></tr>
           
                <tr bgcolor="#E1EBF5">
-                   <th height="35" colspan="10" scope="row"><div align="left"><strong><span class="style1"> 设备电能消耗查询</span></strong></div></th>
+                   <th height="35" colspan="10" scope="row"><div align="center"><strong><span class="style1"> 设备电能消耗查询</span></strong></div></th>
                    <td colspan="2">&nbsp;</td>
                    <td width="50">&nbsp;</td>
                </tr>
 
 <tr><td>
-
  <table id="jqGrid"></table>
  <div id="jqGridPager"></div>
 </td></tr>

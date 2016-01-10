@@ -15,6 +15,9 @@ public class OEEData {
 	    private int    quantity;
 	    private int    infe_quantity;
 	    private Float  oeerate;
+	    private Float  timeutilityrate;
+	    private Float  performancerate;
+	  
 	    //某一组汇总数据的起始时间和结束时间，比如按周汇总时第二组数据的起始时间是第二周周一，结束时间是第二周周日，注意不是用户所选择的总体汇总的起始时间和结束时间
 	    private String   startdate; 
 	    private Date   enddate;
@@ -108,5 +111,26 @@ public class OEEData {
         public void setEnddate(Date enddate) {
 				this.enddate = enddate;
 			}
-				
+        
+		public Float  getTimeutilityrate() {
+			return timeutilityrate;
+		}
+	
+	
+
+  
+
+
+public void setTimeutilityrate(Float timeutilityrate) {
+		this.timeutilityrate = timeutilityrate;
+	}		
+
+public void setPerformancerate(Float performancerate) {
+	this.performancerate= performancerate;
+}
+public Float  getPerformancerate() {
+return performancerate;
+}
+
+
 }

@@ -16,5 +16,11 @@ public interface UsersDAO {
 	
 	
 	public List<Users> list();
+	public int exist(Users users);
+	public void save(Users users);
+	public Users getUser(String username);
+	public int update(Users users);
+	public int frozen(String username);
+	public int unfrozen(String username);
 	
 }
