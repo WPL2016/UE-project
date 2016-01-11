@@ -152,4 +152,34 @@ public class Maint_reg_tabDAOImpl implements Maint_reg_tabDAO {
 		});
 	}
 
+	@Override
+	public List<Maint_reg_tab> listMaint_reg_tab(String maint_plan_obj_num) {
+		String sql = "select maint_reg_num,maint_reg_date,maint_reg_cont,maint_reg_per_num,maint_plan_obj_num"+
+ " FROM maint_reg_tab JOIN maint_plan_tab ON maint_reg_tab. maint_plan_num=maint_plan_tab. maint_plan_num where maint_plan_tab.maint_plan_obj_num='"+maint_plan_obj_num+"'";
+		List<Maint_reg_tab> listMaint_reg_tab = jdbcTemplate.query(sql, new RowMapper<Maint_reg_tab>() {
+
+			@Override
+			public Maint_reg_tab mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Maint_reg_tab aMaint_reg_tab = new Maint_reg_tab();
+				
+				aMaint_reg_tab.setMaint_reg_cont(rs.getString("maint_reg_cont"));
+								
+				
+				System.out.println("TIME:"+rs.getTimestamp("maint_reg_date"));
+				
+				aMaint_reg_tab.setMaint_reg_date(rs.getTimestamp("maint_reg_date"));
+				
+				System.out.println("TIME2:"+aMaint_reg_tab.getMaint_reg_date());
+				
+				aMaint_reg_tab.setMaint_reg_num(rs.getString("maint_reg_num"));
+				aMaint_reg_tab.setMaint_reg_per_num(rs.getString("maint_reg_per_num"));
+				aMaint_reg_tab.setMaint_plan_obj_num(rs.getString("maint_plan_obj_num"));
+				return aMaint_reg_tab;
+			}
+			
+		});
+		
+		return listMaint_reg_tab;
+	}
+
 }

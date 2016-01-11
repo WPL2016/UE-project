@@ -54,7 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		                       //注意如有重复的规则则会自动取或，而不是取与
 		                       .antMatchers("/login").permitAll()		                                                    
                                .antMatchers("/resources/**" ).permitAll()
-                               .antMatchers("/toregister").permitAll()
+                               .antMatchers("/toregister","/register").permitAll()
                                
                               	
                                //重复的规则取或，ADMIN和USER都可以请求“/toadmin”

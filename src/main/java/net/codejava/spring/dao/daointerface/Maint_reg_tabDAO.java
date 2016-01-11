@@ -20,4 +20,6 @@ public interface Maint_reg_tabDAO {
 	public List<Maint_reg_tab> list();
 	
 	public List<Maint_reg_tab> list(String maint_plan_num);
+	
+	public List<Maint_reg_tab> listMaint_reg_tab(String maint_plan_obj_num);
 }

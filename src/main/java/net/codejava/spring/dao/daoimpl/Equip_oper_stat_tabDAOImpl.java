@@ -119,8 +119,8 @@ public class Equip_oper_stat_tabDAOImpl implements Equip_oper_stat_tabDAO {
 	
 	@Override
 	public List< Equip_oper_stat_tab> getLastUniqueRecord(String equip_num){
-		String sql = "WITH lastunique as (SELECT stat_name, MAX(stat_time) as stat_time FROM equip_oper_stat_tab GROUP BY stat_name)"+
-",total as (SELECT * FROM equip_oper_stat_tab) SELECT * FROM total,lastunique WHERE total.stat_time=lastunique.stat_time AND total.stat_name=lastunique.stat_name and total.equip_num="+"'"+equip_num+"' ORDER BY total.stat_time";
+		String sql = "WITH lastunique as (SELECT stat_name, MAX(stat_time) as stat_time FROM equip_oper_stat_tab GROUP BY stat_name,equip_num)"+
+",total as (SELECT * FROM equip_oper_stat_tab) SELECT * FROM total,lastunique WHERE total.stat_time=lastunique.stat_time AND total.stat_name=lastunique.stat_name and total.equip_num="+"'"+equip_num+"' and datediff(dd,total.stat_time,getdate())=0  ORDER BY total.stat_time desc";
 		List<Equip_oper_stat_tab> listEquip_oper_stat_tab = jdbcTemplate.query(sql, new RowMapper<Equip_oper_stat_tab>() {
         
 			@Override

@@ -136,7 +136,7 @@ $(function () {
           	                { edit: true, add: true, del: true, search: true, refresh: true, view: false, position: "left", cloneToTop: false },
           	                // options for the Edit Dialog
           	                {
-          	                    editCaption: "The Edit Dialog",
+          	                    editCaption: "编辑记录",
           	                    recreateForm: true,
           						checkOnUpdate : true,
           						checkOnSubmit : true,

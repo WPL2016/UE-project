@@ -213,7 +213,7 @@ div.menu
   {
    float:left;	
    margin:0 auto;
-   width:43%;   
+   width:46%;   
    over-flow:hidden;
    padding-top:30px;
    min-width:500px;
@@ -235,7 +235,7 @@ div.menu
   
   div.blank_btw_table
   {
-  width:3%;
+  width:1%;
   height:40px;
   background-color:#F8F8F8;
   float:left;

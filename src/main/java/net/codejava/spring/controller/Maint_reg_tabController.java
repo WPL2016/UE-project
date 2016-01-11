@@ -49,6 +49,17 @@ public class Maint_reg_tabController {
 		 return allMaint_reg_tab;
 	}
 	
+	@RequestMapping(value="/showsomemaint_reg_tab1")  	
+	public @ResponseBody List<Maint_reg_tab> someMaint_reg_tab1(HttpServletRequest request) throws IOException{
+		String maint_plan_obj_num=request.getParameter("equip_num");
+		//System.out.println(mou_num);
+		List<Maint_reg_tab> someMaint_reg_tab1 = maint_reg_tabDAO.listMaint_reg_tab(maint_plan_obj_num);		
+		return someMaint_reg_tab1;
+	}
+	
+	
+	
+	
 	@RequestMapping(value="/showsomemaint_reg_tab")  	
 	public @ResponseBody List<Maint_reg_tab> someMaint_plan_tab(HttpServletRequest request) throws IOException{
 		String maint_plan_num=request.getParameter("maint_plan_num");

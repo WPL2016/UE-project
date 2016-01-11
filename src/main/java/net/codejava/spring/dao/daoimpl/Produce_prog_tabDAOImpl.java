@@ -140,13 +140,13 @@ public class Produce_prog_tabDAOImpl implements Produce_prog_tabDAO {
 " FROM  count_product_quantity   JOIN  equip_product_relat_tab ON count_product_quantity.equip_product_relat_num =  equip_product_relat_tab.equip_product_relat_num "+ 
 " JOIN count_qulifiedproduct_quantity ON count_qulifiedproduct_quantity.equip_product_relat_num =  equip_product_relat_tab.equip_product_relat_num   "+
 " JOIN equip_tab ON  equip_product_relat_tab.equip_num =  equip_tab.equip_num   "+
-" JOIN  produce_module_time_mapping ON produce_module_time_mapping.equip_num=equip_tab.equip_num "+
 " JOIN  mou_use_inf_tab ON mou_use_inf_tab.equip_num=equip_tab.equip_num"+
 " JOIN  mou_tab ON mou_tab.mou_num=mou_use_inf_tab.mou_num "+
 " JOIN  product_tab ON   mou_tab.product_num =  product_tab.product_num "+
 " JOIN  produce_plan_tab ON produce_plan_tab.equip_product_relat_num =equip_product_relat_tab.equip_product_relat_num "+
 " JOIN  produce_plan_exe_stat_tab ON produce_plan_exe_stat_tab.produce_plan_num=produce_plan_tab.produce_plan_num "+
 " JOIN  recent_produce_start_time ON produce_plan_exe_stat_tab.exe_start_time=recent_produce_start_time.recent_start_time"+
+" JOIN  produce_module_time_mapping ON produce_module_time_mapping.equip_num=equip_tab.equip_num  and  mou_tab.product_num=produce_module_time_mapping.product_num "+ 
 " WHERE  produce_module_time_mapping.mou_chan_time=mou_use_inf_tab.mou_chan_time ";
 			List<Produce_static_tab> listProduce_static_tab =jdbcTemplate.query(sql, new RowMapper<Produce_static_tab>() {
 

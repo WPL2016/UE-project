@@ -62,8 +62,10 @@ $(function () {
 
 <script>
 $(document).ready(function(){
-    $("#starttime").datepicker({showWeek:true, firstDay:1});
-    $("#endtime").datepicker({showWeek:true, firstDay:1});
+    $("#starttime").datepicker({showWeek:true, firstDay:1,changeMonth:true,
+	      changeYear:true});
+    $("#endtime").datepicker({showWeek:true, firstDay:1,changeMonth:true,
+	      changeYear:true});
 })
 </script> 
 
@@ -95,9 +97,9 @@ $(document).ready(function(){
           <tr><td>
           
           <label>选择起始时间：</label>
- <input type="text" id="starttime" style="width:70px;height:15px;font-size-3" ></input>
+ <input type="text" id="starttime" style="width:70px;height:15px;font-size-3;z-index:1000;position:relative" ></input>
             <label>选择结束时间：</label>
- <input type='text' id='endtime' style='width:70px;height:15px;font-size-3'></input>
+ <input type='text' id='endtime' style='width:70px;height:15px;font-size-3;z-index:1000;position:relative'></input>
 
       <select style='width:80px;height:25px;font-size-3' id="timechoice">
          	          <option value="0">按日汇总</option><option value="1">按周汇总</option><option value="2">按月汇总</option><option value="3">按年汇总</option></select>
@@ -168,8 +170,8 @@ $(document).ready(function () {
         	        
         		        loadonce:true,
         		        //当加载出错时提供错误信息
-        		        loadError: function(xhr,status,error){  
-        		        	 alert(status + " loading data of " + $(this).attr("id") + " : " + error );    },  
+        		     //   loadError: function(xhr,status,error){  
+        		     //   	 alert(status + " loading data of " + $(this).attr("id") + " : " + error );    },  
 
 
         		        caption:"", height : 80,align : "center",
@@ -319,7 +321,7 @@ $(document).ready(function () {
 
 
                     //数据系列，要显示几个系列酒填几个大括号，不然不会显示多出的系列
-                    series : [{},{}],}
+                    series : [{},{},{}],}
                 
                
                 //通过ajax从后台获取图表所需数据

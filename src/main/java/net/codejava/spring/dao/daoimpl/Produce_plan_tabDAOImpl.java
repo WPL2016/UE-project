@@ -53,7 +53,23 @@ public class Produce_plan_tabDAOImpl implements Produce_plan_tabDAO {
 		}
 		
 	}
-
+	
+	@Override
+	public void add(Produce_plan_tab produce_plan_tab){
+	 String abc = "SELECT COUNT(*) FROM produce_plan_tab WHERE produce_plan_num=?";
+		
+		@SuppressWarnings("deprecation")
+		int i=jdbcTemplate.queryForInt(abc,produce_plan_tab.getProduce_plan_num());
+		if (i==0) {// insert
+			String sql = "INSERT INTO produce_plan_tab (equip_product_relat_num,produce_plan_num,plan_start_time,plan_end_time,plan_quan,plan_work_time,produce_plan_recorder_num)"
+					+ " VALUES (?, ?,?, ?,?,?,?)";
+		jdbcTemplate.update(sql, produce_plan_tab.getEquip_product_relat_num(), produce_plan_tab.getProduce_plan_num(),produce_plan_tab.getPlan_start_time(), produce_plan_tab.getPlan_end_time(),
+				produce_plan_tab.getPlan_quan(),produce_plan_tab.getPlan_work_time(),produce_plan_tab.getProduce_plan_recorder_num());
+			
+		} 
+		
+	}
+	
 	@Override
 	public void delete(String produce_plan_num) {
 		String sql = "DELETE FROM produce_plan_tab WHERE produce_plan_num=?";

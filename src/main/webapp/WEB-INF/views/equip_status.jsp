@@ -31,9 +31,11 @@
 <meta name="_csrf" content="${_csrf.token}"/>
 <!-- default header name is X-CSRF-TOKEN -->
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
-<title>基础模板</title>  
+
+<title>压铸设备状态</title>  
 <script>
  $(function() {
+
 
             $.datepicker.regional["zh-CN"] = { closeText: "关闭", prevText: "&#x3c;上月", nextText: "下月&#x3e;", currentText: "今天", monthNames: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"], monthNamesShort: ["一", "二", "三", "四", "五", "六", "七", "八", "九", "十", "十一", "十二"], dayNames: ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"], dayNamesShort: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"], dayNamesMin: ["日", "一", "二", "三", "四", "五", "六"], weekHeader: "周", dateFormat: "yy-m-d", firstDay: 1, isRTL: !1, showMonthAfterYear: !0, yearSuffix: "年" }
 
@@ -284,6 +286,7 @@ setInterval(preSetStateAjax,1333000);
          <tr><td><div id="cloneTr0"></div></td></tr>
          </table>
          <table id="customers">         
+
          <tr><td><div id="cloneTr1"></div></td></tr>
          </table>
           <table id="customers">         
@@ -296,6 +299,7 @@ setInterval(preSetStateAjax,1333000);
                   <table id="jqGrid"></table>
                   <div id="jqGridPager"></div>
                   </div>
+
        </div>
       <div class="blank_btw_table"></div>
      
@@ -311,7 +315,7 @@ setInterval(preSetStateAjax,1333000);
                </tr>
                <tr bgcolor="#E1EBF5" align="center"> 
                    <td height="275"  colspan="13" align="center" >
-                        <div style="width:80%">
+                        <div style="width:100%">
                             <table id="jqGrid1"></table>
                             <div id="jqGridPager1"></div>
                             
@@ -325,9 +329,9 @@ setInterval(preSetStateAjax,1333000);
  
   
   <tr bgcolor="#E1EBF5">
-    <td height="257" colspan="13" align="center">
-        <div id="linechart" style="width:80%; height:500px"></div>
-        <div id="piechart" style="width:80%; height:500px"></div>
+    <td height="100" colspan="13" align="right">
+        <div id="linechart" style="width:100%; height:300px;" ></div>
+     
         
      
 
@@ -361,19 +365,23 @@ setInterval(preSetStateAjax,1333000);
         		  var lastsel;
         		  jQuery("#jqGrid").jqGrid(
         		      {
-        		        url : "showmaint_reg_tab ? equip_num="+$("#equip_in_stat").val(),
+        		        url : "showsomemaint_reg_tab1? equip_num="+$("#equip_in_stat").val(),
         		        
         		        datatype : "json",
-        		        colNames : [  '维修编号', '维修日期', '维修人员', '维修内容' ],
+        		        colNames : [  '维护记录编号', '维护记录日期',  '维护记录内容','维护记录人员' ],
         		        colModel : [ 
         		                     
-        		                     {name : 'maint_reg_num',index :'maint_reg_num',width:120,sortable :true,editable :false,key:true},
-        		                     {name : 'maint_reg_date',index : 'maint_reg_date',width:120,sortable : true,editable : false,formatter: 'date', editable: false, 
+
+        		                     {name : 'maint_reg_num',index :'maint_reg_num',width:100,align : "center",sortable :true,editable :false,key:true},
+        		                     {name : 'maint_reg_date',index : 'maint_reg_date',width:100,align : "center",sortable : true,editable : false,formatter: 'date', editable: false, 
+
         		                  searchoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}} }, 
+        		                  {name : 'maint_reg_cont',index : 'maint_reg_cont',width:250,sortable : true,editable : false}, 
         		                          		                 
-        		                     {name : 'maint_reg_per_num',index : 'maint_reg_per_num',width:120,sortable : true,editable : false},        		  
+        		                     {name : 'maint_reg_per_num',index : 'maint_reg_per_num',width:100,align : "center",sortable : true,editable : false},        		  
         		                 //    {name : 'maint_reg_obj_num',index : 'maint_reg_obj_num',width:80,sortable : true,editable :false}, 
-        		                     {name : 'maint_reg_cont',index : 'maint_reg_cont',width:220,sortable : true,editable : false}, 
+        		                     
+        		                     
         		                   ],
         		                   
         		        //下载数据到本地，可以实现在前端排序、搜索，这种方式好处是这里的排序和搜索都无需后台处理，无需额外代码，而且支持多条件复杂搜索
@@ -435,7 +443,7 @@ setInterval(preSetStateAjax,1333000);
          	                    }
          	                 }
         	                );
-        		   $("#equip_in_stat").change(function(){$("#jqGrid").setGridParam({url : "showemaint_reg_tab?equip_num="+$("#equip_in_stat").val(),datatype:'json', page:1}).trigger('reloadGrid')});
+        		   $("#equip_in_stat").change(function(){$("#jqGrid").setGridParam({url : "showsomemaint_reg_tab1?equip_num="+$("#equip_in_stat").val(),datatype:'json', page:1}).trigger('reloadGrid')});
         		 
 
         		 
@@ -454,15 +462,15 @@ setInterval(preSetStateAjax,1333000);
           		        colNames : [  '开机时间', '关机时间', '停机时间', '待机时间', '生产量','不合格品数','日期','合格率','OEE' ],
           		        colModel : [ 
           		                     
-          		                     {name : 'runtime',index :'runtime',width : 90,sortable :true,editable :false,key:true},
-          		                     {name : 'stoptime',index : 'stoptime',width : 80,sortable : true,editable :false}, 
-          		                     {name : 'breaktime',index : 'breaktime',width : 90,sortable : true,editable : false},        		                 
-          		                     {name : 'waittime',index : 'waittime',width : 80,sortable : true,editable : false},        		  
-          		                     {name : 'quantity',index : 'quantity',width : 80,sortable : true,editable : false}, 
-          		                     {name : 'infe_quantity',index : 'infe_quantity',width : 80,sortable : true,editable : false}, 
-          		                     {name : 'startdate',index :'startdate',width : 80,sortable : true,editable : false}, 
-          		                     {name : 'passrate',index : 'passrate', width : 80,sortable : true,editable : false}, 
-          		                     {name : 'oeerate',index : 'oeerate',width : 80,sortable : true,editable : false}, 
+          		                     {name : 'runtime',index :'runtime',width : 90,align : "center",sortable :true,editable :false,key:true},
+          		                     {name : 'stoptime',index : 'stoptime',width : 80,align : "center",sortable : true,editable :false}, 
+          		                     {name : 'breaktime',index : 'breaktime',width : 90,align : "center",sortable : true,editable : false},        		                 
+          		                     {name : 'waittime',index : 'waittime',width : 80,align : "center",sortable : true,editable : false},        		  
+          		                     {name : 'quantity',index : 'quantity',width : 80,align : "center",sortable : true,editable : false}, 
+          		                     {name : 'infe_quantity',index : 'infe_quantity',width : 120,align : "center",sortable : true,editable : false}, 
+          		                     {name : 'startdate',index :'startdate',width :120,align : "center",sortable : true,editable : false}, 
+          		                     {name : 'passrate',index : 'passrate', width : 80,align : "center",sortable : true,editable : false}, 
+          		                     {name : 'oeerate',index : 'oeerate',width : 79,align : "center",sortable : true,editable : false}, 
           		                    
           		               
           		               
@@ -544,14 +552,18 @@ setInterval(preSetStateAjax,1333000);
          	          "<tr><td><input id='search' type='button' value='查询'/></td></tr></table>");
          	  $("#starttime", "#t_jqGrid1").click(  $("#starttime").datepicker({
          	      showWeek: true,
-         	      firstDay: 1
+         	      firstDay: 1,
+         	     changeMonth:true,
+        	      changeYear:true,
          	    }))
          	      $("#endtime", "#t_jqGrid1").click(  $("#endtime").datepicker({
          	      showWeek: true,
-         	      firstDay: 1
+         	      firstDay: 1,
+         	      changeMonth:true,
+         	      changeYear:true,
          	    }))
          	   
-         	      $("#search", "#t_jqGrid1").click(  function(){$("#jqGrid1").setGridParam({url : "getoeedata?equip_num="+$("#equip_num_in_OEE").val()+"&summarytype="+$("#summarytype").val()+"&starttime="+$("#starttime").val()+"&endtime="+$("#endtime").val(),datatype:'json', page:1}).trigger('reloadGrid')})
+         	      $("#search", "#t_jqGrid1").click(  function(){$("#jqGrid1").setGridParam({url : "getoeedata?equip_num="+$("#equip_num_in_OEE").val()+"&summarytype="+$("#summarytype").val()+"&starttime="+$("#starttime").val()+"&endtime="+$("#endtime").val(),datatype:'json', page:1}).trigger('reloadGrid'), drawBar()})
          	    
          	    
           		} 
@@ -586,7 +598,7 @@ setInterval(preSetStateAjax,1333000);
             );
             function DrawCharts(ec) {	
             drawBar();
-            drawPie();
+          
              }
 
             function drawBar() {
@@ -598,11 +610,12 @@ setInterval(preSetStateAjax,1333000);
 
                 var value=[];
                 var label=[];
+                
                //设置图的选项
 
                 var option = {                		                  		
                 title : {
-                  	        text: 'OEE分析折线图图',
+                  	        text: 'OEE分析折线图',
                   	        //subtext: '折线图（Line Chart）',
                   	        x:'center'
                   	      },	
@@ -613,14 +626,15 @@ setInterval(preSetStateAjax,1333000);
                     legend: {
                     	orient : 'vertical',
                         x : 'left',
+                       
                         data:[],
                     },
                     //图标右上方的工具箱设置
                     toolbox: {
                         show : true,
                         feature : {
-                            mark : {show: true},
-                            dataView : {show: true, readOnly: false},
+                       //     mark : {show: false},
+                     //       dataView : {show: false, readOnly: false},
                             magicType : {show: true, type: ['line', 'bar']},
                             restore : {show: true},
                             saveAsImage : {show: true}
@@ -642,7 +656,7 @@ setInterval(preSetStateAjax,1333000);
                     ],
 
                     //数据系列，要显示几个系列酒填几个大括号，不然不会显示多出的系列
-                    series : [{},{}],}
+                    series : [{},{},{},{}],}
                 
                
                 //通过ajax从后台获取图表所需数据               
@@ -652,7 +666,7 @@ setInterval(preSetStateAjax,1333000);
     	       type:"POST", 
     	       async : false,
     	       dataType: "json",  
-    	       url:"echartlinedata",  
+    	       url:"oeelinedata?equip_num="+$("#equip_num_in_OEE").val()+"&summarytype="+$("#summarytype").val()+"&starttime="+$("#starttime").val()+"&endtime="+$("#endtime").val(),
     	       error:function(data){  
     	            //alert("出错了！！:"+data[0].name);  
     	        },  
@@ -675,89 +689,7 @@ setInterval(preSetStateAjax,1333000);
 
             }
             
-            function drawPie(ec) {
-                   // 基于准备好的dom，初始化echarts图表
-            	  //myChart = ec.init(document.getElementById('piechart'));            	
-            	  var dom=document.getElementById('piechart');
-                  var myChart=require('echarts').init(dom);
-                  
-            	  var option = {
-            	      title : {
-            	        text: 'OEE分析饼图',
-            	        subtext: '饼图（Pie Chart）',
-            	        x:'center'
-            	      },
-            	      tooltip : {
-            	        trigger: 'item',
-            	        formatter: "{a} <br/>{b} : {c} ({d}%)"
-            	      },
-            	      legend: {
-            	        orient : 'vertical',
-            	        x : 'left',
-            	        data:[],
-            	      },
-            	      toolbox: {
-            	        show : true,
-            	        feature : {
-            	          mark : {show: true},
-            	          dataView : {show: true, readOnly: false},
-            	          restore : {show: true},
-            	          saveAsImage : {show: true}
-            	        }
-            	      },
-            	      calculable : true,
-            	      series : [
-            	        {
-            	          name:'饼图实例',
-            	          //type:'pie',
-            	          radius : '55%',
-            	          center: ['50%', '60%'],
-            	          data:[]
-            	        }
-            	      ]
-            	    };
-
-            	  
-
-            	  //myChart.setOption(option);
-                  $.ajax({  
-           	       data:"name="+$("#name").val(),  
-           	       //用GET方法当请求参数不变时会因部分浏览器缓存而无法更新
-           	       type:"POST", 
-           	       async : false,
-           	       dataType: "json",  
-           	       url:"echartpiedata",  
-           	       error:function(data){  
-           	            //alert("出错了！！:"+data[0].name);  
-           	        },  
-           	        success:function(data){     	          
-           	            var label=[];
-               	        var value=[];
-               	        var values=[];
-           	        //     alert(option.series[0].data);
-           	        //	  alert(data);
-           	        	 //  option.legend.data = data.legend;  
-                            	        
-                   	 label=data.series[0].label;
-                   	 value=data.series[0].data;
-                   	 $.each(label,function(idx,obj){
-                   	values[idx]={'name':label[idx],'value':value[idx]}; 
-                   	 })
-                	
-                	// alert(values);	                   
-           	        	
-                   	 	
-                   	 option.legend.data = data.legend;	
-           	         option.series[0].data = values;
-           	      option.series[0].type = data.series[0].type;
-                  //  alert(option.series[0].data); 
-           	        }
-                 }) 
-
-            	  // 为echarts对象加载数据 
-            	 myChart.setOption(option); 
-
-            }
+          
                
     
        

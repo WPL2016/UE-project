@@ -63,16 +63,16 @@ public class OEECalcuController {
 	          
 	           }   
        	   
-       	   series.add(0,new Series("所选设备OEE","line",oee_val,date));
-       	   series.add(1,new Series("所选设备产品合格率","line",pass_rate,date));
-       	   series.add(2,new Series("所选设备时间利用率","line",time_utility_rate,date));
-       	   series.add(3,new Series("所选设备性能利用率","line",performance_rate,date));
+       	   series.add(0,new Series("设备OEE","line",oee_val,date));
+       	   series.add(1,new Series("产品合格率","line",pass_rate,date));
+       	   series.add(2,new Series("时间利用率","line",time_utility_rate,date));
+       	   series.add(3,new Series("性能利用率","line",performance_rate,date));
        	  
         
 	       //序列的值
 	        	   		    		       
 	       //数据分组 
-	       List<String> legend = new ArrayList<String>(Arrays.asList("所选设备OEE","所选设备产品合格率","所选设备时间利用率","所选设备性能利用率")); 
+	       List<String> legend = new ArrayList<String>(Arrays.asList("设备OEE","产品合格率","时间利用率","性能利用率")); 
 	        //横坐标名称
 	       List<String> category = date;
 	       //序列的值

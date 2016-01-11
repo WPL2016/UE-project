@@ -81,7 +81,7 @@ public class Produce_plan_tabController {
 		}
 		else if(oper != null && oper.equals("add")){
 			if(produce_plan_tab.getProduce_plan_num()=="")produce_plan_tab.setProduce_plan_num(null);
-			produce_plan_tabDAO.saveOrUpdate(produce_plan_tab);
+			produce_plan_tabDAO.add(produce_plan_tab);
 		}
 		else if(oper != null && oper.equals("del")){
 			String[] ids=produce_plan_num.split(",");

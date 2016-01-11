@@ -13,6 +13,8 @@ public interface Produce_plan_tabDAO {
 	
 	public void saveOrUpdate(Produce_plan_tab produce_plan_tab);
 	
+	public void add(Produce_plan_tab produce_plan_tab);
+	
 	public void delete(String produce_plan_num);
 	
 	public Produce_plan_tab get(String produce_plan_num);
