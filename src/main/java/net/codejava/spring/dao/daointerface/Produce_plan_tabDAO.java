@@ -20,6 +20,8 @@ public interface Produce_plan_tabDAO {
 	public Produce_plan_tab get(String produce_plan_num);
 	
 	public List<Produce_plan_tab> list();
+	
+	public List<Produce_plan_tab> listOfOper();
   
 	public int updateSingleColumn(Produce_plan_tab produce_plan_tab,String column,String value);
 }

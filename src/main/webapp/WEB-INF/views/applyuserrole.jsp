@@ -14,7 +14,7 @@
 <meta name="_csrf" content="${_csrf.token}"/>
 <!-- default header name is X-CSRF-TOKEN -->
 <meta name="_csrf_header" content="${_csrf.headerName}"/>
-<title>权限设置</title>  
+<title>申请角色</title>  
 
 <script type="text/javascript">  
 <!--ajax访问时发送csrf token，以防止ajax访问被crsf过滤器拦截   -->
@@ -26,29 +26,7 @@ $(function () {
 	});	
    });
 </script>  
- <script type="text/javascript">
-        <!--自动隔行换色-->
-        $(document).ready(function(){ 
-        	$("#customers tr:odd").addClass("gap_change"); 
-        })
-        	</script>
- <script type="text/javascript">  
-                    function validate_info(addrole)  
-                   {  
-                       if(addrole.role_name.value=="")  
-                        {  
-                            alert("角色名不能为空！");  
-                            return false;  
-                        }                     
-                       return true;  
-                   }   
-                     
-                 
-                     
-</script>  
-        	
-        	
-
+ 
 </head>
 <body>
   <!-- 插入头部 -->
@@ -69,35 +47,14 @@ $(function () {
         <div class="blank_btw_menu_content"></div>
         <!--内容主体的div,请根据具体内容决定div的样式，table_container0最小，1次之，2最大，也可自行在div.css定义你自己想要的样式，要设置成左浮动以保证div水平排列-->     
         <div class="table_container2">
-        <table id="customers">
-	        	<th>No</th>
-	        	<th>角色编号</th>
-	        	<th>角色名</th>
-	        	<th>角色类型</th>
-	        	<th>操作</th>
-	        	
-				<c:forEach var="roles" items="${roles}" varStatus="status">
-	        	<tr>
-	        		<td align="center">${status.index + 1}</td>
-					<td align="center">${roles.role_id}</td>
-					<td align="center">${roles.role_name}</td>
-					<td align="center">${roles.role_type}</td>
-					<td align="center">
-						<input type=button class="button blue" onclick="window.location.href('toeditroleauthors?role_id=${roles.role_id}')" value="修改权限">
-						&nbsp;&nbsp;&nbsp;&nbsp;
-					   <input type=button class="button blue" onclick="window.location.href('deleterole?role_id=${roles.role_id}')" value="删除">
-					</td>
-							
-	        	</tr>
-				</c:forEach>	        	
-			</table>
+       
 			<div class="horiz_blank" style="height:50px"></div>
-			<div class="table_head">新建角色</div>
-			<form id="addrole" method="post"  action="addrole" onsubmit="return validate_info(this);" >
+			<div class="table_head">申请角色</div>
+			<form id="applyuserrole" method="post"  action="applyuserrole" >
 			<table id="customers">
 			<tr><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
-			<tr><td align="center">输入角色名称: <input name="role_name" id="role_name" type="text"/><span style="color:red;">*</span></td>
-			    <td align="center">选择角色类型: 
+			<tr><td align="center" class="blank"></td>
+			    <td align="center" class="blank">选择申请角色类型: 
 			       <select style='width:180px;height:25px;font-size-3' id="role_type" name="role_type">
          	             <option value="经理">经理</option>
          	             <option value="现场操作人员">现场操作人员</option>

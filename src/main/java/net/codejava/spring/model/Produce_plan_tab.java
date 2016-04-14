@@ -16,6 +16,7 @@ public class Produce_plan_tab {
 	private String equip_product_relat_num;
 	private String equip_name;
 	private String product_name;
+	private String plan_status;
 	public Produce_plan_tab() {
 	}
 
@@ -99,4 +100,13 @@ public class Produce_plan_tab {
 	public void setEquip_product_relat_num(String equip_product_relat_num) {
 		this.equip_product_relat_num = equip_product_relat_num;
 	}
+	
+	public String getPlan_status() {
+		return plan_status;
+	}
+
+	public void setPlan_status(String plan_status) {
+		this.plan_status = plan_status;
+	}
+	
 }

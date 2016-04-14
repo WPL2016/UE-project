@@ -32,7 +32,7 @@ private JdbcTemplate jdbcTemplate;
 	
 				aRoles.setRole_id(rs.getInt("role_id"));
 				aRoles.setRole_name(rs.getString("role_name"));
-				
+				aRoles.setRole_type(rs.getString("role_type"));
 				return aRoles;
 			}
 			
@@ -53,7 +53,7 @@ private JdbcTemplate jdbcTemplate;
 	
 				aRoles.setRole_id(rs.getInt("role_id"));
 				aRoles.setRole_name(rs.getString("role_name"));
-				
+				aRoles.setRole_type(rs.getString("role_type"));
 				return aRoles;
 			}
 			
@@ -73,7 +73,7 @@ private JdbcTemplate jdbcTemplate;
 	
 				aRoles.setRole_id(rs.getInt("role_id"));
 				aRoles.setRole_name(rs.getString("role_name"));
-				
+				aRoles.setRole_type(rs.getString("role_type"));
 				return aRoles;
 			}
 			
@@ -92,8 +92,8 @@ private JdbcTemplate jdbcTemplate;
 	
 	@Override
 	public void save(Roles roles){
-	  String sql="Insert into roles (role_name) values (?)";	
-	  jdbcTemplate.update(sql,roles.getRole_name());
+	  String sql="Insert into roles (role_name,role_type) values (?,?)";	
+	  jdbcTemplate.update(sql,roles.getRole_name(),roles.getRole_type());
 	}
 	@Override
 	public int delete(String role_id){

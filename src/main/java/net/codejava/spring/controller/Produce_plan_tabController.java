@@ -3,10 +3,12 @@ package net.codejava.spring.controller;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -28,19 +30,38 @@ public class Produce_plan_tabController {
 	private ContactDAO contactDAO;
 	
 	@RequestMapping(value="/toproduce_plan_tab")
-	public ModelAndView toproduce_plan_tab(){
+	public ModelAndView toproduce_plan_tab(HttpServletRequest request){
 		ModelAndView model=new ModelAndView();
-		model.setViewName("produce_plan_tab");
+		
 		int recordnum=contactDAO.countRecord();
 		model.addObject("recordnum",recordnum+"");
+		HttpSession session = request.getSession();
+		String user_role_type=session.getAttribute("user_role_type").toString();
+		if(user_role_type.equals("经理")){
+			model.setViewName("produce_plan_tab");
+		}
+		else if(user_role_type.equals("现场操作人员")){
+			model.setViewName("oper/produce_plan_tab");
+		}
 		return model;
 	}
 	 
 	@RequestMapping(value="/showproduce_plan_tab")  	
-	public @ResponseBody List<Produce_plan_tab> allContact() throws IOException{
-		List<Produce_plan_tab> allProduce_plan_tab = produce_plan_tabDAO.list();		
+	public @ResponseBody List<Produce_plan_tab> allContact(HttpServletRequest request) throws IOException{
+		HttpSession session = request.getSession();
+		String user_role_type=session.getAttribute("user_role_type").toString();
+		List<Produce_plan_tab> allProduce_plan_tab=new ArrayList();
+		if(user_role_type.equals("经理")){
+		   allProduce_plan_tab = produce_plan_tabDAO.list();
+		}
+		else if(user_role_type.equals("现场操作人员")){
+	       allProduce_plan_tab = produce_plan_tabDAO.listOfOper();
+		}
+		
+				
 		return allProduce_plan_tab;
 	}
+
 	
 	@RequestMapping(value="/editproduce_plan_tab")  	
 	public @ResponseBody String editJqGrid(HttpServletRequest request,@RequestParam(value ="plan_start_time",required=false) @DateTimeFormat(pattern="yyyy-MM-dd") Date date,@RequestParam(value ="plan_end_time",required=false) @DateTimeFormat(pattern="yyyy-MM-dd") Date date1) throws ParseException {
@@ -76,11 +97,13 @@ public class Produce_plan_tabController {
 		System.out.println(produce_plan_tab.getProduce_plan_num());
 		if(oper != null && oper.equals("edit")){
 		if(produce_plan_tab.getProduce_plan_num()=="")produce_plan_tab.setProduce_plan_num(null);
+		
 		produce_plan_tabDAO.saveOrUpdate(produce_plan_tab);   
 		
 		}
 		else if(oper != null && oper.equals("add")){
 			if(produce_plan_tab.getProduce_plan_num()=="")produce_plan_tab.setProduce_plan_num(null);
+			produce_plan_tab.setPlan_status("未审核");
 			produce_plan_tabDAO.add(produce_plan_tab);
 		}
 		else if(oper != null && oper.equals("del")){

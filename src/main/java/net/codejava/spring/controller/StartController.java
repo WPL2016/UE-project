@@ -3,16 +3,24 @@ package net.codejava.spring.controller;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import net.codejava.spring.dao.daointerface.ContactDAO;
+import net.codejava.spring.dao.daointerface.Equip_para_tabDAO;
 import net.codejava.spring.dao.daointerface.Equip_tabDAO;
 import net.codejava.spring.dao.daointerface.Product_tabDAO;
+import net.codejava.spring.dao.daointerface.RolesDAO;
 import net.codejava.spring.model.Equip_tab;
 import net.codejava.spring.model.Product_tab;
+import net.codejava.spring.model.Roles;
+import net.codejava.spring.model.User_Roles;
 
 
 @Controller
@@ -25,14 +33,26 @@ public class StartController {
 	
 	@Autowired
 	private Product_tabDAO product_tabDAO;
+	@Autowired
+	private RolesDAO rolesDAO;
 	
 	@RequestMapping(value="/")
-	public ModelAndView listContact(ModelAndView model) throws IOException{
-		
+	public ModelAndView listContact(ModelAndView model,HttpServletRequest request) throws IOException{
+		List<Roles> roles=rolesDAO.list(request.getUserPrincipal().getName());	  
+	    HttpSession session = request.getSession();
+	    session.setAttribute("user_role_type",roles.get(0).getRole_type() );
 		model.setViewName("home");
-		
 		return model;
 	}
+	
+	@RequestMapping(value="/getmenu")
+	public @ResponseBody  List<Roles> listRoles(ModelAndView model,HttpServletRequest request) throws IOException{
+		 List<Roles> roles=rolesDAO.list(request.getUserPrincipal().getName());
+		return roles;
+	}
+	
+	
+	
 	@RequestMapping(value="/login")
 	public   ModelAndView login(){
 		ModelAndView model=new ModelAndView();

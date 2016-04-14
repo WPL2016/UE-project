@@ -31,6 +31,17 @@ div.background
 	min-width:170px;
  }
 */
+
+div.login_page
+  {
+   	color:#00B0F0;
+	background-color:#00B0F0;
+	height:30px; 
+	width:800px;
+	text-align:center; 
+	
+  }
+
 div.equip_container
   {
     background-color:#F8F8F8;

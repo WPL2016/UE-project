@@ -44,71 +44,11 @@ $(function () {
 	});	
    });
 </script>  
- 
-<script type="text/javascript">
-        function planPublish(id) {
-        		   $.ajax({  
-                       data:{"produce_plan_num":""+id,"column_value":"已发布","oper":"batch_edit","column_name":"plan_status"},  
-                       //用GET方法当请求参数不变时会因部分浏览器缓存而无法更新
-                       type:"POST",  
-                       dataType:'json',  
-                       url:"editproduce_plan_tab",  
-                       error:function(data){  
-                       //alert("出错了！！:"+data[0].name);  
-                                           },  
-                       success:function(data){  
-                      	
-                      	 // alert("成功！！:"+data[0].name);
-                       }
-                                             
-                       })   
-			    //var selected=gr.split(',');
-			    	//   $.each(selected,function(i,n){
-					//	 if(selected[i]!="")  $("#jqGrid").jqGrid('delGridRow',n,{}); 
-				//$.each(gr,function(key,val){
-				//    $("#jqGrid").jqGrid('setRowData',gr[0],{equip_sup:"79800"}).trigger('reloadGrid');   
-				//    $("#jqGrid").jqGrid('saveRow', gr[0], {equip_sup:"79800"} );  
-				//	 $("#jqGrid").jqGrid('saveRow', gr[0],{equip_sup:"79800"});
-		           
-			    //	            })
-			       alert("操作成功！"); 
-			      $("#jqGrid").setGridParam({datatype:'json', page:1}).trigger('reloadGrid');
-			      
-			 
-			    	}
-			    	 	
-                function planDecom(produce_plan_num){
-                	window.open ("today_plan_tab?produce_plan_num="+produce_plan_num,'newwindow','height=1000,width=1000,top=400,left=300,toolbar=no,menubar=no,scrollbars=no, resizable=no,location=no, status=no') 
-			    }        
-			//完成生产计划   	
-			function planFinish(id) {
-			    $.ajax({  
-			    data:{"produce_plan_num":""+id,"column_value":"已完成","oper":"batch_edit","column_name":"plan_status"},  
-			 //用GET方法当请求参数不变时会因部分浏览器缓存而无法更新
-		        type:"POST",  
-			    dataType:'json',  
-			    url:"editproduce_plan_tab",  
-			    error:function(data){  
-		     //alert("出错了！！:"+data[0].name);  
-			    	                },  
-			    success:function(data){  
-			    	                      	
-	         // alert("成功！！:"+data[0].name);
-			    	  }
-			    	                                             
-			    	})   
-			    				    
-		         alert("操作成功！"); 
-			    $("#jqGrid").setGridParam({datatype:'json', page:1}).trigger('reloadGrid');
-			    }
-			    		  
-</script>
-
 </head>
 <body>
   
   <!-- 插入头部 -->
-  <%@ include file="./component/1_head.jsp"%> 
+  <%@ include file="../component/1_head.jsp"%> 
   
   <!-- 中间层的总体容器，宽度是100% -->
   <div class="horiz_container">
@@ -118,7 +58,7 @@ $(function () {
        
         <!-- 插入左侧菜单 --> 
         <div class="menu_container">
-        <%@ include file="./component/7_content.jsp"%> 
+        <%@ include file="../component/7_content.jsp"%> 
         </div>
        
         <!--插入菜单与主体内容之间的空白  -->
@@ -132,11 +72,7 @@ $(function () {
                                    
                   <table id="jqGrid"></table>
                   <div id="jqGridPager"></div>
-                  <!--  
-                  <button id="execute">发布</button>
-                  <button id="finish">分解成日计划</button>
-                  <button id="finish">确认完成</button>
-                  -->
+                  <button id="execute">开始执行</button>
             </div>
        </div>
    
@@ -156,7 +92,7 @@ $(function () {
         		      {
         		        url : "showproduce_plan_tab",
         		        datatype : "json",
-        		        colNames : [  '生产计划编号', '生产计划开始时间 ', '生产计划结束时间 ','设备名称', '产品名称','计划产量','计划工作时间', '生产计划记录人姓名','设备与产品关系编号','生产计划状态','操作'],
+        		        colNames : [  '生产计划编号', '生产计划开始时间 ', '生产计划结束时间 ','设备名称', '产品名称','计划产量','计划工作时间', '生产计划记录人姓名','设备与产品关系编号','生产计划状态'],
         		        colModel : [ 
 
         		                     {name : 'produce_plan_num',index :'produce_plan_num',width : 150,align : "center",sortable :true,editable : true,key:true},
@@ -169,9 +105,6 @@ $(function () {
         		                     {name : 'produce_plan_recorder_num',index : 'produce_plan_recorder_num',width : 150,align : "center",sortable : true,editable : false},       
         		                     {name : 'equip_product_relat_num',index : 'equip_product_relat_num',width : 150,align : "center",sortable : true,editable : true}, 
         		                     {name : 'plan_status',index : 'plan_status',width : 150,align : "center",sortable : true,editable : false},   
-        		                     {name : 'operate',index : 'operate',width : 300,align : "center",sortable : false,editable : false, formatter: function (value, grid, rows, state) { return "<button onclick='planPublish("+rows.produce_plan_num+")'>发布</button>&nbsp&nbsp&nbsp<button onclick='planDecom("+rows.produce_plan_num+")'>分解</button>&nbsp&nbsp&nbsp<button onclick='planFinish("+rows.produce_plan_num+")'>完成</button>" },
-        		                  
-        		                     }
         		                     
         		                   ],
         		                   
@@ -194,7 +127,7 @@ $(function () {
         		        height:300,
         		        rowList : [ 20, 40, 60 ],
         		        pager : '#jqGridPager',
-        		       // multiselect:true,
+        		        multiselect:true,
         		        sortname :'produce_plan_num',
         		        viewrecords : true,
         		        sortorder : "desc",
@@ -396,53 +329,7 @@ $(function () {
         			    
         			  });
         		 
-        		   //批量修改
-        		   $("#finish").click(function() {
-        			   //alert("Please Select Row to delete!1")
-        			   var gr = $("#jqGrid").jqGrid('getGridParam', 'selarrrow');
-        			   
-        			    if ((gr != null)&&(gr !="")){
-        			    	
-        			   // alert("Please Select Row to delete!2"+gr)
-        			  
-        			    //自定义ajax访问实现批量操作
-        	            $.ajax({  
-	                             data:{"produce_plan_num":""+gr,"column_value":"已完成","oper":"batch_edit","column_name":"plan_status"},  
-	                             //用GET方法当请求参数不变时会因部分浏览器缓存而无法更新
-	                             type:"POST",  
-	                             dataType:'json',  
-	                             url:"editproduce_plan_tab",  
-	                             error:function(data){  
-	                             //alert("出错了！！:"+data[0].name);  
-	                                                 },  
-	                             success:function(data){  
-	                            	 
-	                            
-	                            	 //alert("成功！！:"+data[0].name);
-	                            	
-	                             }
-	                                                   
-	                             })   
-        			    //var selected=gr.split(',');
-        			    	//   $.each(selected,function(i,n){
-      						//	 if(selected[i]!="")  $("#jqGrid").jqGrid('delGridRow',n,{}); 
-      					//$.each(gr,function(key,val){
-      					//    $("#jqGrid").jqGrid('setRowData',gr[0],{equip_sup:"79800"}).trigger('reloadGrid');   
-      					//    $("#jqGrid").jqGrid('saveRow', gr[0], {equip_sup:"79800"} );  
-      					//	 $("#jqGrid").jqGrid('saveRow', gr[0],{equip_sup:"79800"});
-        		           
-        			    //	            })
-        			      alert("操作成功！"); 
-        			      $("#jqGrid").setGridParam({datatype:'json', page:1}).trigger('reloadGrid');
-        			 
-        			    	            }
-        			    else {alert("请选择要编辑的行")}
-        			   
-        			    
-        			   
-        			    
-        			  });
-        		       		          		 
+        		          		          		 
         			    	
         		}
         		
@@ -459,7 +346,7 @@ $(function () {
     
   <!-- 插入底部 -->     
   <div>
-  <%@ include file="./component/2_foot.jsp"%>
+  <%@ include file="../component/2_foot.jsp"%>
   </div>  
   
   

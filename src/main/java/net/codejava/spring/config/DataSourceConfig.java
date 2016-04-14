@@ -42,6 +42,7 @@ import net.codejava.spring.dao.daoimpl.Product_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.Role_AuthorsDAOImpl;
 import net.codejava.spring.dao.daoimpl.RolesDAOImpl;
 import net.codejava.spring.dao.daoimpl.User_RolesDAOImpl;
+import net.codejava.spring.dao.daoimpl.User_role_applyDAOImpl;
 import net.codejava.spring.dao.daoimpl.User_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.UsersDAOImpl;
 import net.codejava.spring.dao.daointerface.Atype_tabDAO;
@@ -82,6 +83,7 @@ import net.codejava.spring.dao.daointerface.Product_tabDAO;
 import net.codejava.spring.dao.daointerface.Role_AuthorsDAO;
 import net.codejava.spring.dao.daointerface.RolesDAO;
 import net.codejava.spring.dao.daointerface.User_RolesDAO;
+import net.codejava.spring.dao.daointerface.User_role_applyDAO;
 import net.codejava.spring.dao.daointerface.User_tabDAO;
 import net.codejava.spring.dao.daointerface.UsersDAO;
 
@@ -240,7 +242,11 @@ public class DataSourceConfig {
    		return new  Role_AuthorsDAOImpl(getDataSource());
 
    	} 
-   
+    @Bean
+   	public  User_role_applyDAO getUser_role_applyDAO() {
+   		return new  User_role_applyDAOImpl(getDataSource());
+
+   	} 
     
    
 }
