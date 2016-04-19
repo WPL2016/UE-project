@@ -44,6 +44,40 @@ $(function () {
 	});	
    });
 </script>  
+<script type="text/javascript">
+function workExcute(id,plan_status) {
+	if((plan_status=="4")||(plan_status=="1")){   
+	$.ajax({  
+          data:{"work_plan_num":""+id,"column_value":"3","oper":"batch_edit","column_name":"plan_status"},  
+          //用GET方法当请求参数不变时会因部分浏览器缓存而无法更新
+          type:"POST",  
+          dataType:'json',  
+          url:"excutework_plan",  
+          error:function(data){  
+          //alert("出错了！！:"+data[0].name);  
+                              },  
+          success:function(data){  
+         	
+         	 // alert("成功！！:"+data[0].name);
+          }
+                                
+          })   
+	    //var selected=gr.split(',');
+	    	//   $.each(selected,function(i,n){
+			//	 if(selected[i]!="")  $("#jqGrid").jqGrid('delGridRow',n,{}); 
+		//$.each(gr,function(key,val){
+		//    $("#jqGrid").jqGrid('setRowData',gr[0],{equip_sup:"79800"}).trigger('reloadGrid');   
+		//    $("#jqGrid").jqGrid('saveRow', gr[0], {equip_sup:"79800"} );  
+		//	 $("#jqGrid").jqGrid('saveRow', gr[0],{equip_sup:"79800"});
+        
+	    //	            })
+	       alert("操作成功！"); 
+	      $("#jqGrid").setGridParam({datatype:'json', page:1}).trigger('reloadGrid');
+	    	}
+	    	else alert("只能执行已经发布且没完成的作业计划");
+	 
+	    	}
+</script>
 </head>
 <body>
   
@@ -68,11 +102,11 @@ $(function () {
       <div class="table_container2">
            
                  
-                <div class="table_head">生产计划</div>  
+                <div class="table_head">作业计划</div>  
                                    
                   <table id="jqGrid"></table>
                   <div id="jqGridPager"></div>
-                  <button id="execute">开始执行</button>
+                 
             </div>
        </div>
    
@@ -86,253 +120,302 @@ $(function () {
         		  //pageInit1();
         		 // pageInit2();
         		});
-        		function pageInit(){
-        		  var lastsel;
-        		  jQuery("#jqGrid").jqGrid(
-        		      {
-        		        url : "showproduce_plan_tab",
-        		        datatype : "json",
-        		        colNames : [  '生产计划编号', '生产计划开始时间 ', '生产计划结束时间 ','设备名称', '产品名称','计划产量','计划工作时间', '生产计划记录人姓名','设备与产品关系编号','生产计划状态'],
-        		        colModel : [ 
+        function pageInit(){
+  		  var lastsel;
+  		  jQuery("#jqGrid").jqGrid(
+  		      {
+  		        url : "showwork_plan_tab?plan_status_type=operator",
+  		        datatype : "json",
+  		        colNames : [  '作业计划编号','日生产计划编号','产品编号','产品名称','设备编号','设备名称', '计划数量', '计划状态 ','计划日期','计划班次', '制定日期','制定人','操作'],
+  		        colModel : [ 
+  		                     {name : 'work_plan_num',index :'work_plan_num',width : 150,align : "center",sortable :true,editable : true,key:true},
+  		                     {name : 'day_plan_num',index :'day_plan_num',width : 150,align : "center",sortable :true,editable : true},       		                    
+  		                     {name : 'product_num',index :'product_num',width : 150,align : "center",sortable :true,editable : true}, 
+		                     {name : 'product_name',index :'product_name',width : 150,align : "center",sortable :true,editable : true}, 
+		                     {name : 'equip_num',index :'equip_num',width : 150,align : "center",sortable :true,editable : true}, 
+		                     {name : 'equip_name',index :'equip_name',width : 150,align : "center",sortable :true,editable : true},        
+  		                     {name : 'plan_quan',index : 'plan_quan',width : 70,align : "center",sortable : true,editable : true},  
+  		                     {name : 'plan_status',index : 'plan_status',width : 150,align : "center",sortable : true,editable : false,formatter:'select', editoptions:{value:'0:未发布;1:已发布;2:已分解;3:执行中;4:执行中断;5:已完成'}},   
+  		                     {name : 'plan_date',index : 'plan_date',width : 130,align : "center",sortable : true,editable : true,searchoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}},addoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}},editoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}}} ,
+  		                     {name : 'plan_shift',index : 'plan_shift',width : 150,align : "center",sortable : true,editable : false},   
+  		                     {name : 'edit_time',index : 'edit_time',width : 130,align : "center",sortable : true,editable : true,searchoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}},addoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}},editoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}}} ,
+  		                     {name : 'work_plan_recorder_num',index : 'work_plan_recorder_num',width : 150,align : "center",sortable : true,editable : false},
+  		                     {name : 'operate',index : 'operate',width : 300,align : "center",sortable : false,editable : false, formatter: function (value, grid, rows, state) { return "<button onclick='workExcute("+rows.work_plan_num+","+rows.plan_status+")'>开始执行</button>" },}
+  		                  
+  		                     
+  		                     
+  		                   ],
+  		                   
+  		        //下载数据到本地，可以实现在前端排序、搜索，这种方式好处是这里的排序和搜索都无需后台处理，无需额外代码，而且支持多条件复杂搜索
+  	        	//缺点是一次导入所有数据，数据量大时会存在一些问题，此时需要在后台实现搜索，只载入符合条件的数据,此外表格不自动刷新，需要reload
+  	        	//请根据需要选择养已经完成好的前台查询和排序还是自行实现后台排序和搜索  
+  	        
+  		        loadonce:true,
+  		        //当加载出错时提供错误信息
+  		        loadError: function(xhr,status,error){  
+  		        	 alert(status + " loading data of " + $(this).attr("id") + " : " + error );    },  
 
-        		                     {name : 'produce_plan_num',index :'produce_plan_num',width : 150,align : "center",sortable :true,editable : true,key:true},
-        		                     {name : 'plan_start_time',index : 'plan_start_time',width : 130,align : "center",sortable : true,editable : true,searchoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}},addoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}},editoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}}} ,
-        		                     {name : 'plan_end_time',index : 'plan_end_time',width : 130,align : "center",sortable : true,editable : true,searchoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}},addoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}},editoptions:{readonly: 'readonly', dataInit:function(el) { $(el).datepicker()}}} ,
-        		                     {name : 'equip_name',index : 'equip_name',width : 100,align : "center",sortable : true,editable : false}, 
-        		                     {name : 'product_name',index : 'product_name',width : 100,align : "center",sortable : true,editable : false}, 
-        		                     {name : 'plan_quan',index : 'plan_quan',width : 70,align : "center",sortable : true,editable : true},        		                 
-        			                 {name : 'plan_work_time',index : 'plan_work_time',width : 100,align : "center",sortable : true,editable : true}, 
-        		                     {name : 'produce_plan_recorder_num',index : 'produce_plan_recorder_num',width : 150,align : "center",sortable : true,editable : false},       
-        		                     {name : 'equip_product_relat_num',index : 'equip_product_relat_num',width : 150,align : "center",sortable : true,editable : true}, 
-        		                     {name : 'plan_status',index : 'plan_status',width : 150,align : "center",sortable : true,editable : false},   
-        		                     
-        		                   ],
-        		                   
-        		        //下载数据到本地，可以实现在前端排序、搜索，这种方式好处是这里的排序和搜索都无需后台处理，无需额外代码，而且支持多条件复杂搜索
-        	        	//缺点是一次导入所有数据，数据量大时会存在一些问题，此时需要在后台实现搜索，只载入符合条件的数据,此外表格不自动刷新，需要reload
-        	        	//请根据需要选择养已经完成好的前台查询和排序还是自行实现后台排序和搜索  
-        	        
-        		        loadonce:true,
-        		        //当加载出错时提供错误信息
-        		        loadError: function(xhr,status,error){  
-        		        	 alert(status + " loading data of " + $(this).attr("id") + " : " + error );    },  
 
+  		        caption:"", height : 80,align : "center",
 
-        		        caption:"", height : 80,align : "center",
+  		       
 
-        		       
+  		        prmNames: { id: "produce_plan_num" },
+  		        rowNum : 20,
+  		        height:300,
+  		        rowList : [ 20, 40, 60 ],
+  		        pager : '#jqGridPager',
+  		       // multiselect:true,
+  		        sortname :'produce_plan_num',
+  		        viewrecords : true,
+  		        sortorder : "desc",
+  		        autowidth:true,
+  		        onSelectRow : function(id) {
+  		          if (id && id !== lastsel) {
+  		            jQuery('#jqGrid2').jqGrid('restoreRow', lastsel);
+  		            jQuery('#jqGrid2').jqGrid('editRow', id, true);
+  		            lastsel = id;
+  		          }
+  		        },
+  		        editurl : "editday_plan_tab",
+  		       
+  		      });
+  		  
+  		   $('#jqGrid2').navGrid('#jqGridPager',
+  	                // the buttons to appear on the toolbar of the grid
+  	                { edit: true, add: true, del: true, search: true, refresh: true, view: false, position: "left", cloneToTop: false },
+  	                // options for the Edit Dialog
+  	                {
+  	                    editCaption: "编辑记录",
+  	                    recreateForm: true,
+  						checkOnUpdate : true,
+  						checkOnSubmit : true,
+  	                    closeAfterEdit: true,
+  	                    //出错时返回提示
+  	                    errorTextFormat: function (data) {
+  	                    	var message="服务器异常，请稍后尝试！";
+  	                    	var result=data.statusText;
+  	                    	if(result=="Not Found") message="无法找到资源，请联系系统管理员！";
+  	                    	else if(result=="Forbidden") message="您没有权限执行此操作，请联系上级或申请相应权限！";
+  	                        alert(message);
+  	                    },
 
-        		        prmNames: { id: "produce_plan_num" },
-        		        rowNum : 20,
-        		        height:300,
-        		        rowList : [ 20, 40, 60 ],
-        		        pager : '#jqGridPager',
-        		        multiselect:true,
-        		        sortname :'produce_plan_num',
-        		        viewrecords : true,
-        		        sortorder : "desc",
-        		        autowidth:true,
-        		        onSelectRow : function(id) {
-        		          if (id && id !== lastsel) {
-        		            jQuery('#jqGrid').jqGrid('restoreRow', lastsel);
-        		            jQuery('#jqGrid').jqGrid('editRow', id, true);
-        		            lastsel = id;
-        		          }
-        		        },
-        		        editurl : "editproduce_plan_tab",
-        		       
-        		      });
-        		  
-        		   $('#jqGrid').navGrid('#jqGridPager',
-        	                // the buttons to appear on the toolbar of the grid
-        	                { edit: true, add: true, del: true, search: true, refresh: true, view: false, position: "left", cloneToTop: false },
-        	                // options for the Edit Dialog
-        	                {
-        	                    editCaption: "编辑记录",
-        	                    recreateForm: true,
-        						checkOnUpdate : true,
-        						checkOnSubmit : true,
-        	                    closeAfterEdit: true,
-        	                    //出错时返回提示
-        	                    errorTextFormat: function (data) {
-        	                    	var message="服务器异常，请稍后尝试！";
-        	                    	var result=data.statusText;
-        	                    	if(result=="Not Found") message="无法找到资源，请联系系统管理员！";
-        	                    	else if(result=="Forbidden") message="您没有权限执行此操作，请联系上级或申请相应权限！";
-        	                        alert(message);
-        	                    },
+  	                //执行完毕进行提示和更新数据  
+  	                afterComplete:function(xhr){      
+  	                	         //提示操作结果
+  	                	                  
+  	                             alert("操作成功！");
+  	                             //更新表格数据，因为之前设置了loadonce，所以datatype自动转换成了local，所以一般的reload都无效，
+  	                             //必须先改回原先的数据数据类型
+  	                             $("#jqGrid").setGridParam({datatype:'json', page:1}).trigger('reloadGrid');
 
-        	                //执行完毕进行提示和更新数据  
-        	                afterComplete:function(xhr){      
-        	                	         //提示操作结果
-        	                	                  
-        	                             alert("操作成功！");
-        	                             //更新表格数据，因为之前设置了loadonce，所以datatype自动转换成了local，所以一般的reload都无效，
-        	                             //必须先改回原先的数据数据类型
-        	                             $("#jqGrid").setGridParam({datatype:'json', page:1}).trigger('reloadGrid');
+  	                              },
 
-        	                              },
+  	                },
+  	                // options for the Add Dialog
+  	                {
+  	                	
+  	                	
+  	                   // recreateForm: true,
+  	                   //出错时返回信息
+  	                    errorTextFormat: function (data) {
+  	                    	var message="服务器异常，请稍后尝试！";
+  	                    	var result=data.statusText;
+  	                    	if(result=="Not Found") message="无法找到资源，请联系系统管理员！";
+  	                    	else if(result=="Forbidden") message="您没有权限执行此操作，请联系上级或申请相应权限！";
+  	                        alert(message);
+  	                   },
+  	                   
+  	                 //执行完毕进行提示和更新数据  
+  	                afterComplete:function(xhr){      
+  	                	         //提示操作结果
+  	                	                  
+  	                             alert("操作成功！");
+  	                             //更新表格数据，因为之前设置了loadonce，所以datatype自动转换成了local，所以一般的reload都无效，
+  	                             //必须先改回原先的数据数据类型
+  	                             $("#jqGrid").setGridParam({datatype:'json', page:1}).trigger('reloadGrid');
 
-        	                },
-        	                // options for the Add Dialog
-        	                {
-        	                	
-        	                	
-        	                   // recreateForm: true,
-        	                   //出错时返回信息
-        	                    errorTextFormat: function (data) {
-        	                    	var message="服务器异常，请稍后尝试！";
-        	                    	var result=data.statusText;
-        	                    	if(result=="Not Found") message="无法找到资源，请联系系统管理员！";
-        	                    	else if(result=="Forbidden") message="您没有权限执行此操作，请联系上级或申请相应权限！";
-        	                        alert(message);
-        	                   },
-        	                   
-        	                 //执行完毕进行提示和更新数据  
-        	                afterComplete:function(xhr){      
-        	                	         //提示操作结果
-        	                	                  
-        	                             alert("操作成功！");
-        	                             //更新表格数据，因为之前设置了loadonce，所以datatype自动转换成了local，所以一般的reload都无效，
-        	                             //必须先改回原先的数据数据类型
-        	                             $("#jqGrid").setGridParam({datatype:'json', page:1}).trigger('reloadGrid');
+  	                              },
+  	                 closeAfterAdd: true,            
+  	                                   	               
+  	                },
+  	                // options for the Delete Dailog
+  	                {
+ 
+  	                	
+  	                	errorTextFormat: function (data) {
+  	                    	var message="服务器异常，请稍后尝试！";
+  	                    	var result=data.statusText;
+  	                    	if(result=="Not Found") message="无法找到资源，请联系系统管理员！";
+  	                    	else if(result=="Forbidden") message="您没有权限执行此操作，请联系上级或申请相应权限！";
+  	                        alert(message);
+  	                    },
 
-        	                              },
-        	                 closeAfterAdd: true,            
-        	                                   	               
-        	                },
-        	                // options for the Delete Dailog
-        	                {
-       
-        	                	
-        	                	errorTextFormat: function (data) {
-        	                    	var message="服务器异常，请稍后尝试！";
-        	                    	var result=data.statusText;
-        	                    	if(result=="Not Found") message="无法找到资源，请联系系统管理员！";
-        	                    	else if(result=="Forbidden") message="您没有权限执行此操作，请联系上级或申请相应权限！";
-        	                        alert(message);
-        	                    },
+  	                //执行完毕进行提示和更新数据  
+  	                afterComplete:function(xhr){      
+  	                	         //提示操作结果
+  	                	                  
+  	                             alert("操作成功！");
+  	                             //更新表格数据，因为之前设置了loadonce，所以datatype自动转换成了local，所以一般的reload都无效，
+  	                             //必须先改回原先的数据数据类型
+  	                             $("#jqGrid").setGridParam({datatype:'json', page:1}).trigger('reloadGrid');
 
-        	                //执行完毕进行提示和更新数据  
-        	                afterComplete:function(xhr){      
-        	                	         //提示操作结果
-        	                	                  
-        	                             alert("操作成功！");
-        	                             //更新表格数据，因为之前设置了loadonce，所以datatype自动转换成了local，所以一般的reload都无效，
-        	                             //必须先改回原先的数据数据类型
-        	                             $("#jqGrid").setGridParam({datatype:'json', page:1}).trigger('reloadGrid');
+  	                              },
 
-        	                              },
-
-        	                },
-        	                // options for the Search Dailog
-        	                {
-        	                	multipleSearch:true,
-        	                	multipleGroup:true,
-        	                	recreateForm: true,
-        	                	closeAfterSearch: true,       	            
-        	                	errorTextFormat: function (data) {
-        	                        return '搜索失败，请重新尝试!'+ data.responseText
-        	                    }
-        	                 }
-        	                );
-        		 
-        		   //批量修改
-        		   $("#deldata").click(function() {
-        			   //alert("Please Select Row to delete!1")
-        			   var gr = $("#jqGrid").jqGrid('getGridParam', 'selarrrow');
-        			   
-        			    if ((gr != null)&&(gr !="")){
-        			    
-        			   // alert("Please Select Row to delete!2"+gr)
-        			  
-        			    //自定义ajax访问实现批量操作
-        	            $.ajax({  
-	                             data:{"produce_plan_num":""+gr,"column_value":99,"oper":"batch_edit","column_name":"equip_product_relat_num"},  
-	                             //用GET方法当请求参数不变时会因部分浏览器缓存而无法更新
-	                             type:"POST",  
-	                             dataType:'json',  
-	                             url:"editproduce_plan_tab",  
-	                             error:function(data){  
-	                             //alert("出错了！！:"+data[0].name);  
-	                                                 },  
-	                             success:function(data){  
-	                            	
-	                            	 // alert("成功！！:"+data[0].name);
-	                             }
-	                                                   
-	                             })   
-        			    //var selected=gr.split(',');
-        			    	//   $.each(selected,function(i,n){
-      						//	 if(selected[i]!="")  $("#jqGrid").jqGrid('delGridRow',n,{}); 
-      					//$.each(gr,function(key,val){
-      					//    $("#jqGrid").jqGrid('setRowData',gr[0],{equip_sup:"79800"}).trigger('reloadGrid');   
-      					//    $("#jqGrid").jqGrid('saveRow', gr[0], {equip_sup:"79800"} );  
-      					//	 $("#jqGrid").jqGrid('saveRow', gr[0],{equip_sup:"79800"});
-        		           
-        			    //	            })
-        			       alert("操作成功！"); 
-        			      $("#jqGrid").setGridParam({datatype:'json', page:1}).trigger('reloadGrid');
-        			    	            }
-        			
-        			    	
-        			    else {alert("请选择要删除的行")}
-        			    
-        			    
-        			   
-        			  });
-        		 
-        		   //批量修改
-        		   $("#execute").click(function() {
-        			   //alert("Please Select Row to delete!1")
-        			   var gr = $("#jqGrid").jqGrid('getGridParam', 'selarrrow');
-        			   
-        			    if ((gr != null)&&(gr !="")){
-        			    	
-        			   // alert("Please Select Row to delete!2"+gr)
-        			  
-        			    //自定义ajax访问实现批量操作
-        	            $.ajax({  
-	                             data:{"produce_plan_num":""+gr,"column_value":"执行中","oper":"batch_edit","column_name":"plan_status"},  
-	                             //用GET方法当请求参数不变时会因部分浏览器缓存而无法更新
-	                             type:"POST",  
-	                             dataType:'json',  
-	                             url:"editproduce_plan_tab",  
-	                             error:function(data){  
-	                             //alert("出错了！！:"+data[0].name);  
-	                                                 },  
-	                             success:function(data){  
-	                            	 
-	                            
-	                            	 //alert("成功！！:"+data[0].name);
-	                            	
-	                             }
-	                                                   
-	                             })   
-        			    //var selected=gr.split(',');
-        			    	//   $.each(selected,function(i,n){
-      						//	 if(selected[i]!="")  $("#jqGrid").jqGrid('delGridRow',n,{}); 
-      					//$.each(gr,function(key,val){
-      					//    $("#jqGrid").jqGrid('setRowData',gr[0],{equip_sup:"79800"}).trigger('reloadGrid');   
-      					//    $("#jqGrid").jqGrid('saveRow', gr[0], {equip_sup:"79800"} );  
-      					//	 $("#jqGrid").jqGrid('saveRow', gr[0],{equip_sup:"79800"});
-        		           
-        			    //	            })
-        			      alert("操作成功！"); 
-        			      $("#jqGrid").setGridParam({datatype:'json', page:1}).trigger('reloadGrid');
-        			 
-        			    	            }
-        			    else {alert("请选择要编辑的行")}
-        			   
-        			    
-        			   
-        			    
-        			  });
-        		 
-        		          		          		 
-        			    	
-        		}
-        		
+  	                },
+  	                // options for the Search Dailog
+  	                {
+  	                	multipleSearch:true,
+  	                	multipleGroup:true,
+  	                	recreateForm: true,
+  	                	closeAfterSearch: true,       	            
+  	                	errorTextFormat: function (data) {
+  	                        return '搜索失败，请重新尝试!'+ data.responseText
+  	                    }
+  	                 }
+  	                );
+  		 
+  		   //批量修改
+  		   $("#deldata").click(function() {
+  			   //alert("Please Select Row to delete!1")
+  			   var gr = $("#jqGrid").jqGrid('getGridParam', 'selarrrow');
+  			   
+  			    if ((gr != null)&&(gr !="")){
+  			    
+  			   // alert("Please Select Row to delete!2"+gr)
+  			  
+  			    //自定义ajax访问实现批量操作
+  	            $.ajax({  
+                           data:{"produce_plan_num":""+gr,"column_value":99,"oper":"batch_edit","column_name":"equip_product_relat_num"},  
+                           //用GET方法当请求参数不变时会因部分浏览器缓存而无法更新
+                           type:"POST",  
+                           dataType:'json',  
+                           url:"editproduce_plan_tab",  
+                           error:function(data){  
+                           //alert("出错了！！:"+data[0].name);  
+                                               },  
+                           success:function(data){  
+                          	
+                          	 // alert("成功！！:"+data[0].name);
+                           }
+                                                 
+                           })   
+  			    //var selected=gr.split(',');
+  			    	//   $.each(selected,function(i,n){
+						//	 if(selected[i]!="")  $("#jqGrid").jqGrid('delGridRow',n,{}); 
+					//$.each(gr,function(key,val){
+					//    $("#jqGrid").jqGrid('setRowData',gr[0],{equip_sup:"79800"}).trigger('reloadGrid');   
+					//    $("#jqGrid").jqGrid('saveRow', gr[0], {equip_sup:"79800"} );  
+					//	 $("#jqGrid").jqGrid('saveRow', gr[0],{equip_sup:"79800"});
+  		           
+  			    //	            })
+  			       alert("操作成功！"); 
+  			      $("#jqGrid").setGridParam({datatype:'json', page:1}).trigger('reloadGrid');
+  			    	            }
+  			
+  			    	
+  			    else {alert("请选择要删除的行")}
+  			    
+  			    
+  			   
+  			  });
+  		 
+  		   //批量修改
+  		   $("#execute").click(function() {
+  			   //alert("Please Select Row to delete!1")
+  			   var gr = $("#jqGrid").jqGrid('getGridParam', 'selarrrow');
+  			   
+  			    if ((gr != null)&&(gr !="")){
+  			    	
+  			   // alert("Please Select Row to delete!2"+gr)
+  			  
+  			    //自定义ajax访问实现批量操作
+  	            $.ajax({  
+                           data:{"produce_plan_num":""+gr,"column_value":"执行中","oper":"batch_edit","column_name":"plan_status"},  
+                           //用GET方法当请求参数不变时会因部分浏览器缓存而无法更新
+                           type:"POST",  
+                           dataType:'json',  
+                           url:"editproduce_plan_tab",  
+                           error:function(data){  
+                           //alert("出错了！！:"+data[0].name);  
+                                               },  
+                           success:function(data){  
+                          	 
+                          
+                          	 //alert("成功！！:"+data[0].name);
+                          	
+                           }
+                                                 
+                           })   
+  			    //var selected=gr.split(',');
+  			    	//   $.each(selected,function(i,n){
+						//	 if(selected[i]!="")  $("#jqGrid").jqGrid('delGridRow',n,{}); 
+					//$.each(gr,function(key,val){
+					//    $("#jqGrid").jqGrid('setRowData',gr[0],{equip_sup:"79800"}).trigger('reloadGrid');   
+					//    $("#jqGrid").jqGrid('saveRow', gr[0], {equip_sup:"79800"} );  
+					//	 $("#jqGrid").jqGrid('saveRow', gr[0],{equip_sup:"79800"});
+  		           
+  			    //	            })
+  			      alert("操作成功！"); 
+  			      $("#jqGrid").setGridParam({datatype:'json', page:1}).trigger('reloadGrid');
+  			 
+  			    	            }
+  			    else {alert("请选择要编辑的行")}
+  			   
+  			    
+  			   
+  			    
+  			  });
+  		 
+  		   //批量修改
+  		   $("#finish").click(function() {
+  			   //alert("Please Select Row to delete!1")
+  			   var gr = $("#jqGrid").jqGrid('getGridParam', 'selarrrow');
+  			   
+  			    if ((gr != null)&&(gr !="")){
+  			    	
+  			   // alert("Please Select Row to delete!2"+gr)
+  			  
+  			    //自定义ajax访问实现批量操作
+  	            $.ajax({  
+                           data:{"produce_plan_num":""+gr,"column_value":"已完成","oper":"batch_edit","column_name":"plan_status"},  
+                           //用GET方法当请求参数不变时会因部分浏览器缓存而无法更新
+                           type:"POST",  
+                           dataType:'json',  
+                           url:"editproduce_plan_tab",  
+                           error:function(data){  
+                           //alert("出错了！！:"+data[0].name);  
+                                               },  
+                           success:function(data){  
+                          	 
+                          
+                          	 //alert("成功！！:"+data[0].name);
+                          	
+                           }
+                                                 
+                           })   
+  			    //var selected=gr.split(',');
+  			    	//   $.each(selected,function(i,n){
+						//	 if(selected[i]!="")  $("#jqGrid").jqGrid('delGridRow',n,{}); 
+					//$.each(gr,function(key,val){
+					//    $("#jqGrid").jqGrid('setRowData',gr[0],{equip_sup:"79800"}).trigger('reloadGrid');   
+					//    $("#jqGrid").jqGrid('saveRow', gr[0], {equip_sup:"79800"} );  
+					//	 $("#jqGrid").jqGrid('saveRow', gr[0],{equip_sup:"79800"});
+  		           
+  			    //	            })
+  			      alert("操作成功！"); 
+  			      $("#jqGrid").setGridParam({datatype:'json', page:1}).trigger('reloadGrid');
+  			 
+  			    	            }
+  			    else {alert("请选择要编辑的行")}
+  			   
+  			    
+  			   
+  			    
+  			  });
+  		       		          		 
+  			    	
+  		}		   	        		        
         		
             	        		 
             	        		          		          		 

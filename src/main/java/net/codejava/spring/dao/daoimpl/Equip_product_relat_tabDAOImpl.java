@@ -104,5 +104,12 @@ public class Equip_product_relat_tabDAOImpl implements Equip_product_relat_tabDA
 			
 		});
 	}
-
+    @Override
+	public String getEquip_product_relate_num(String equip_num,String product_num){
+    	
+    	String number = (String) jdbcTemplate.queryForObject( "select  equip_product_relat_num from equip_product_relat_tab where equip_num=? and product_num=?", new Object[] {equip_num,product_num}, java.lang.String.class);
+    	return number;
+    	
+    }
+    
 }

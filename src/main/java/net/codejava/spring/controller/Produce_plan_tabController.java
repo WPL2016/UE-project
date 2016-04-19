@@ -26,15 +26,14 @@ import net.codejava.spring.model.Produce_plan_tab;
 public class Produce_plan_tabController {
 	@Autowired
 	private Produce_plan_tabDAO produce_plan_tabDAO;
-	@Autowired
-	private ContactDAO contactDAO;
+	
 	
 	@RequestMapping(value="/toproduce_plan_tab")
 	public ModelAndView toproduce_plan_tab(HttpServletRequest request){
 		ModelAndView model=new ModelAndView();
 		
-		int recordnum=contactDAO.countRecord();
-		model.addObject("recordnum",recordnum+"");
+		
+	
 		HttpSession session = request.getSession();
 		String user_role_type=session.getAttribute("user_role_type").toString();
 		if(user_role_type.equals("经理")){
@@ -83,7 +82,7 @@ public class Produce_plan_tabController {
 				}
 		if(request.getParameter("plan_work_time")!=null)
 		{produce_plan_tab.setPlan_work_time(Integer.parseInt(request.getParameter("plan_work_time")));}
-		produce_plan_tab.setEquip_product_relat_num(request.getParameter("equip_product_relat_num"));
+		produce_plan_tab.setProduct_num(request.getParameter("product_num"));
 		 
 		System.out.println("oper:"+oper);
 		System.out.println("produce_plan_num:"+produce_plan_num);
@@ -91,7 +90,7 @@ public class Produce_plan_tabController {
 		System.out.println("plan_time:"+request.getParameter("plan_end_time"));
 		System.out.println("plan_quan:"+request.getParameter("plan_quan"));
 		System.out.println("plan_work_time:"+request.getParameter("plan_work_time"));
-		System.out.println("equip_product_relat_num:"+request.getParameter("equip_product_relat_num"));
+		System.out.println("product_num:"+request.getParameter("product_num"));
 		
 	    //System.out.println("进入0");
 		System.out.println(produce_plan_tab.getProduce_plan_num());
@@ -103,7 +102,7 @@ public class Produce_plan_tabController {
 		}
 		else if(oper != null && oper.equals("add")){
 			if(produce_plan_tab.getProduce_plan_num()=="")produce_plan_tab.setProduce_plan_num(null);
-			produce_plan_tab.setPlan_status("未审核");
+			produce_plan_tab.setPlan_status("0");
 			produce_plan_tabDAO.add(produce_plan_tab);
 		}
 		else if(oper != null && oper.equals("del")){

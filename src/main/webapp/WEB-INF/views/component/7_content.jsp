@@ -80,6 +80,7 @@ else if(s.getAttribute("user_role_type").equals("经理")){%>
 >计划信息维护 </div> 
 <div id="child5mg" class="menu" style="display:none;"> 
 <a href="toproduce_plan_tab">-生产计划</a> <br> 
+<a href="towork_plan_tab">-作业计划</a> <br> 
 <a href="tomaintenance">-维护保养计划</a> <br> 
 </div>
 <div id="main6mg" class="menu" onclick="document.all.child6mg.style.display=(document.all.child6mg.style.display =='none')?'':'none'" > 
@@ -96,7 +97,7 @@ else if(s.getAttribute("user_role_type").equals("经理")){%>
 <%}
 else if(s.getAttribute("user_role_type").equals("现场操作人员")){%>
 <div id="child5op" class="menu"> 
-<a href="toproduce_plan_tab">-生产计划</a> <br> 
+<a href="toproduce_plan_tab">-作业计划</a> <br> 
 </div>
 
 <%} 
