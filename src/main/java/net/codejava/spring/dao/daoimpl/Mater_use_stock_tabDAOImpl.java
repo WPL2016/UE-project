@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -33,97 +35,7 @@ public class Mater_use_stock_tabDAOImpl implements Mater_use_stock_tabDAO {
 		jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 
-	/*@Override
-	public void saveOrUpdate(Produce_prog_tab produce_prog_tab) {
-        String abc = "SELECT COUNT(*) FROM produce_prog_tab WHERE produce_prog_num=?";
-		
-		@SuppressWarnings("deprecation")
-		int i=jdbcTemplate.queryForInt(abc,produce_prog_tab.getProduce_prog_num());
-		if (i!=0) {
-			// update
-			String sql = "UPDATE produce_prog_tab SET equip_product_relat_num=?,"
-						+ "bat_produce_start_time=?WHERE produce_prog_num=?";
-			jdbcTemplate.update(sql, produce_prog_tab.getEquip_product_relat_num(), produce_prog_tab.getBat_produce_start_time(),
-					produce_prog_tab.getProduce_prog_num());
-		} else {
-			// insert
-			String sql = "INSERT INTO produce_plan_tab (equip_product_relat_num,bat_produce_start_time,produce_prog_num)"
-						+ " VALUES (?, ?, ?)";
-			jdbcTemplate.update(sql, produce_prog_tab.getEquip_product_relat_num(), produce_prog_tab.getBat_produce_start_time(),
-					produce_prog_tab.getProduce_prog_num());
-		}
-		
-	}
 
-	@Override
-	public void delete(String produce_prog_num) {
-		String sql = "DELETE FROM produce_prog_tab WHERE produce_prog_num=?";
-		jdbcTemplate.update(sql, produce_prog_num);
-	}
-
-	@Override
-	public List<Mater_use_stock_tab> list() {
-		String sql = "SELECT * FROM produce_prog_tab";
-		List<Produce_prog_tab> listProduce_prog_tab = jdbcTemplate.query(sql, new RowMapper<Produce_prog_tab>() {
-
-			@Override
-			public Produce_prog_tab mapRow(ResultSet rs, int rowNum) throws SQLException {
-				Produce_prog_tab aProduce_prog_tab = new Produce_prog_tab();
-	
-				aProduce_prog_tab.setProduce_prog_num(rs.getString("produce_prog_num"));
-				aProduce_prog_tab.setEquip_product_relat_num(rs.getString("equip_product_relat_num"));
-					
-				
-				aProduce_prog_tab.setBat_produce_start_time(rs.getTimestamp ("bat_produce_start_time"));
-				
-												
-				return aProduce_prog_tab;
-			}
-			
-		});
-		
-		return listProduce_prog_tab;
-	}*/
-
-	/*@Override
-	public Mater_use_stock_tab get(String mater_num) {
-		String sql = "SELECT * FROM mater_use_stock_tab WHERE mater_num=" + mater_num;
-		return jdbcTemplate.query(sql, new ResultSetExtractor<Mater_use_stock_tab>() {
-
-			@Override
-			public  Mater_use_stock_tab  extractData(ResultSet rs) throws SQLException,
-					DataAccessException {
-				if (rs.next()) {
-					 Mater_use_stock_tab  aMater_use_stock_tab  = new  Mater_use_stock_tab ();
-					
-					 aMater_use_stock_tab.setEquip_name(rs.getString("equip_name"));
-						aMater_use_stock_tab.setProduct_name(rs.getString("product_name"));
-						aMater_use_stock_tab.setMater_name(rs.getString("mater_name"));
-						aMater_use_stock_tab.setMater_num(rs.getString("mater_num"));
-						aMater_use_stock_tab.setNew_value(rs.getString("new_value"));
-						aMater_use_stock_tab.setFou_value(rs.getString("fou_value"));	
-						aMater_use_stock_tab.setMater_percent(rs.getString("mater_percent"));
-					//	aProduce_prog_tab.setBat_produce_start_time(rs.getTimestamp ("bat_produce_start_time"));
-						
-						System.out.println(rs.getString("new_value"));
-						System.out.println(rs.getString("fou_value"));
-						return aMater_use_stock_tab;
-				}
-				
-				return null;
-			}
-			
-		});
-	    }*/
-		/*@Override
-		public int updateSingleColumn(Produce_prog_tab produce_prog_tab,String column,String value){
-			   System.out.println("updating...");
-		        String sql = "UPDATE produce_prog_tab SET "+column+" = '"+value+"' WHERE produce_prog_num='"+produce_prog_tab.getProduce_prog_num()+"'";
-		        //int i=jdbcTemplate.update(sql,column,value,equip_tab.getEquip_num());	
-		        int i=jdbcTemplate.update(sql);
-		        System.out.println("updating result:"+i);
-		        return i;
-		}*/
 
 		@Override
 		public List<Mater_use_stock_tab> listMater_use_stock_tab() {
@@ -162,10 +74,7 @@ public class Mater_use_stock_tabDAOImpl implements Mater_use_stock_tabDAO {
 					aMater_use_stock_tab.setNew_value(rs.getString("new_value"));
 					aMater_use_stock_tab.setFou_value(rs.getString("fou_value"));	
 					aMater_use_stock_tab.setMater_percent(rs.getString("mater_percent"));
-				//	aProduce_prog_tab.setBat_produce_start_time(rs.getTimestamp ("bat_produce_start_time"));
-					
-					System.out.println(rs.getString("new_value"));
-					System.out.println(rs.getString("fou_value"));
+	
 					return aMater_use_stock_tab;
 					
 				}
@@ -220,8 +129,77 @@ public class Mater_use_stock_tabDAOImpl implements Mater_use_stock_tabDAO {
 				}
 				
 			});
-			
 			return listMater_use_stock_tab;
 		}
+		
+			@Override
+			public List<Mater_use_stock_tab> listOper_mater_use_stock_tab() {
+				// TODO Auto-generated method stub
+				
+				String sql= "SELECT  new_mater_use_stat_tab.new_mater_use_time AS new_mater_use_time,mater_tab.mater_name AS mater_name,"+
+						" new_mater_use_stat_tab.new_mater_use_quan AS new_value,equip_product_relat_tab.equip_num AS equip_num"+
+						" , mater_tab.mater_unit AS mater_unit"+
+						" FROM  new_mater_use_stat_tab JOIN equip_product_relat_tab "+
+						" ON  new_mater_use_stat_tab.equip_product_relat_num=equip_product_relat_tab.equip_product_relat_num"+
+						" JOIN product_tab ON product_tab.product_num=equip_product_relat_tab.product_num"+
+						" JOIN mater_tab ON product_tab.mater_num=mater_tab.mater_num"+
+						" WHERE datediff(dd, new_mater_use_stat_tab.new_mater_use_time,getdate())<=100"+
+						" Order by new_mater_use_stat_tab.new_mater_use_time DESC";
+									List<Mater_use_stock_tab> listOper_mater_use_stock_tab=jdbcTemplate.query(sql, new RowMapper<Mater_use_stock_tab>() {
 
+										@Override
+										public Mater_use_stock_tab mapRow(ResultSet rs, int rowNum) throws SQLException {
+											Mater_use_stock_tab aMater_use_stock_tab = new Mater_use_stock_tab();
+								
+											aMater_use_stock_tab.setMater_unit(rs.getString("mater_unit"));
+											aMater_use_stock_tab.setEquip_num(rs.getString("equip_num"));
+											aMater_use_stock_tab.setMater_name(rs.getString("mater_name"));
+											aMater_use_stock_tab.setNew_value(rs.getString("new_value"));
+										    
+											aMater_use_stock_tab.setNew_mater_use_time(rs.getTimestamp("new_mater_use_time"));
+											
+					
+											return aMater_use_stock_tab;
+											
+										}
+										
+									});
+									
+									return  listOper_mater_use_stock_tab;
+								}
+			@Override
+			public List<Mater_use_stock_tab> listOper_fou_mater_use_stock_tab() {
+				// TODO Auto-generated method stub
+				
+				String sql= "SELECT  fou_use_stat_tab.fou_use_time AS fou_mater_use_time,mater_tab.mater_name AS mater_name,"
+						+ "	fou_use_stat_tab.fou_use_quan AS fou_value,equip_product_relat_tab.equip_num AS equip_num,"+
+						" mater_tab.mater_unit AS mater_unit"+
+						" FROM  fou_use_stat_tab JOIN equip_product_relat_tab "+
+						" ON  fou_use_stat_tab.equip_product_relat_num=equip_product_relat_tab.equip_product_relat_num"+
+						" JOIN product_tab ON product_tab.product_num=equip_product_relat_tab.product_num"+
+						" JOIN mater_tab ON product_tab.mater_num=mater_tab.mater_num"+
+						" WHERE datediff(dd, fou_use_stat_tab.fou_use_time,getdate())<=100"+
+						" Order by fou_use_stat_tab.fou_use_time DESC";
+									List<Mater_use_stock_tab> listOper_fou_mater_use_stock_tab=jdbcTemplate.query(sql, new RowMapper<Mater_use_stock_tab>() {
+
+										@Override
+										public Mater_use_stock_tab mapRow(ResultSet rs, int rowNum) throws SQLException {
+											Mater_use_stock_tab aMater_use_stock_tab = new Mater_use_stock_tab();
+								
+											aMater_use_stock_tab.setMater_unit(rs.getString("mater_unit"));
+											aMater_use_stock_tab.setEquip_num(rs.getString("equip_num"));
+											aMater_use_stock_tab.setMater_name(rs.getString("mater_name"));
+											aMater_use_stock_tab.setFou_value(rs.getString("fou_value"));
+										    
+											aMater_use_stock_tab.setFou_mater_use_time(rs.getTimestamp("fou_mater_use_time"));
+											
+					
+											return aMater_use_stock_tab;
+											
+										}
+										
+									});
+									
+									return  listOper_fou_mater_use_stock_tab;
+								}
 }

@@ -56,6 +56,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                                .antMatchers("/resources/**" ).permitAll()
                                .antMatchers("/toregister","/register").permitAll()
                                
+                               .antMatchers("/getting_data_from_counters").permitAll()		 
+                               
                               	
                                //重复的规则取或，ADMIN和USER都可以请求“/toadmin”
 			                  // .antMatchers("/toadmin").hasRole("ADMIN")
@@ -101,6 +103,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			                   .antMatchers("/qualitylinedata","/qualitypiedata","/showproduct_qual_stat_tab").hasRole("showproduct_qual_stat_tab")
 			                   .antMatchers("/showproduct_tab").hasRole("showproduct_tab")
 			                   .antMatchers("/editproduct_tab").hasRole("editproduct_tab")
+			                   .antMatchers("/data_acquisition").hasRole("data_acquisition")
 				               .anyRequest().authenticated()
 				.and()				
 			.formLogin().loginPage("/login").permitAll()   

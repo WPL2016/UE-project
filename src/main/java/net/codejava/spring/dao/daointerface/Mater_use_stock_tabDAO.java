@@ -22,7 +22,8 @@ public interface Mater_use_stock_tabDAO {
 	public List<Mater_use_stock_tab> listMater_use_stock_tab();
 	
 	public List<Mater_use_stock_tab> listMater_use_stock_tab(String mater_num);
-  
+	public List<Mater_use_stock_tab> listOper_mater_use_stock_tab();
+	public List<Mater_use_stock_tab> listOper_fou_mater_use_stock_tab();
 	//public int updateSingleColumn(Produce_prog_tab produce_prog_tab,String column,String value);
 	
 	//public List<Produce_static_tab> listProduce_static_tab();

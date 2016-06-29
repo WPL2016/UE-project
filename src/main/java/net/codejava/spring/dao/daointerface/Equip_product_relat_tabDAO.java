@@ -19,4 +19,6 @@ public interface Equip_product_relat_tabDAO {
 	public Equip_product_relat_tab get(String equip_product_relat_num);
 	
 	public List<Equip_product_relat_tab> list();
+	
+	public String getEquip_product_relate_num(String equip_num,String product_num);
 }

@@ -1,4 +1,3 @@
-
 <%@ page language="java" import="java.util.*" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -54,24 +53,24 @@ $(function () {
         <div class="blank_btw_menu_content"></div>
         <!--内容主体的div,请根据具体内容决定div的样式，table_container0最小，1次之，2最大，也可自行在div.css定义你自己想要的样式，要设置成左浮动以保证div水平排列-->     
         <div class="table_container2"> <table id="customers">
-	        	<th>No</th>
+	        
 	        	<th>用户名</th>
-	        	<th>启用状态</th>
-	        	
+	        	<th>申请用户类型</th>
+	        	<th>申请日期</th>
 	        	<th>操作</th>
 	        	
-				<c:forEach var="users" items="${users}" varStatus="status">
+				<c:forEach var="user_role_apply" items="${user_role_apply}" varStatus="status">
 	        	<tr>
-	        		<td align="center">${status.index + 1}</td>
+	        		
+					<td align="center"><a href="toedituserinfo?username=${user_role_apply.username}">${user_role_apply.username}</a></td>
 					
-					<td align="center">${users.username}</td>
-					
-					<td align="center">${users.enabled}</td>
+					<td align="center">${user_role_apply.apply_role_type}</td>
+					<td align="center">${user_role_apply.last_modify_date}</td>
 					
 					<td align="center">
-						<input type=button class="button blue" onclick="window.location.href('toedituserrole?username=${users.username}')" value="修改用户角色">
+						<input type=button class="button blue" onclick="window.location.href('toedituserrole?username=${user_role_apply.username}')" value="修改用户角色">
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					    <input type=button class="button blue" onclick="window.location.href('frozenuser?username=${users.username}')" value="冻结用户">
+					    <input type=button class="button blue" onclick="window.location.href('frozenuser?username=${user_role_apply.username}')" value="冻结用户">
 					      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="button" class="button blue" onclick="window.location.href('unfrozenuser?username=${users.username}')" value="解冻">
 					</td>
 							

@@ -13,20 +13,21 @@ public class Produce_plan_tab {
 	private Date plan_end_time;
 	private int plan_quan;
 	private int plan_work_time;
-	private String equip_product_relat_num;
+	private String product_num;
 	private String equip_name;
 	private String product_name;
+	private String plan_status;
 	public Produce_plan_tab() {
 	}
 
-	public Produce_plan_tab(String produce_plan_recorder_num, String produce_plan_num,@DateTimeFormat(pattern="yyyy-MM-dd") Date plan_start_time,@DateTimeFormat(pattern="yyyy-MM-dd") Date plan_end_time,int plan_quan,int plan_work_time, String equip_product_relat_num) {
+	public Produce_plan_tab(String produce_plan_recorder_num, String produce_plan_num,@DateTimeFormat(pattern="yyyy-MM-dd") Date plan_start_time,@DateTimeFormat(pattern="yyyy-MM-dd") Date plan_end_time,int plan_quan,int plan_work_time, String product_num) {
 		this.produce_plan_recorder_num = produce_plan_recorder_num;
 		this.produce_plan_num = produce_plan_num;
 		this.plan_start_time = plan_start_time;	
 		this.plan_end_time = plan_end_time;
 		this.plan_quan = plan_quan;	
 		this.plan_work_time = plan_work_time;	
-		this.equip_product_relat_num = equip_product_relat_num;
+		this.product_num = product_num;
 		
 	}
 	public String getProduct_name() {
@@ -92,11 +93,20 @@ public class Produce_plan_tab {
 		this.plan_work_time = plan_work_time;
 	}
 	
-	public String getEquip_product_relat_num() {
-		return equip_product_relat_num;
+	public String getProduct_num() {
+		return product_num;
 	}
 
-	public void setEquip_product_relat_num(String equip_product_relat_num) {
-		this.equip_product_relat_num = equip_product_relat_num;
+	public void setProduct_num(String product_num) {
+		this.product_num = product_num;
 	}
+	
+	public String getPlan_status() {
+		return plan_status;
+	}
+
+	public void setPlan_status(String plan_status) {
+		this.plan_status = plan_status;
+	}
+	
 }

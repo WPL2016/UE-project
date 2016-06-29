@@ -10,8 +10,8 @@ import net.codejava.spring.dao.daoimpl.Atype_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.Atype_use_inf_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.AuthorsDAOImpl;
 import net.codejava.spring.dao.daoimpl.ContactDAOImpl;
-
-
+import net.codejava.spring.dao.daoimpl.Data_acquisitionDAOImpl;
+import net.codejava.spring.dao.daoimpl.Day_plan_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.Ener_stat_tabDAOImpl;
 
 import net.codejava.spring.dao.daoimpl.Equip_dyn_para_tabDAOImpl;
@@ -42,14 +42,16 @@ import net.codejava.spring.dao.daoimpl.Product_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.Role_AuthorsDAOImpl;
 import net.codejava.spring.dao.daoimpl.RolesDAOImpl;
 import net.codejava.spring.dao.daoimpl.User_RolesDAOImpl;
+import net.codejava.spring.dao.daoimpl.User_role_applyDAOImpl;
 import net.codejava.spring.dao.daoimpl.User_tabDAOImpl;
 import net.codejava.spring.dao.daoimpl.UsersDAOImpl;
+import net.codejava.spring.dao.daoimpl.Work_plan_tabDAOImpl;
 import net.codejava.spring.dao.daointerface.Atype_tabDAO;
 import net.codejava.spring.dao.daointerface.Atype_use_inf_tabDAO;
 import net.codejava.spring.dao.daointerface.AuthorsDAO;
 import net.codejava.spring.dao.daointerface.ContactDAO;
-
-
+import net.codejava.spring.dao.daointerface.Data_acquisitionDAO;
+import net.codejava.spring.dao.daointerface.Day_plan_tabDAO;
 import net.codejava.spring.dao.daointerface.Ener_stat_tabDAO;
 
 
@@ -82,8 +84,10 @@ import net.codejava.spring.dao.daointerface.Product_tabDAO;
 import net.codejava.spring.dao.daointerface.Role_AuthorsDAO;
 import net.codejava.spring.dao.daointerface.RolesDAO;
 import net.codejava.spring.dao.daointerface.User_RolesDAO;
+import net.codejava.spring.dao.daointerface.User_role_applyDAO;
 import net.codejava.spring.dao.daointerface.User_tabDAO;
 import net.codejava.spring.dao.daointerface.UsersDAO;
+import net.codejava.spring.dao.daointerface.Work_plan_tabDAO;
 
 
 @Configuration
@@ -240,7 +244,25 @@ public class DataSourceConfig {
    		return new  Role_AuthorsDAOImpl(getDataSource());
 
    	} 
-   
+    @Bean
+   	public  User_role_applyDAO getUser_role_applyDAO() {
+   		return new  User_role_applyDAOImpl(getDataSource());
+
+   	} 
+    @Bean
+   	public Day_plan_tabDAO getDay_plan_tabDAO() {
+   		return new  Day_plan_tabDAOImpl(getDataSource());
+
+   	} 
+    @Bean
+   	public Work_plan_tabDAO getWork_plan_tabDAO() {
+   		return new  Work_plan_tabDAOImpl(getDataSource());
+
+   	} 
     
-   
+    @Bean
+   	public Data_acquisitionDAO data_acquisitionDAODAO() {
+   		return new  Data_acquisitionDAOImpl(getDataSource());
+
+   	} 
 }

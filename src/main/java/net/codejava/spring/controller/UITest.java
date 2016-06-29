@@ -3,9 +3,12 @@ package net.codejava.spring.controller;
 import java.io.IOException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import net.codejava.spring.dao.daointerface.ContactDAO;
@@ -34,17 +37,7 @@ public ModelAndView schedule(){
 	return model;
 }
 
-@RequestMapping(value="/togas")
-public ModelAndView gas(){
-	ModelAndView model=new ModelAndView();
-	model.setViewName("gas");
-	List<Equip_tab> supequip=equip_tabDAO.getSomeEquip("sup");
-	model.addObject("supequip",supequip);
-	
-	int recordnum=contactDAO.countRecord();
-	model.addObject("recordnum",recordnum+"");
-	return model;
-}
+
 
 
 
@@ -87,6 +80,9 @@ public ModelAndView home(){
 	model.addObject("ZSequip", ZSequip);
 	return model;
 }
+
+
+
 
 
 }

@@ -1,30 +1,28 @@
 package net.codejava.spring.model;
 
-import java.text.SimpleDateFormat;
+
+import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class Produce_plan_exe_stat_tab {
-	private SimpleDateFormat exe_start_time = new SimpleDateFormat("yyyy-M-dd HH:mm:ss");
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	private Date exe_start_time;
 	private String produce_plan_exe_stat_recorder_num;
 	private String produce_plan_exe_stat_num;
-	private String produce_plan_num;
-	private String equip_product_relat_num;
+	private String work_plan_num;
+	
 	
 	public Produce_plan_exe_stat_tab() {
 	}
 
-	public Produce_plan_exe_stat_tab(SimpleDateFormat exe_start_time, String produce_plan_exe_stat_recorder_num, String produce_plan_exe_stat_num,String produce_plan_num, String equip_product_relat_num) {
-		this.exe_start_time = exe_start_time;
-		this.produce_plan_exe_stat_recorder_num = produce_plan_exe_stat_recorder_num;
-		this.produce_plan_exe_stat_num = produce_plan_exe_stat_num;	
-		this.produce_plan_num=produce_plan_num;
-		this.equip_product_relat_num=equip_product_relat_num;
-	}
+	
 
-	public SimpleDateFormat getExe_start_time() {
+	public @DateTimeFormat(pattern="yyyy-MM-dd") Date getExe_start_time() {
 		return exe_start_time;
 	}
 
-	public void setExe_start_time(SimpleDateFormat exe_start_time) {
+	public void setExe_start_time(@DateTimeFormat(pattern="yyyy-MM-dd") Date exe_start_time) {
 		this.exe_start_time = exe_start_time;
 	}
 
@@ -44,19 +42,12 @@ public class Produce_plan_exe_stat_tab {
 		this.produce_plan_exe_stat_num = produce_plan_exe_stat_num;
 	}
 	
-	public String getProduce_plan_num() {
-		return produce_plan_num;
+	public String getWork_plan_num() {
+		return work_plan_num;
 	}
 
-	public void setProduce_plan_num(String produce_plan_num) {
-		this.produce_plan_num = produce_plan_num;
-	}
-	
-	public String getEquip_product_relat_num() {
-		return equip_product_relat_num;
-	}
-
-	public void setEquip_product_relat_num(String equip_product_relat_num) {
-		this.equip_product_relat_num = equip_product_relat_num;
+	public void setWork_plan_num(String work_plan_num) {
+		this.work_plan_num = work_plan_num;
 	}
 }
+	

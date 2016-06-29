@@ -24,4 +24,6 @@ public interface Equip_tabDAO {
 	public List<Equip_tab> getSomeEquip(String type);
 	
 	public List<Equip_tab> getSomeEquipWithState(String type);
+
+	public List<Equip_tab> getSomeEquipByEnergy(String energy_type);
 }

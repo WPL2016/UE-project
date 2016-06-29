@@ -103,7 +103,7 @@ $(document).ready(function(){
 
       <select style='width:80px;height:25px;font-size-3' id="timechoice">
          	          <option value="0">按日汇总</option><option value="1">按月汇总</option><option value="2">按年汇总</option></select>
-        <c:forEach var="equip_tab" items="${yzequip}">
+        <c:forEach var="equip_tab" items="${electricequip}">
 	      <input type="checkbox" id="equip_selected" name="equip_selected" value="${equip_tab.equip_num}">${equip_tab.equip_name}</input> </c:forEach>
              <input type="button" id="search" onClick="drawBar(),drawPie()">查询</input>
            </td></tr>

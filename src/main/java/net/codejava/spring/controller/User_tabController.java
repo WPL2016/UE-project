@@ -7,9 +7,11 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.codejava.spring.dao.daointerface.User_RolesDAO;
 import net.codejava.spring.dao.daointerface.User_tabDAO;
 import net.codejava.spring.dao.daointerface.UsersDAO;
 import net.codejava.spring.model.Contact;
+import net.codejava.spring.model.User_Roles;
 import net.codejava.spring.model.User_tab;
 import net.codejava.spring.model.Users;
 
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -33,6 +36,8 @@ public class User_tabController {
 	private User_tabDAO user_tabDAO;
 	@Autowired
 	private UsersDAO usersDAO;
+	@Autowired
+	private User_RolesDAO user_rolesDAO;
 	
 	@RequestMapping(value="/toregister")
 	public ModelAndView toRegister(ModelAndView model) throws IOException{		
@@ -49,6 +54,10 @@ public class User_tabController {
 		if(usersDAO.exist(users)==0){
 			users.setEnabled(1);
 			usersDAO.save(users);
+			User_Roles user_roles=new User_Roles();
+			user_roles.setUsername(users.getUsername());
+			user_roles.setRole_id(2);
+			user_rolesDAO.save(user_roles);
 			response.setContentType("text/html;charset=utf-8");
 			PrintWriter out=response.getWriter();
 			out.println("<script language='javascript'>alert('×¢²á³É¹¦£¬ÇëµÇÂ½');window.location.href='login'</script>");
@@ -66,7 +75,8 @@ public class User_tabController {
 	
 	@RequestMapping(value="/toedituserinfo")
 	public ModelAndView toEditUserInfo(ModelAndView model,HttpServletRequest request) throws IOException{		
-		Users users=usersDAO.getUser(request.getUserPrincipal().getName());
+		
+		Users users=usersDAO.getUser(request.getParameter("username"));
 		model.addObject("users",users);
 		model.setViewName("edituserinfo");	
 		return model;
@@ -115,7 +125,7 @@ public class User_tabController {
 	
 	@RequestMapping(value = "user_tab/saveUser_tab", method = RequestMethod.POST)
 	public ModelAndView saveContact(@ModelAttribute User_tab user_tab) {
-		user_tabDAO.saveOrUpdate(user_tab);
+		user_tabDAO.saveOrUpdate(user_tab);		
 		return new ModelAndView("redirect:/user_tab");
 	}
 	
@@ -135,4 +145,6 @@ public class User_tabController {
 		
 		return model;
 	}
+	
+
 }

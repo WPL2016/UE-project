@@ -168,4 +168,29 @@ public class Equip_tabDAOImpl implements Equip_tabDAO {
 		return listEquip_tab;
 	}
 	
+	@Override
+	public List<Equip_tab> getSomeEquipByEnergy(String energy_type){
+		String sql= "SELECT * FROM equip_tab WHERE equip_num in (SELECT equip_num FROM ener_stat_tab WHERE ener_type='"+energy_type+"')";
+		
+		     
+		List<Equip_tab> listEquip_tab = jdbcTemplate.query(sql, new RowMapper<Equip_tab>() {
+
+			@Override
+			public Equip_tab mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Equip_tab aEquip_tab = new Equip_tab();
+	
+				aEquip_tab.setEquip_num(rs.getString("equip_num"));
+				aEquip_tab.setEqu_equip_num(rs.getString("equ_equip_num"));
+				aEquip_tab.setEquip_sup(rs.getString("equip_sup"));
+				aEquip_tab.setEquip_name(rs.getString("equip_name"));
+				aEquip_tab.setEquip_recorder_num(rs.getString("equip_recorder_num"));
+				
+				return aEquip_tab;
+			}
+			
+		});
+		
+		return listEquip_tab;
+	}
+	
 }

@@ -94,7 +94,7 @@ public class EnergyController {
 		   
 		  //序列
 	        //添加第一个饼图的数据，第一项不用填，第二项为类型，第三项为序列的值，第四项是数据分组，注意第三项和第四项的顺序是对应的
-		  String start_time=request.getParameter("starttime");
+		     String start_time=request.getParameter("starttime");
 		     String end_time=request.getParameter("endtime");
 		     String timechoice =request.getParameter("timechoice");
 		     String user_select_equip[]=request.getParameter("equip_selected").split(",");       

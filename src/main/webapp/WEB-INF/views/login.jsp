@@ -26,9 +26,9 @@
 <body>
 
 
-
-   
 <form action="${loginUrl}" method="post"> 
+<table width="100%",width="100%" aligh="center">
+<tr><td>
 <table width="680" height="401" border="0" cellpadding="0" cellspacing="0">
    
 <c:if test="${param.error != null}">        
@@ -83,11 +83,14 @@
     <td colspan="2"><div align="center" class="style2 style7"><strong>永艺家具股份有限公司</strong></div></td>
     <td>&nbsp;</td>
   </tr>
+  <tr><td>
   <input type="hidden"                        
 		name="${_csrf.parameterName}"
 		value="${_csrf.token}"/>
+  </td></tr>
   
-  
+</table>
+</td></tr>
 </table>
 </form>
 
